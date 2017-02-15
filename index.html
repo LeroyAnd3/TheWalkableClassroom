@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      }
+
+      body {
+        background-color: gray;
+      }
+
+      .buttonContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 80%;
+        height: 60%;
+        top:20%;
+        position: relative;
+        background-color: turquoise;
+        border-radius: 10px;
+        border: 4px solid #fff;
+      }
+
+      .container {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        background-color: lightblue;
+        width: 90%;
+        display: flex;
+      }
+
+      .gameBoard {
+      width: 42%;
+      overflow: auto;
+      }
+
+      .gameInfo {
+        position: absolute;
+        top: 20%;
+        left: 5%;
+        width: 20%;
+        height: 60%;
+        background-color: turquoise;
+        border-radius: 10px;
+        border: 4px solid #fff;
+
+      }
+
+      .leftSider {
+        width: 29%;
+      }
+
+      .rightSider {
+        width: 29%;
+      }
+
+      .myButton {
+    	-moz-box-shadow: 0px 1px 0px 0px #1c1b18;
+    	-webkit-box-shadow: 0px 1px 0px 0px #1c1b18;
+    	box-shadow: 0px 1px 0px 0px #1c1b18;
+    	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #eae0c2), color-stop(1, #ccc2a6));
+    	background:-moz-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+    	background:-webkit-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+    	background:-o-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+    	background:-ms-linear-gradient(top, #eae0c2 5%, #ccc2a6 100%);
+    	background:linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+    	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eae0c2', endColorstr='#ccc2a6',GradientType=0);
+    	background-color:#eae0c2;
+    	-moz-border-radius:15px;
+    	-webkit-border-radius:15px;
+    	border-radius:15px;
+    	border:2px solid #333029;
+    	display:inline-block;
+    	cursor:pointer;
+    	color:#505739;
+    	font-family:Arial;
+    	font-size:20px;
+    	font-weight:bold;
+    	padding:10px 10px;
+      width: 200px;
+    	text-decoration:none;
+    	text-shadow:0px 1px 0px #ffffff;
+      display: block;
+    }
+    .myButton:hover {
+    	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ccc2a6), color-stop(1, #eae0c2));
+    	background:-moz-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+    	background:-webkit-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+    	background:-o-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+    	background:-ms-linear-gradient(top, #ccc2a6 5%, #eae0c2 100%);
+    	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+    	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ccc2a6', endColorstr='#eae0c2',GradientType=0);
+    	background-color:#ccc2a6;
+    }
+    .myButton:active {
+    	position:relative;
+    	top:1px;
+    }
+
+
+
+      h1, h2, p {
+        margin: 0 auto;
+        color:#825B1F;
+      }
+
+      ul {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      }
+
+      li img {
+      margin: 8px;
+      border: 5px solid #fff;
+
+      -webkit-transition: box-shadow 0.5s ease;
+      -moz-transition: box-shadow 0.5s ease;
+      -o-transition: box-shadow 0.5s ease;
+      -ms-transition: box-shadow 0.5s ease;
+      transition: box-shadow 0.5s ease;
+      }
+
+      li img:hover {
+      -webkit-box-shadow: 0px 0px 7px rgba(255,255,255,0.9);
+      box-shadow: 0px 0px 7px rgba(255,255,255,0.9);
+      }
+      li {
+        width: 100px;
+        height: 100px;
+        background-color: coral;
+        color: lightblue;
+        margin: 8px;
+        border: 4px solid #fff;
+        text-align: center;
+
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+        -webkit-transition:.5s;
+        transition:.5s;
+      }
+
+      li:hover {
+        background-color: magenta;
+      }
+
+      .title {
+        font-size: 30px;
+        display: block;
+      }
+
+    </style>
+</head>
+<body>
+  <div class="container" align="center">
+
+    <div class="leftSider">
+      <p class="title" align="left"><strong><i>The Concentration Game</i></strong></p>
+      <div class="gameInfo">
+        <h2>
+            Remaining Time:
+            <br/>
+            1:29
+        </h2>
+        <br/>
+        <br/>
+        <br/>
+        <h2>
+            Score:
+            <br/>
+            1100 points
+        </h2>
+      </div>
+    </div>
+    <div class="gameBoard">
+      <ul>
+        <li><h3>Hint #1</h3></li>
+        <li><h3>Hint #2</h3></li>
+        <li><h3>Hint #3</h3></li>
+        <li><h3>Hint #4</h3></li>
+        <li><h3>Hint #5</h3></li>
+        <li><h3>Hint #6</h3></li>
+        <li><h3>Hint #7</h3></li>
+        <li><h3>Hint #8</h3></li>
+        <li><h3>Hint #9</h3></li>
+        <li><h3>Hint #10</h3></li>
+        <li><h3>Hint #11</h3></li>
+        <li><h3>Hint #12</h3></li>
+        <li><h3>Hint #13</h3></li>
+        <li><h3>Hint #14</h3></li>
+        <li><h3>Hint #15</h3></li>
+        <li><h3>Hint #16</h3></li>
+      </ul>
+    </div>
+    <div class="rightSider">
+        <div class="buttonContainer">
+          <button class="myButton">Pause Game</button>
+          <button class="myButton">Restart Game</button>
+          <button class="myButton">Quit Game</button>
+        </div>
+    </div>
+  </div>
+  <!-- <div id="app"></div> -->
+  <script src="bundle.js"></script>
+</body>
+</html>
+<!-- <a href="#"><img src="http://placehold.it/100x100"></a> -->
