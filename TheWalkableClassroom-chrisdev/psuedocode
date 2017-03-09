@@ -1,0 +1,49 @@
+Pseudocode for Concentration.js
+===============================
+Assumptions:
+------------
+-Each term object has field properties which include an id, label/name, and hint(s)
+-Term refers to the object/thing that has a name and hints. The hints for terms are the things that are displayed on each card. The name of the term is not immediately visible to the player.
+-Cards only display hints from specific terms. Internally each card has a parent id/answer field that refers back to the term that the card's hint originated from.
+
+Create terms and hints for cards:
+---------------------------------
+num = # of cards
+terms[] = chooseFromTerms(num/2)	//chose num/2 terms from the term list
+for(every 2 cards)			//card0 and card1 are neighboring cards
+ card0.hint = terms[i].chooseHint()	//pick a hint from the term in pos i
+ card0.ans   = terms[i].id
+ card1.hint = terms[i].chooseHint()	//pick a different hint from term in pos i
+ card1.ans   = terms[i].id
+shuffleCards()
+
+Make cards matchable and clearable, Add Move Counter:
+-----------------------------------------------------
+moveCount = 0
+selectToggle = false			//toggles whether to set id0 or id1
+ans0 = null  ,  ans1 = null		//answer to each card selected
+hint0 = null , hint1 = null		//hint to each card selected
+onCardClick()				//when a card is clicked on...
+ if(!selectToggle)
+ 	ans0 = this.ans
+  	hint0 = this.hint
+  	selectToggle = !selectToggle
+ else 
+  	ans1 = this.ans
+  	hint1 = this.hint
+  	selectToggle = !selectToggle
+	moveCount++
+  	if(hint0!=hint1)		//only check for match if different cards
+		if(ans0==ans1)		//if cards have the same answer...
+			//Show match signal
+			removeCard0()
+			removeCard1()
+		else
+			shuffleHintCard0()
+			shuffleHintCard1()
+			
+			
+   
+
+
+
