@@ -1,0 +1,164 @@
+html {
+  background : #1a1a1a;
+}
+
+.container {
+  border: 1px solid white;
+  background-color : #2d2d2d;
+  /*padding : 20px;*/
+  color: #f3f3f3;
+  width : 500px;
+  height : 600px;
+  margin : 5vh auto;
+}
+
+.containerHeader {
+  height : 6.6%;
+  background-color : #525252;
+  text-align: center;
+  padding: 10px;
+}
+
+.containerHeader span {
+  font-size: 20px;
+}
+
+.textFieldContainer {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.sideButton {
+  background-color: gray;
+  height: 50px;
+  width: 50px;
+  margin-top: 35%;
+  text-align: center;
+  font-size: 30px;
+  border: none;
+}
+
+.containerBody {
+  height : 70%;
+  width: 100%;
+  /*background-color : #525252;*/
+  margin : 6% auto;
+  /*text-align: center;*/
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.containerBody form {
+  width: 70%;
+  background-color: #525252;
+  text-align: center;
+}
+
+.containerFooter {
+  height : 10%;
+  background-color : #525252;
+}
+
+.containerFooter button  {
+  background-color: #1a1a1a;
+  padding : 5px;
+  border-radius:  0px;
+  border : 0px none;
+  color : white;
+  margin : 15px 35px 0px 35px;
+}
+
+form label {
+  float: left;
+  width: 175px;
+  font-size: 18px;
+  padding-left : 10px;
+}
+
+form label.mid {
+  line-height: 30px;
+}
+
+form input, form select {
+ background: #01caa7;
+	border: 2px solid #fff;
+	color: #fff;
+	font-family: 'PT Sans Caption', sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+	height: 20px;
+	margin: 5px auto;
+	/*padding: 0 10px;*/
+	width: 150px;
+ vertical-align: middle;
+}
+
+form input:hover, form select:hover, form textarea:hover {
+	border: 2px solid #2b7b5c;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+  border-color: #2b7b5c;
+  outline: none;
+}
+
+form select {
+  float: left;
+  margin-bottom: 40px;
+  appearance: none;
+  width: 100px;
+  border-radius: 0;
+}
+
+.hintBox {
+  background-color: #f3f3f3;
+  margin: 10px auto;
+  height: 285px;
+  width: 90%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    border: 0.5px solid #3f3f3f;
+}
+
+button.accordion span {
+  float: right;
+}
+
+button.accordion span select {
+   background: #01caa7;
+   border: 2px solid #fff;
+   color: #fff;
+   font-size: 1em;
+   font-weight: 400;
+   height: 20px;
+   margin: 0 0 1px 0;
+   width: 100px;
+   float: right;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+    background-color: white;
+    width: 100%;
+    display: none;
+    color: black;
+}
