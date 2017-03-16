@@ -17,7 +17,9 @@ var terms = [
 ];
 
 var cardlist = [];
+var score = 0;
 var moveCount=0;
+var streakCount = 0;
 var num = terms.length*2;
 var selectTog=false;
 var initialized = false;
@@ -130,6 +132,7 @@ function initializeGame(numcards){
 		console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
 		moveCount++;
+		$('#moveCounter').val(moveCount);
 		//Checks to make sure that you're not matching two cards with the same INITIAL hint
 		//It still works after hint swapping for this reason, kind of useful in that sense
 		if(hint0!=hint1){
@@ -138,18 +141,36 @@ function initializeGame(numcards){
 				//"Remove" the matched pair
 				$('#'+id0).replaceWith(blankdiv);
 				$('#'+id1).replaceWith(blankdiv);
+				//Add to the player's score for correct match (includes streak multiplier)
+				score = score + 100 + (50*streakCount);	
+				streakCount++;
 				resetSelections();
+				//Play sound for correct match
+				var snd = new Audio("./resources/correct.wav");
+				snd.play();
 				//Check if all the pairs have been cleared
 				pairsCleared++;
 				if(pairsCleared==(numcards/2)){
 					//Stuff when the board is cleared
-					alert("You cleared the board!");	
+					//If the player matched all cards without breaking the streak...
+					if(streakCount==(numcards/2)) {alert("Perfect clear!");}
+					else{alert("You cleared the board!");}
 				}
+				$('#gameScore').val(score);
+				$('#streakCounter').val(streakCount);
 			}else{
+				//Play sound for wrong match
+				var snd = new Audio("./resources/wrong.wav");
+				snd.play();
 				//Shuffle hints on cards
 				$('#'+id0).text(pickHint($('#'+id0).attr('termID')));
 				$('#'+id1).text(pickHint($('#'+id1).attr('termID')));
 				setCardBackground(id0);
+				//Decrement the player's score for wrong match (resets streak multiplier)
+				score = score - 50;
+				streakCount = 0;
+				$('#gameScore').val(score);
+				$('#streakCounter').val(streakCount);
 				resetSelections();
 
 			}
@@ -162,6 +183,30 @@ function initializeGame(numcards){
 		}
 	}
  });
+}
+
+//Picks a random hint from a term in the terms array at the specified index
+function pickHint(index){
+ var len = terms[index].length-1;
+ var pos = Math.round(Math.random()*(len-2));	
+ pos = pos+2;	//skip over id and answer fields in the terms list 
+ console.log("Index:",index," Pos:",pos);
+ return terms[index][pos];
+}
+
+//Returns a random int in the range [min,max]
+function getRandomIntInclusive(min,max){
+ min = Math.ceil(min);
+ max = Math.floor(max);
+ return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+//Resets the selection vars and appropriate fields
+function resetSelections(){
+ ans0 = null; ans1 = null;
+ hint0 = null; hint1 = null;
+ termID0 = null; termID1 = null;
+ //console.log("-----Reset choices to null-----");
 }
 
 //Checks and sets card backgrounds based on the user's choice
@@ -224,30 +269,6 @@ function setCardBackground(id){
  });
 }
 
-//Picks a random hint from a term in the terms array at the specified index
-function pickHint(index){
- var len = terms[index].length-1;
- var pos = Math.round(Math.random()*(len-2));	
- pos = pos+2;	//skip over id and answer fields in the terms list 
- console.log("Index:",index," Pos:",pos);
- return terms[index][pos];
-}
-
-//Returns a random int in the range [min,max]
-function getRandomIntInclusive(min,max){
- min = Math.ceil(min);
- max = Math.floor(max);
- return Math.floor(Math.random()*(max-min+1))+min;
-}
-
-//Resets the selection vars and appropriate fields
-function resetSelections(){
- ans0 = null; ans1 = null;
- hint0 = null; hint1 = null;
- termID0 = null; termID1 = null;
- //console.log("-----Reset choices to null-----");
-}
-
 function makeSqConfig(){
   var row, i, j, x;
   width = 3;
@@ -288,7 +309,7 @@ $(document).ready( function(){
      paused = 0; // 0 = no, 1 = yes
 
     $("#play").attr("disabled", "disabled");
-    $("#gameScore").val(0);
+    //$("#gameScore").val(0);
 
     checkBoardConfig();
     $("#cardbackground").attr("disabled","disabled");
