@@ -103,6 +103,10 @@ function shuffleCards(array){
 }
 
 function initializeGame(numcards){
+  $('.card').css("color","black");
+  $('.card').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
+  $('.card').css("font-family","sans-serif");
+  checkCardBackgrounds();
   initialized = true;
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
   var pairsCleared = 0;
@@ -114,6 +118,7 @@ function initializeGame(numcards){
 		hint0 = $(this).attr('hint');
 		id0 = $(this).attr('id');
 		termID0 = $(this).attr('termID');
+		$(this).css("background-image","none");
 		$(this).css("background-color","yellow");
 		selectTog = true;
 		console.log("Answer:",ans0," Hint:",hint0," TermID:",termID0);
@@ -144,17 +149,78 @@ function initializeGame(numcards){
 				//Shuffle hints on cards
 				$('#'+id0).text(pickHint($('#'+id0).attr('termID')));
 				$('#'+id1).text(pickHint($('#'+id1).attr('termID')));
+				setCardBackground(id0);
 				resetSelections();
 
 			}
-			$('#'+id0).css("background-color","white");
-			$('#'+id1).css("background-color","white");
+			setCardBackground(id0);
+			setCardBackground(id1);
 
 		}else{
-		 $('#'+id0).css("background-color","white");
-		 $('#'+id1).css("background-color","white");
+		 setCardBackground(id0);
+		 setCardBackground(id1);
 		}
 	}
+ });
+}
+
+//Checks and sets card backgrounds based on the user's choice
+function checkCardBackgrounds(){
+ $('#defaultback').each(function() {
+  if(this.selected) {$('.card').css("background-color","white");}
+ });
+ $('#naturalwhite').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/ep_naturalwhite.png)");}
+ });
+ $('#naturalblack').each(function(){
+  if(this.selected) {
+  	$('.card').css("background-image","url(./resources/ep_naturalblack.png)");
+	$('.card').css("color","white");
+  	$('.card').css("text-shadow","2px 0 black, 0 2px black, 2px 0 black, 0 -2px black");
+  }
+ });
+ $('#sayagata').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/sayagata-400px.png)");}
+ });
+ $('#retinawood').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/retina_wood.png");}
+ });
+ $('#circlesround').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/circles-and-roundabouts.png)");}
+ });
+ $('#oldmap').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/old_map.png)");}
+ });
+ $('#skulls').each(function(){
+  if(this.selected) {$('.card').css("background-image","url(./resources/skulls.png)");}
+ });
+}
+
+//Resets the background for a particular card
+function setCardBackground(id){
+ $('#defaultback').each(function() {
+  if(this.selected) {$('#'+id).css("background-color","white");}
+ });
+ $('#naturalwhite').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/ep_naturalwhite.png)");}
+ });
+ $('#naturalblack').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/ep_naturalblack.png)");}
+ });
+ $('#sayagata').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/sayagata-400px.png)");}
+ });
+ $('#retinawood').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/retina_wood.png");}
+ });
+ $('#circlesround').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/circles-and-roundabouts.png)");}
+ });
+ $('#oldmap').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/old_map.png)");}
+ });
+ $('#skulls').each(function(){
+  if(this.selected) {$('#'+id).css("background-image","url(./resources/skulls.png)");}
  });
 }
 
@@ -201,9 +267,9 @@ function makeSqConfig(){
 
 function makeRectConfig(){
   var row, i, j, x;
-  width = 6;
+  width = 7;
 
-  for (i=0; i<3; i++){
+  for (i=0; i<4; i++){
     x = ( width * i);
     row = '<div id="row">';
 
@@ -225,6 +291,7 @@ $(document).ready( function(){
     $("#gameScore").val(0);
 
     checkBoardConfig();
+    $("#cardbackground").attr("disabled","disabled");
   });
 
 
