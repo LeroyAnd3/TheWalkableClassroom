@@ -6,22 +6,35 @@ var paused;
 //A strict requirement of each term requiring >= 2hints is important
 var terms = [
 	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
-	[1,"Pear","Green","Crunchy"],
+	[1,"Pear","Green, not citrus","Crunchy"],
 	[2,"Grape","Purple","Squishy"],
 	[3,"Banana","Yellow","Peel"],
 	[4,"Orange","Orange","Related to tangerine"],
 	[5,"Blueberry","Blue","Berry"],
 	[6,"Blackberry","Black","Also known as mulberry"],
 	[7,"Pineapple","Spikey","Yellow fruit inside"],
-	[8,"Coconut","Brown","Fuzzy and hard"]
+	[8,"Coconut","Brown","Fuzzy and hard"],
+	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
+	[10,"Lime","Resembles a lemon","Green citrus"],
+	[11,"Kiwi","Small and brown","Green fruit with black seeds"],
+	[12,"Raisin","Used to be a grape","Oatmeal and..."],
+	[13,"Avocado","Used in california rolls (sushi)","Native to Mexico"],
+	[14,"Carrot","Often associated with rabbits","Orange vegetable with green stem"],
+	[15,"Mushroom","Can be found in the wild, may be poisonous though","Often used as a pizza topping"],
+	[16,"Spinach","Gives Popeye super strength","Often used in quiches"],
+	[17,"Ghost chili","Alternative name: bhut jolokia","World's hottest (natural) chili pepper"],
+	[18,"Tomato","Biologically a fruit, but taxed as a vegetable","Red when ripe, has green stem"],
+	[19,"Corn","Also known as maize","Often grown in large fields on stalks"],
+	[20,"Cauliflower","A variety of cabbage","The head of the vegetable is a white flower"],
 ];
 
 var cardlist = [];
+var addedCardList = [];
 var clearedCardList = [];
 var score = 0;
 var moveCount=0;
 var streakCount = 0;
-var num = terms.length*2;	//number of cards to be made
+var num;	//number of cards to be made
 var selectTog=false;
 var initialized = false;
 var ans0,ans1,hint0,hint1,id0,id1,litID0,litID1,termID0,termID1;
@@ -37,36 +50,43 @@ class Card{
 }
 
 function checkBoardConfig(){
-  $('#default').each(function() {
-    if (this.selected) {makeRectBoard(num);}
+  $('#rectangle3x4').each(function() {
+    if (this.selected) {if(terms.length>=6){num=12; makeRectBoard(12,3,4);}else{failedToStart();}}
   });
 
-  $('#rectangle').each(function() {
-    if (this.selected) {makeRectBoard(num);}
+  $('#rectangle3x6').each(function(){
+    if(this.selected) {if(terms.length>=9){num=18; makeRectBoard(18,3,6);}else{failedToStart();}}
+  });
+
+  $('#rectangle4x7').each(function(){
+    if(this.selected) {if(terms.length>=14){num=28; makeRectBoard(28,4,7);}else{failedToStart();}}
   });
 
   $('#square').each(function() {
-    if (this.selected) {makeSqConfig();}
+    if (this.selected) {if(terms.length>=8){num=16; makeRectBoard(16,4,4);}else{failedToStart();}}
+  });
+
+  $('#default').each(function() {
+    if (this.selected) {if(terms.length>=9){num=18; makeRectBoard(18,3,6);}else{failedToStart();}}
   });
 }
 
-function makeRectBoard(numcards){
- prepareCards(numcards);
+function makeRectBoard(numcards,rows,columns){
+ prepareCards(rows*columns);
  shuffleCards(cardlist);
  var row,i,j,x;
  var index = 0;
- width = 6;
- for(i=0;i<3;i++){
- 	x = width*i;
+ for(i=0;i<rows;i++){
+ 	x = columns*i;
 	row = '<div id="row">';
-	for(j=0;j<width;j++){
+	for(j=0;j<columns;j++){
 	 row += cardlist[index].div;
 	 index++;
 	}
 	row += '</div>';
 	$('#deck').append(row);
  }
- initializeGame(numcards);
+ initializeGame(rows*columns);
 }
 
 //Create cards for the card list
@@ -74,12 +94,18 @@ function makeRectBoard(numcards){
 function prepareCards(n){
  var i;
  var cardID = 0;
- var itemID = 0;
+ var itemID = getRandomIntInclusive(0,terms.length-1);
  var paired = false;
  var a,b;
  for(i=0;i<n;i++){
  	if(!paired){
-		a = getRandomIntInclusive(2,terms[itemID].length-1); 
+		//Pick a random term from the terms list that hasn't been added
+		while(addedCardList.includes(itemID)) {itemID=getRandomIntInclusive(0,terms.length-1);}
+		//Keep track of terms already added to the game
+		addedCardList.push(itemID);		
+		//Pick a new, random hint from the random term chosen
+		a = getRandomIntInclusive(2,terms[itemID].length-1);
+		//Create the card for this hint
 		var card = new Card(cardID,terms[itemID][1],terms[itemID][a],itemID);
 	} 	
 	if(paired){
@@ -87,7 +113,6 @@ function prepareCards(n){
 		while(a==b){b=getRandomIntInclusive(2,terms[itemID].length-1);}	//prevent a==b (i.e. same hint for same termID)
 		var card = new Card(cardID,terms[itemID][1],terms[itemID][b],itemID);
 	} 	
-	if(paired) itemID++;
 	paired = !paired;
 	cardlist.push(card);
 	cardID++;
@@ -109,6 +134,8 @@ function initializeGame(numcards){
   $('.card').css("color","black");
   $('.card').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
   $('.card').css("font-family","sans-serif");
+  $("#cardbackground").attr("disabled","disabled");
+  $("#play").attr("disabled", "disabled");
   checkCardBackgrounds();
   initialized = true;
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
@@ -315,38 +342,8 @@ function setCardBackground(id){
  });
 }
 
-function makeSqConfig(){
-  var row, i, j, x;
-  width = 3;
-
-  for (i=0; i<width; i++){
-    x = ( width * i);
-    row = '<div id="row">';
-
-    for (j=1; j<(width +1); j++){
-      row += '<div class ="card" id="card' + (x+j) +'">Card ' + (x+j) +'</div>';
-    }
-    row += '</div>';
-    $('#deck').append(row);
-  }
-  initializeGame();
-}
-
-function makeRectConfig(){
-  var row, i, j, x;
-  width = 7;
-
-  for (i=0; i<4; i++){
-    x = ( width * i);
-    row = '<div id="row">';
-
-    for (j=1; j<(width+1); j++){
-      row += '<div class ="card" id="card' + (x+j) +'">Card ' + (x+j) +'</div>';
-    }
-    row += '</div>';
-    $('#deck').append(row);
-  }
-  initializeGame();
+function failedToStart(){
+ alert("Not enough terms...");
 }
 
 $(document).ready( function(){
@@ -354,10 +351,7 @@ $(document).ready( function(){
   $('#play').click( function() {
      paused = 0; // 0 = no, 1 = yes
 
-    $("#play").attr("disabled", "disabled");
-
-    checkBoardConfig();
-    $("#cardbackground").attr("disabled","disabled");
+     checkBoardConfig();
   });
 
 
