@@ -1,0 +1,9 @@
+Troubleshooting Log for Various Issues While Coding:
+=====================================================
+1) The hintFunction() still picked and pushed values that were already in the cleared card list.
+	-Originally, the values pushed into the cleared card list from manually picking cards were stored as strings.  This is because the div atrributes are stored as strings.  However, in the hintFunction, the id values were added as ints (not as strings).  Hence, when trying to check if an element existed in the cleared card list, the program was trying to compare ints and strings.  As such, it never found any of the elements as already contained within the cleared card list.
+
+2) Incorrect noise was never played when matching "Yellow" from "Banana" and "Yellow fruit inside" from "Pineapple".  It also didn't swap their hints.
+	-It turns out that when the hints were being added to the divs in the prepareCards(n) method, any hints that had white space truncated the string to just the first word in the string.  Hence, "Yellow" and "Yellow fruit inside" were both treated as "Yellow".  This caused the program to skip over an entire block of code that's executed when the hints on two cards aren't the same.  The solution was to fix how the hint strings were added as div attributes.  See this link for an example of the solution: http://stackoverflow.com/questions/10003552/javascript-passing-into-a-function-a-string-containing-whitespace-is-truncated-a
+
+

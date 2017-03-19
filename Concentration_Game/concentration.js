@@ -17,13 +17,14 @@ var terms = [
 ];
 
 var cardlist = [];
+var clearedCardList = [];
 var score = 0;
 var moveCount=0;
 var streakCount = 0;
-var num = terms.length*2;
+var num = terms.length*2;	//number of cards to be made
 var selectTog=false;
 var initialized = false;
-var ans0,ans1,hint0,hint1,id0,id1,termID0,termID1;
+var ans0,ans1,hint0,hint1,id0,id1,litID0,litID1,termID0,termID1;
 
 class Card{
         constructor(id,answer,hint,itemid){
@@ -31,7 +32,7 @@ class Card{
         this.answer = answer;
         this.hint = hint;
 	this.itemid = itemid;
-        this.div='<div class ="card" termID ='+itemid+' hint='+hint+'  answer='+answer+'  id="card' +id +'">'+hint+'</div>';
+        this.div='<div class ="card" termID ='+itemid+' hint="'+hint+'"  answer="'+answer+'" literalID = '+id+' id="card' +id +'">'+hint+'</div>';
  }
 }
 
@@ -120,6 +121,7 @@ function initializeGame(numcards){
 		hint0 = $(this).attr('hint');
 		id0 = $(this).attr('id');
 		termID0 = $(this).attr('termID');
+		litID0 = $(this).attr('literalID');
 		$(this).css("background-image","none");
 		$(this).css("background-color","yellow");
 		selectTog = true;
@@ -129,6 +131,7 @@ function initializeGame(numcards){
 		hint1 = $(this).attr('hint');
 		id1 = $(this).attr('id');
 		termID1 = $(this).attr('termID');
+		litID1 = $(this).attr('literalID');
 		console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
 		moveCount++;
@@ -141,6 +144,11 @@ function initializeGame(numcards){
 				//"Remove" the matched pair
 				$('#'+id0).replaceWith(blankdiv);
 				$('#'+id1).replaceWith(blankdiv);
+				//Add the cleared cards to the cleared card list by their literal ID
+				clearedCardList.push(litID0);
+				clearedCardList.push(litID1);
+				//Print the cleared card list
+				console.log(clearedCardList.toString());
 				//Add to the player's score for correct match (includes streak multiplier)
 				score = score + 100 + (50*streakCount);	
 				streakCount++;
@@ -172,7 +180,6 @@ function initializeGame(numcards){
 				$('#gameScore').val(score);
 				$('#streakCounter').val(streakCount);
 				resetSelections();
-
 			}
 			setCardBackground(id0);
 			setCardBackground(id1);
@@ -207,6 +214,45 @@ function resetSelections(){
  hint0 = null; hint1 = null;
  termID0 = null; termID1 = null;
  //console.log("-----Reset choices to null-----");
+}
+
+//Automatically clears a pair of uncleared cards. Checks the cleared card list values
+function hintFunction(){
+ var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+ var i = getRandomIntInclusive(0,num-1);
+ if(clearedCardList.length==num) {console.log("No more hints to clear..."); return;}
+ while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
+ //console.log(clearedCardList.toString());
+ //console.log(i);
+ if(i%2==0){
+ 	$('#card'+i).replaceWith(blankdiv);
+	$('#card'+(i+1)).replaceWith(blankdiv);
+	clearedCardList.push(i.toString()); clearedCardList.push((i+1).toString());
+ }else{
+ 	$('#card'+i).replaceWith(blankdiv);
+	$('#card'+(i-1)).replaceWith(blankdiv);
+	clearedCardList.push(i.toString()); clearedCardList.push((i-1).toString());
+ }
+}
+
+//Automatically solve the entire board
+function solveFunction(){
+ var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+ while(clearedCardList.length!=num){
+ 	var i = getRandomIntInclusive(0,num-1);
+	while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
+	if(i%2==0){
+ 		$('#card'+i).replaceWith(blankdiv);
+		$('#card'+(i+1)).replaceWith(blankdiv);
+		clearedCardList.push(i.toString()); clearedCardList.push((i+1).toString());
+	 }else{
+ 		$('#card'+i).replaceWith(blankdiv);
+		$('#card'+(i-1)).replaceWith(blankdiv);
+		clearedCardList.push(i.toString()); clearedCardList.push((i-1).toString());
+	 }
+ }
+ alert("Auto-solving the board...");
+ console.log(clearedCardList.toString());
 }
 
 //Checks and sets card backgrounds based on the user's choice
@@ -309,7 +355,6 @@ $(document).ready( function(){
      paused = 0; // 0 = no, 1 = yes
 
     $("#play").attr("disabled", "disabled");
-    //$("#gameScore").val(0);
 
     checkBoardConfig();
     $("#cardbackground").attr("disabled","disabled");
@@ -342,6 +387,14 @@ $(document).ready( function(){
       alert("paused is not 0 or 1");
     }
   });
+
+ $('#hint').click(function(){
+ 	if(initialized){hintFunction();}
+ }); 
+
+ $('#solve').click(function(){
+	if(initialized){solveFunction();}
+ });
 
 });
 
