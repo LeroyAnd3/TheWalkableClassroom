@@ -50,7 +50,7 @@ header, footer {
   margin: 0 auto;
 }
 
-button:not(#pause, #restart, #quit, #play) {
+button:not(#pause, #restart, #quit, #play, #hint) {
   height: 25px;
   width: 25px;
   font-weight: 700;
