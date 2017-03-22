@@ -3,8 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Card Maker</title>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyC0l1DWL8cQgrV_X5cMAHazd-MU-XNLQgs",
+	    authDomain: "thewalkableclassroom.firebaseapp.com",
+	    databaseURL: "https://thewalkableclassroom.firebaseio.com",
+	    storageBucket: "thewalkableclassroom.appspot.com",
+	    messagingSenderId: "880340132017"
+	  };
+	  firebase.initializeApp(config);
+	</script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="index.js" type="text/javascript"></script>
+	<script src="script/main.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
@@ -50,7 +64,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint1" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -69,7 +83,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint2" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -88,7 +102,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint3" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -107,7 +121,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint4" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -126,7 +140,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint5" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -145,7 +159,7 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint6" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -163,7 +177,7 @@
               </select>
             </span></button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint7" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
           <button class="accordion">
@@ -181,24 +195,25 @@
             </span>
           </button>
           <div class="panel">
-            <textarea style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
+            <textarea id="hint8" style = "width: 90%; height : 90%; margin : 5px 5px 5px 5px"></textarea>
           </div>
 
         </div>
       </div>
-
+			<div class= "containerFooter">
+		    <button id="deleteButton"> Delete Cards </button>
+		    <button id="findButton"> Look at Cards </button>
+		    <button id="submitButton"> Sumbit Cards </button>
+		  </div>
     </form>
 
     <button class="sideButton"><span>▶</span></button>
   </div>
 
-  <div class= "containerFooter">
-    <button> Delete Cards </button>
-    <button> Look at Cards </button>
-    <button> Sumbit Cards </button>
-  </div>
+
 
 </div>
+
 
 </body>
 </html>
