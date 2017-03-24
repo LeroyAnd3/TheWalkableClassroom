@@ -2,7 +2,7 @@
 'use strict'
 $(document).ready(function(){
   //Shortcuts to DOM Elements
-  alert("in main js");
+  alert("in");
   var category = document.getElementById('category');
   var answer = document.getElementById('answer');
   var hint1 = document.getElementById('hint1');
@@ -16,15 +16,15 @@ $(document).ready(function(){
   var deleteButton = document.getElementById('deleteButton');
   var findButton = document.getElementById('findButton');
   var submitButton = document.getElementById('submitButton');
-
   var hintArray = [];
-  pushHints(hintArray,hint1.val(),hint2.val(),hint3.val(),
-            hint4.val(),hint5.val(),hint6.val(),hint7.val(),hint8.val());
+
 
   submitButton.on('click',function(e){
     alert("submit button worked");
     e.preventDefault();
     alert("submit button worked");
+    pushHints(hintArray,hint1.val(),hint2.val(),hint3.val(),
+              hint4.val(),hint5.val(),hint6.val(),hint7.val(),hint8.val());
     var key = writeNewCategory(category.val());
     writeNewTerm(key,answer.val(),hintArray);
   });
@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 
 //push hints that our not null to an array
-void function pushHints(array[], hint1, hint2, hint3,
+function pushHints(array, hint1, hint2, hint3,
                   hint4, hint5, hint6, hint7, hint8){
       alert("entered push hint function");
       if(!isEmptyObject(hint1))
@@ -72,7 +72,7 @@ function writeNewCategory(category){
   return newCategoryKey;
 }
 
-function writeNewTerm(categoryKey,answer,array[]){
+function writeNewTerm(categoryKey,answer,array){
   //A Term entry
   var termData = {
     term:answer,
