@@ -48,6 +48,7 @@ header, footer {
   float: center;
   border-collapse: collapse;
   margin: 0 auto;
+  display: table;
 }
 
 button:not(#pause, #restart, #quit, #play, #hint, #solve) {
