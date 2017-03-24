@@ -2,7 +2,7 @@
 'use strict'
 $(document).ready(function(){
   //Shortcuts to DOM Elements
-//  alert("in main.js ");
+//  // alert("in main.js ");
   var category = document.getElementById('category');
   var answer = document.getElementById('answer');
   var hint1 = document.getElementById('hint1');
@@ -21,7 +21,7 @@ $(document).ready(function(){
 
   submitButton.addEventListener("click",function(e){
     e.preventDefault();
-  //  alert("submit button worked");
+  //  // alert("submit button worked");
     hintList = pushHints(hint1.value,hint2.value,hint3.value,
               hint4.value,hint5.value,hint6.value,hint7.value,hint8.value);
     createNewTerm(rootRef);
@@ -35,13 +35,13 @@ $(document).ready(function(){
 
     categoryRef.once('value').then(function(categoryKeys){//check if subject exist
       categoryKeys.forEach(function(snapSubjects){
-        alert("in forEach statement");
+        // alert("in forEach statement");
         //console.log(snapSubjects.val().subject);
         var k = snapSubjects.val();
         if(k.subject===category.value){
-          alert("found a matching term");
+          // alert("found a matching term");
           key = snapSubjects.key
-          alert("key: " + key);
+          // alert("key: " + key);
           return pushTerm(key,answer.value,rootRef,hintList);
         }
       });
@@ -59,15 +59,15 @@ $(document).ready(function(){
     if(key===null){//create new category
       key = createNewCategory(rootRef);
     }
-    alert("entered writeNewTerm");
+    // alert("entered writeNewTerm");
     //A Term entry
     var termData = {
       term:answer,
       hint:hintList
     };
     var newTermKey = firebase.database().ref().child("terms").push().key;
-    alert("term key: " + newTermKey);
-    alert("category key: " + key);
+    // alert("term key: " + newTermKey);
+    // alert("category key: " + key);
     //Write the new term's data to the database
     var updates = {};
     updates['/terms/' + newTermKey] = termData;
@@ -77,7 +77,7 @@ $(document).ready(function(){
   }
 
   function createNewCategory(rootRef){
-    alert("entered new category");
+    // alert("entered new category");
     //A category entry
     var categoryData = {
       subject: category.value
@@ -89,13 +89,13 @@ $(document).ready(function(){
     var updates = {};
     updates['/categories/' + newCategoryKey] = categoryData;
     firebase.database().ref().update(updates);
-    alert("end of new category");
+    // alert("end of new category");
     return newCategoryKey;
   }
 
   //push hints that our not null to an array
   function pushHints(h1, h2, h3, h4, h5, h6, h7, h8){
-      //  alert("entered push hint function");
+      //  // alert("entered push hint function");
     var list = {
         hint1:h1,
         hint2:h2,
@@ -107,9 +107,9 @@ $(document).ready(function(){
         hint8:h8
       };
       console.log(list);
-      alert("pause after push hints");
+      // alert("pause after push hints");
     return list;
-    //  alert("end of push hint function. Size: " + array.length);
+    //  // alert("end of push hint function. Size: " + array.length);
 
   }
 
