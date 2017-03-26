@@ -70,8 +70,8 @@ $(document).ready(function(){
     // alert("category key: " + key);
     //Write the new term's data to the database
     var updates = {};
-    updates['/terms/' + newTermKey] = termData;
-    updates['/category-terms/'+ key + '/' + newTermKey]  = termData;
+    updates['/terms/' + answer] = termData;
+    updates['/category-terms/'+ key + '/' + answer]  = termData;
     return firebase.database().ref().update(updates);
 
   }
@@ -87,7 +87,7 @@ $(document).ready(function(){
 
     //Write new category data
     var updates = {};
-    updates['/categories/' + newCategoryKey] = categoryData;
+    updates['/category/' + newCategoryKey] = categoryData;
     firebase.database().ref().update(updates);
     // alert("end of new category");
     return newCategoryKey;
@@ -112,6 +112,5 @@ $(document).ready(function(){
     //  // alert("end of push hint function. Size: " + array.length);
 
   }
-
 
 });
