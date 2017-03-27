@@ -1,5 +1,6 @@
 {
   "projects": {
-    "TWC": "thewalkableclassroom"
+    "TWC": "thewalkableclassroom",
+    "default": "quickstart-f7002"
   }
 }

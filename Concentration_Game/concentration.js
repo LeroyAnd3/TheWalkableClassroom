@@ -4,29 +4,31 @@ var paused;
 
 //Index 0 is the termid, index 1 is the answer, indices > 1 are the hints
 //A strict requirement of each term requiring >= 2hints is important
-var terms = [
-	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
-	[1,"Pear","Green, not citrus","Crunchy"],
-	[2,"Grape","Purple","Squishy"],
-	[3,"Banana","Yellow","Peel"],
-	[4,"Orange","Orange","Related to tangerine"],
-	[5,"Blueberry","Blue","Berry"],
-	[6,"Blackberry","Black","Also known as mulberry"],
-	[7,"Pineapple","Spikey","Yellow fruit inside"],
-	[8,"Coconut","Brown","Fuzzy and hard"],
-	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
-	[10,"Lime","Resembles a lemon","Green citrus"],
-	[11,"Kiwi","Small and brown","Green fruit with black seeds"],
-	[12,"Raisin","Used to be a grape","Oatmeal and..."],
-	[13,"Avocado","Used in california rolls (sushi)","Native to Mexico"],
-	[14,"Carrot","Often associated with rabbits","Orange vegetable with green stem"],
-	[15,"Mushroom","Can be found in the wild, may be poisonous though","Often used as a pizza topping"],
-	[16,"Spinach","Gives Popeye super strength","Often used in quiches"],
-	[17,"Ghost chili","Alternative name: bhut jolokia","World's hottest (natural) chili pepper"],
-	[18,"Tomato","Biologically a fruit, but taxed as a vegetable","Red when ripe, has green stem"],
-	[19,"Corn","Also known as maize","Often grown in large fields on stalks"],
-	[20,"Cauliflower","A variety of cabbage","The head of the vegetable is a white flower"],
-];
+// var terms = [
+// 	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
+// 	[1,"Pear","Green, not citrus","Crunchy"],
+// 	[2,"Grape","Purple","Squishy"],
+// 	[3,"Banana","Yellow","Peel"],
+// 	[4,"Orange","Orange","Related to tangerine"],
+// 	[5,"Blueberry","Blue","Berry"],
+// 	[6,"Blackberry","Black","Also known as mulberry"],
+// 	[7,"Pineapple","Spikey","Yellow fruit inside"],
+// 	[8,"Coconut","Brown","Fuzzy and hard"],
+// 	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
+// 	[10,"Lime","Resembles a lemon","Green citrus"],
+// 	[11,"Kiwi","Small and brown","Green fruit with black seeds"],
+// 	[12,"Raisin","Used to be a grape","Oatmeal and..."],
+// 	[13,"Avocado","Used in california rolls (sushi)","Native to Mexico"],
+// 	[14,"Carrot","Often associated with rabbits","Orange vegetable with green stem"],
+// 	[15,"Mushroom","Can be found in the wild, may be poisonous though","Often used as a pizza topping"],
+// 	[16,"Spinach","Gives Popeye super strength","Often used in quiches"],
+// 	[17,"Ghost chili","Alternative name: bhut jolokia","World's hottest (natural) chili pepper"],
+// 	[18,"Tomato","Biologically a fruit, but taxed as a vegetable","Red when ripe, has green stem"],
+// 	[19,"Corn","Also known as maize","Often grown in large fields on stalks"],
+// 	[20,"Cauliflower","A variety of cabbage","The head of the vegetable is a white flower"],
+// ];
+var terms = []
+getCategoryTerms("Fruits",terms);
 
 var cardlist = [];
 var addedCardList = [];
@@ -102,17 +104,17 @@ function prepareCards(n){
 		//Pick a random term from the terms list that hasn't been added
 		while(addedCardList.includes(itemID)) {itemID=getRandomIntInclusive(0,terms.length-1);}
 		//Keep track of terms already added to the game
-		addedCardList.push(itemID);		
+		addedCardList.push(itemID);
 		//Pick a new, random hint from the random term chosen
 		a = getRandomIntInclusive(2,terms[itemID].length-1);
 		//Create the card for this hint
 		var card = new Card(cardID,terms[itemID][1],terms[itemID][a],itemID);
-	} 	
+	}
 	if(paired){
 		b = getRandomIntInclusive(2,terms[itemID].length-1);
 		while(a==b){b=getRandomIntInclusive(2,terms[itemID].length-1);}	//prevent a==b (i.e. same hint for same termID)
 		var card = new Card(cardID,terms[itemID][1],terms[itemID][b],itemID);
-	} 	
+	}
 	paired = !paired;
 	cardlist.push(card);
 	cardID++;
@@ -167,7 +169,7 @@ function initializeGame(numcards){
 		//It still works after hint swapping for this reason, kind of useful in that sense
 		if(hint0!=hint1){
 			if(ans0==ans1){
-				alert("It's a..."+ans0+"!");	
+				alert("It's a..."+ans0+"!");
 				//"Remove" the matched pair
 				$('#'+id0).replaceWith(blankdiv);
 				$('#'+id1).replaceWith(blankdiv);
@@ -177,7 +179,7 @@ function initializeGame(numcards){
 				//Print the cleared card list
 				console.log(clearedCardList.toString());
 				//Add to the player's score for correct match (includes streak multiplier)
-				score = score + 100 + (50*streakCount);	
+				score = score + 100 + (50*streakCount);
 				streakCount++;
 				resetSelections();
 				//Play sound for correct match
@@ -222,8 +224,8 @@ function initializeGame(numcards){
 //Picks a random hint from a term in the terms array at the specified index
 function pickHint(index){
  var len = terms[index].length-1;
- var pos = Math.round(Math.random()*(len-2));	
- pos = pos+2;	//skip over id and answer fields in the terms list 
+ var pos = Math.round(Math.random()*(len-2));
+ pos = pos+2;	//skip over id and answer fields in the terms list
  console.log("Index:",index," Pos:",pos);
  return terms[index][pos];
 }
@@ -384,11 +386,10 @@ $(document).ready( function(){
 
  $('#hint').click(function(){
  	if(initialized){hintFunction();}
- }); 
+ });
 
  $('#solve').click(function(){
 	if(initialized){solveFunction();}
  });
 
 });
-

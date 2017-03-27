@@ -3,6 +3,6 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "Card_Maker"
+    "public": "Concentration_Game"
   }
 }
