@@ -65,13 +65,13 @@ $(document).ready(function(){
   }
 
   function createNewCategory(rootRef){
-    //A category entry
-    var categoryData = {
-      subject: category.value
-    };
     //Get a new key for a category
     var newCategoryKey = firebase.database().ref().child('categories').push().key
-
+    //A category entry
+    var categoryData = {
+      subject: category.value,
+      key: newCategoryKey
+    };
     //Write new category data
     var updates = {};
     updates['/categories/' + newCategoryKey] = categoryData;
