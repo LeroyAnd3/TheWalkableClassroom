@@ -37,6 +37,9 @@ header, footer {
   border: 3px solid black;
   width: 155px;
   height: 100px;
+  -webkit-transition:-webkit-transform 0.5s;
+  transition:transform 0.5s;
+  background:#FF0;
 }
 
 #row {
@@ -84,4 +87,9 @@ button:not(#pause, #restart, #quit, #play, #hint, #solve) {
 
 .mine {
   text-align: center;
+}
+
+.flipping {
+    transform: translate(0, 20px) rotateY(90deg);
+    -webkit-transform: translate(0, 20px) rotateY(90deg);
 }

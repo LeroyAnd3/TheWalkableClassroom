@@ -36,10 +36,13 @@ var clearedCardList = [];
 var score = 0;
 var moveCount=0;
 var streakCount = 0;
-var num;	//number of cards to be made
+var num;			//number of cards to be made
 var selectTog=false;
 var initialized = false;
+var cardFlipDelay = 500; 	//delay of card flipping in ms
+var isAnimating = false;	//boolean to keep track of whether or not an animation is going on, used for timing
 var ans0,ans1,hint0,hint1,id0,id1,litID0,litID1,termID0,termID1;
+
 
 class Card{
         constructor(id,answer,hint,itemid){
@@ -143,7 +146,8 @@ function initializeGame(numcards){
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
   var pairsCleared = 0;
   $('.card').on('click',function(){
- 	if(!selectTog){
+	if(!isAnimating){
+	 	if(!selectTog){
 		console.log(pickHint(parseInt($(this).attr('termID'))));
 		//Get useful information from the selected card
 		ans0 = $(this).attr('answer');
@@ -161,6 +165,8 @@ function initializeGame(numcards){
 		id1 = $(this).attr('id');
 		termID1 = $(this).attr('termID');
 		litID1 = $(this).attr('literalID');
+		$(this).css("background-image","none");
+		$(this).css("background-color","yellow");
 		console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
 		moveCount++;
@@ -199,10 +205,19 @@ function initializeGame(numcards){
 				//Play sound for wrong match
 				var snd = new Audio("./resources/wrong.wav");
 				snd.play();
-				//Shuffle hints on cards
-				$('#'+id0).text(pickHint($('#'+id0).attr('termID')));
-				$('#'+id1).text(pickHint($('#'+id1).attr('termID')));
-				setCardBackground(id0);
+				//Briefly reveal the answers for the mismatched cards
+				turnCardCSS($('#'+id0),ans0);
+				turnCardCSS($('#'+id1),ans1);
+				//Set timeout operation to handle timing-sensitive functionality
+				setTimeout(function(){
+					//Shuffle the hints on the cards after flipping back over
+					turnCardCSS($('#'+id0),pickHint($('#'+id0).attr('termID')));
+					turnCardCSS($('#'+id1),pickHint($('#'+id1).attr('termID')));
+					setCardBackground(id0);
+					setCardBackground(id1);
+					isAnimating = false;
+				},3*cardFlipDelay)
+				//These operations below the timeout are meant to be done instantenously
 				//Decrement the player's score for wrong match (resets streak multiplier)
 				score = score - 50;
 				streakCount = 0;
@@ -210,15 +225,30 @@ function initializeGame(numcards){
 				$('#streakCounter').val(streakCount);
 				resetSelections();
 			}
-			setCardBackground(id0);
-			setCardBackground(id1);
-
 		}else{
 		 setCardBackground(id0);
 		 setCardBackground(id1);
 		}
 	}
+	}	
+
  });
+}
+
+function turnCardCSS(elem, textToSet){
+ isAnimating = true;
+ var element = elem;
+ var text = textToSet;
+ $(element)
+ 	.addClass("flipping")
+	.bind("transitionend webkittransitionend",function(){
+		$(this)
+			.unbind("transitionend webkittransitionend")
+			.removeClass("flipping")
+	})
+ setTimeout(function(){
+ 	$(element).text(text);
+ },cardFlipDelay)
 }
 
 //Picks a random hint from a term in the terms array at the specified index
