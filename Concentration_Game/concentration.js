@@ -3,7 +3,7 @@
 var paused;
 
 //Index 0 is the termid, index 1 is the answer, indices > 1 are the hints
-//A strict requirement of each term requiring >= 2hints is important
+//Sample data
 // var terms = [
 // 	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
 // 	[1,"Pear","Green, not citrus","Crunchy"],
@@ -15,20 +15,11 @@ var paused;
 // 	[7,"Pineapple","Spikey","Yellow fruit inside"],
 // 	[8,"Coconut","Brown","Fuzzy and hard"],
 // 	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
-// 	[10,"Lime","Resembles a lemon","Green citrus"],
-// 	[11,"Kiwi","Small and brown","Green fruit with black seeds"],
-// 	[12,"Raisin","Used to be a grape","Oatmeal and..."],
-// 	[13,"Avocado","Used in california rolls (sushi)","Native to Mexico"],
-// 	[14,"Carrot","Often associated with rabbits","Orange vegetable with green stem"],
-// 	[15,"Mushroom","Can be found in the wild, may be poisonous though","Often used as a pizza topping"],
-// 	[16,"Spinach","Gives Popeye super strength","Often used in quiches"],
-// 	[17,"Ghost chili","Alternative name: bhut jolokia","World's hottest (natural) chili pepper"],
-// 	[18,"Tomato","Biologically a fruit, but taxed as a vegetable","Red when ripe, has green stem"],
-// 	[19,"Corn","Also known as maize","Often grown in large fields on stalks"],
-// 	[20,"Cauliflower","A variety of cabbage","The head of the vegetable is a white flower"],
+// 	[10,"Lime","Resembles a lemon","Green citrus"]
 // ];
+
 var terms = []
-getCategoryTerms("Fruits",terms);
+getCategoryTerms("Anime",terms);
 
 var cardlist = [];
 var addedCardList = [];
@@ -175,10 +166,17 @@ function initializeGame(numcards){
 		//It still works after hint swapping for this reason, kind of useful in that sense
 		if(hint0!=hint1){
 			if(ans0==ans1){
-				alert("It's a..."+ans0+"!");
+				//CORRECT MATCH: DO THE FOLLOWING
+				//Reveal the matched pair
+				turnCardCSS($('#'+id0),ans0);
+				turnCardCSS($('#'+id1),ans1);
 				//"Remove" the matched pair
-				$('#'+id0).replaceWith(blankdiv);
-				$('#'+id1).replaceWith(blankdiv);
+				setTimeout(function(){
+					$('#'+id0).replaceWith(blankdiv);
+					$('#'+id1).replaceWith(blankdiv);	
+					isAnimating = false;
+				},5*cardFlipDelay)
+				//These operations below the timeout are meant to be done instantenously
 				//Add the cleared cards to the cleared card list by their literal ID
 				clearedCardList.push(litID0);
 				clearedCardList.push(litID1);
@@ -202,6 +200,7 @@ function initializeGame(numcards){
 				$('#gameScore').val(score);
 				$('#streakCounter').val(streakCount);
 			}else{
+				//INCORRECT MATCH: DO THE FOLLOWING
 				//Play sound for wrong match
 				var snd = new Audio("./resources/wrong.wav");
 				snd.play();
@@ -235,6 +234,8 @@ function initializeGame(numcards){
  });
 }
 
+//Flips an elem over and sets its text to the string parameter
+//Designed for divs
 function turnCardCSS(elem, textToSet){
  isAnimating = true;
  var element = elem;
@@ -292,6 +293,10 @@ function hintFunction(){
 	$('#card'+(i-1)).replaceWith(blankdiv);
 	clearedCardList.push(i.toString()); clearedCardList.push((i-1).toString());
  }
+ score = score - 100;
+ streakCount = 0;
+ $('#gameScore').val(score);
+ $('#streakCounter').val(streakCount);
 }
 
 //Automatically solve the entire board
