@@ -137,6 +137,7 @@ function initializeGame(numcards){
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
   var pairsCleared = 0;
   $('.card').on('click',function(){
+  	//Only allow player to click on cards when an animation is not active
 	if(!isAnimating){
 	 	if(!selectTog){
 		console.log(pickHint(parseInt($(this).attr('termID'))));
@@ -316,6 +317,10 @@ function solveFunction(){
 	 }
  }
  alert("Auto-solving the board...");
+ score = -9999;
+ streakCount = -100;
+ $('#gameScore').val(score);
+ $('#streakCounter').val(streakCount);
  console.log(clearedCardList.toString());
 }
 
