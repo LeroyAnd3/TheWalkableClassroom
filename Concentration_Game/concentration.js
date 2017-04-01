@@ -1,6 +1,5 @@
 //Game logic for the concentration game.
 //Author(s): Abby, Chris
-var paused;
 
 //Index 0 is the termid, index 1 is the answer, indices > 1 are the hints
 //Sample data
@@ -18,8 +17,9 @@ var paused;
  	[10,"Lime","Resembles a lemon","Green citrus"]
  ];*/
 
-var terms = []
-getCategoryTerms("Anime",terms);
+var terms = [];
+var topic = "Anime";
+getCategoryTerms(topic,terms);
 
 var cardlist = [];
 var addedCardList = [];
@@ -128,11 +128,8 @@ function shuffleCards(array){
 }
 
 function initializeGame(numcards){
-  $('.card').css("color","black");
-  $('.card').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
-  $('.card').css("font-family","sans-serif");
-  $("#cardbackground").attr("disabled","disabled");
-  $("#play").attr("disabled", "disabled");
+  startGameTimer();
+  setGameDetails();
   checkCardBackgrounds();
   initialized = true;
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
@@ -235,6 +232,24 @@ function initializeGame(numcards){
  });
 }
 
+function setGameDetails(){
+  $('#gametitle').html("Concentration Game: "+topic);
+  $('.card').css("color","black");
+  $('.card').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
+  $('.card').css("font-family","sans-serif");
+  $("#cardbackground").attr("disabled","disabled");
+  $("#play").attr("disabled", "disabled");
+}
+
+function startGameTimer(){
+  jQuery(function ($) {
+     var zero = 0,
+     display = $('#time');
+     startTimer(0, display);
+     document.getElementById('time').style.visibility = 'visible';
+     });
+}
+
 //Flips an elem over and sets its text to the string parameter
 //Designed for divs
 function turnCardCSS(elem, textToSet){
@@ -333,6 +348,7 @@ function hintFunction(){
 }
 
 //Automatically solve the entire board
+//Should allow the player to view the cleared cards somewhere (?)
 function solveFunction(){
  var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
  while(clearedCardList.length!=num){
@@ -354,6 +370,26 @@ function solveFunction(){
  $('#gameScore').val(score);
  $('#streakCounter').val(streakCount);
  console.log(clearedCardList.toString());
+}
+
+//Controls the timer for the game
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+        setInterval(function () {
+	        minutes = parseInt(timer / 60, 10);
+		seconds = parseInt(timer % 60, 10);	
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		display.text(minutes + ":" + seconds);
+		timer++;
+	//	if (--timer < 0) {
+	//        	timer = duration;
+	//	}
+	}, 1000);
+}
+
+function failedToStart(){
+ alert("Not enough terms...");
 }
 
 //Checks and sets card backgrounds based on the user's choice
@@ -416,44 +452,21 @@ function setCardBackground(id){
  });
 }
 
-function failedToStart(){
- alert("Not enough terms...");
-}
-
 $(document).ready( function(){
 
   $('#play').click( function() {
-     paused = 0; // 0 = no, 1 = yes
-
      checkBoardConfig();
   });
 
 
   $('#quit').click( function() {
     $("#play").attr("disabled", "disabled");
-    $("#pause").attr("disabled", "disabled");
     $("#quit").attr("disabled", "disabled");
   });
 
 
   $('#restart').click( function() {
     window.location.reload();
-  });
-
-  $('#pause').click( function() {
-    if (paused == 0) { // in game play
-      // stop timer
-      alert("pausing game");
-      paused = 1;
-    }
-    else if (paused == 1){ // game play is already paused
-      // restart timer
-      alert("resuming game");
-      paused = 0;
-    }
-    else {
-      alert("paused is not 0 or 1");
-    }
   });
 
  $('#hint').click(function(){
