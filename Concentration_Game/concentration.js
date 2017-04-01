@@ -4,19 +4,19 @@ var paused;
 
 //Index 0 is the termid, index 1 is the answer, indices > 1 are the hints
 //Sample data
-// var terms = [
-// 	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
-// 	[1,"Pear","Green, not citrus","Crunchy"],
-// 	[2,"Grape","Purple","Squishy"],
-// 	[3,"Banana","Yellow","Peel"],
-// 	[4,"Orange","Orange","Related to tangerine"],
-// 	[5,"Blueberry","Blue","Berry"],
-// 	[6,"Blackberry","Black","Also known as mulberry"],
-// 	[7,"Pineapple","Spikey","Yellow fruit inside"],
-// 	[8,"Coconut","Brown","Fuzzy and hard"],
-// 	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
-// 	[10,"Lime","Resembles a lemon","Green citrus"]
-// ];
+/* var terms = [
+ 	[0,"Apple","Red","Shiny","Fuji, Golden, Green","Caramelized","58% of these are produced in Washington"],
+ 	[1,"Pear","Green, not citrus","Crunchy"],
+ 	[2,"Grape","Purple","Squishy"],
+ 	[3,"Banana","Yellow","Peel"],
+ 	[4,"Orange","Orange","Related to tangerine"],
+ 	[5,"Blueberry","Blue","Berry"],
+ 	[6,"Blackberry","Black","Also known as mulberry"],
+ 	[7,"Pineapple","Spikey","Yellow fruit inside"],
+ 	[8,"Coconut","Brown","Fuzzy and hard"],
+ 	[9,"Cherry","Flavor of Cheerwine","Small red fruit"],
+ 	[10,"Lime","Resembles a lemon","Green citrus"]
+ ];*/
 
 var terms = []
 getCategoryTerms("Anime",terms);
@@ -33,6 +33,7 @@ var initialized = false;
 var cardFlipDelay = 500; 	//delay of card flipping in ms
 var isAnimating = false;	//boolean to keep track of whether or not an animation is going on, used for timing
 var ans0,ans1,hint0,hint1,id0,id1,litID0,litID1,termID0,termID1;
+var list;
 
 
 class Card{
@@ -139,6 +140,7 @@ function initializeGame(numcards){
   $('.card').on('click',function(){
   	//Only allow player to click on cards when an animation is not active
 	if(!isAnimating){
+		var newUl = document.createElement("ul");
 	 	if(!selectTog){
 		console.log(pickHint(parseInt($(this).attr('termID'))));
 		//Get useful information from the selected card
@@ -147,8 +149,7 @@ function initializeGame(numcards){
 		id0 = $(this).attr('id');
 		termID0 = $(this).attr('termID');
 		litID0 = $(this).attr('literalID');
-		$(this).css("background-image","none");
-		$(this).css("background-color","yellow");
+		setCardToYellow($(this));
 		selectTog = true;
 		console.log("Answer:",ans0," Hint:",hint0," TermID:",termID0);
 	}else{
@@ -157,8 +158,7 @@ function initializeGame(numcards){
 		id1 = $(this).attr('id');
 		termID1 = $(this).attr('termID');
 		litID1 = $(this).attr('literalID');
-		$(this).css("background-image","none");
-		$(this).css("background-color","yellow");
+		setCardToYellow($(this));
 		console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
 		moveCount++;
@@ -253,6 +253,11 @@ function turnCardCSS(elem, textToSet){
  },cardFlipDelay)
 }
 
+function setCardToYellow(elem){
+ $(elem).css("background-image","none");
+ $(elem).css("background-color","yellow");
+}
+
 //Picks a random hint from a term in the terms array at the specified index
 function pickHint(index){
  var len = terms[index].length-1;
@@ -279,19 +284,46 @@ function resetSelections(){
 
 //Automatically clears a pair of uncleared cards. Checks the cleared card list values
 function hintFunction(){
+ //Don't allow hint functionality if an animation is already in progress
+ if(isAnimating) {console.log("Animation in progress, try hint functionality later"); return;}
  var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
  var i = getRandomIntInclusive(0,num-1);
+ var delay1 = 4*cardFlipDelay;
+ var delay2 = 8*cardFlipDelay;
  if(clearedCardList.length==num) {console.log("No more hints to clear..."); return;}
  while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
- //console.log(clearedCardList.toString());
- //console.log(i);
+ isAnimating = true;
  if(i%2==0){
- 	$('#card'+i).replaceWith(blankdiv);
-	$('#card'+(i+1)).replaceWith(blankdiv);
-	clearedCardList.push(i.toString()); clearedCardList.push((i+1).toString());
+	//Highlight the cards about to be cleared
+ 	setCardToYellow($('#card'+i));
+	setCardToYellow($('#card'+(i+1)));
+	//Turn the highlighted cards over to reveal the answer
+	setTimeout(function(){
+		turnCardCSS($('#card'+i),$('#card'+i).attr('answer'));
+		turnCardCSS($('#card'+(i+1)),$('#card'+(i+1)).attr('answer'));
+	},delay1)
+	//Remove the highlighted cards from the playable deck
+	setTimeout(function(){
+		$('#card'+i).replaceWith(blankdiv);
+		$('#card'+(i+1)).replaceWith(blankdiv);
+		isAnimating = false;
+	},delay2)
+ 		clearedCardList.push(i.toString()); clearedCardList.push((i+1).toString());
  }else{
- 	$('#card'+i).replaceWith(blankdiv);
-	$('#card'+(i-1)).replaceWith(blankdiv);
+ 	//Highlight the cards about to be cleared
+	setCardToYellow($('#card'+i));
+	setCardToYellow($('#card'+(i-1)));
+	//Turn the highlighted cards over to reveal the answer
+	setTimeout(function(){
+		turnCardCSS($('#card'+i),$('#card'+i).attr('answer'));
+		turnCardCSS($('#card'+(i-1)),$('#card'+(i-1)).attr('answer'));
+	},delay1)
+	//Remove the highlighted cards from the playable deck
+	setTimeout(function(){
+		$('#card'+i).replaceWith(blankdiv);
+		$('#card'+(i-1)).replaceWith(blankdiv);
+		isAnimating = false;
+	},delay2)
 	clearedCardList.push(i.toString()); clearedCardList.push((i-1).toString());
  }
  score = score - 100;
