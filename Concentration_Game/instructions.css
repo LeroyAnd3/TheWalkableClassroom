@@ -1,0 +1,118 @@
+title{
+   font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
+
+body {
+    background: #98FB9F;
+    font-size: 12pt;
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
+
+#logo {
+  font-size: 35pt;
+  text-align: center;
+  border-bottom: 3px double #000;
+  width: 100%;
+}
+
+#nav {
+  color: #ffffff;
+  font-size: 10pt;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+#textbox {
+  padding: 15px;
+  color: black;
+  background-color: white;
+  clear: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 3px double #000;
+  width: 80%;
+  margin: auto;
+}
+
+#instructions {
+  text-align: left;
+}
+
+#home {
+  color: #000000;
+}
+
+#home:hover {
+  color: #ffffff;
+  text-align: center;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#how {
+  color: #000000;
+}
+
+#how:hover {
+  text-align: center;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#login {
+  color: #000000;
+}
+
+#login:hover {
+  color: #ffffff;
+  text-align: center;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#logout {
+  color: #000000;
+}
+
+#logout:hover {
+  color: #ffffff;
+  text-align: center;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.navigation {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  margin-left; auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: inline-block;
+  margin-left: 350px;
+}
