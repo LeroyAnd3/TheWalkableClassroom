@@ -18,9 +18,9 @@
  ];*/
 
 var terms = [];
-var topic = "Anime";
-getCategoryTerms(topic,terms);
-
+var topic;
+// getCategoryTerms(topic,terms);
+// addCategories();
 var cardlist = [];
 var addedCardList = [];
 var clearedCardList = [];
@@ -171,7 +171,7 @@ function initializeGame(numcards){
 				//"Remove" the matched pair
 				setTimeout(function(){
 					$('#'+id0).replaceWith(blankdiv);
-					$('#'+id1).replaceWith(blankdiv);	
+					$('#'+id1).replaceWith(blankdiv);
 					isAnimating = false;
 				},5*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
@@ -227,7 +227,7 @@ function initializeGame(numcards){
 		 setCardBackground(id1);
 		}
 	}
-	}	
+	}
 
  });
 }
@@ -377,7 +377,7 @@ function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
         setInterval(function () {
 	        minutes = parseInt(timer / 60, 10);
-		seconds = parseInt(timer % 60, 10);	
+		seconds = parseInt(timer % 60, 10);
 		minutes = minutes < 10 ? "0" + minutes : minutes;
 		seconds = seconds < 10 ? "0" + seconds : seconds;
 		display.text(minutes + ":" + seconds);
@@ -452,10 +452,44 @@ function setCardBackground(id){
  });
 }
 
+//Presents the current categories to the user
+function addCategories(){
+  alert("in addCategories");
+  console.log(categories);
+  for(let i=0; i<categories.length;i++){
+    let option = document.createElement("option");
+    let node = document.createTextNode(categories[i]);
+    option.appendChild(node);
+    let element = document.getElementById("categories");
+    element.appendChild(option);
+  }
+}
+
+// function appendCategories(){
+//   alert("in append categories")
+//   console.log(categories);
+//
+//   let option = document.createElement('option');
+//   for(let i=0;i<categories.length;i++){
+//     alert('hi');
+//     console.log("round of appending: " + i);
+//     option.text = categories[i];
+//     category.add(option);
+//   }
+// }
+
 $(document).ready( function(){
+  alert('document ready');
+  appendCategories();
+  let category = document.getElementById('categories');
 
   $('#play').click( function() {
-     checkBoardConfig();
+     topic = category.value;
+     alert(topic);
+     getCategoryTerms(topic,terms);
+     setTimeout(function(){
+       checkBoardConfig();
+     },750)
   });
 
 

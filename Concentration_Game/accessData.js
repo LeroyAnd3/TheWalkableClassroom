@@ -2,7 +2,7 @@
 
 const rootRef = firebase.database().ref();
 const categoryRef = rootRef.child('categories');
-const categoryTermsRef = rootRef.child('category-terms')
+const categoryTermsRef = rootRef.child('category-terms');
 let cardnumber = 0;// the card id in the collection of cards
 
 /*
@@ -31,6 +31,46 @@ function getCategories(categories){
   categoryRef.on('value',snap=>{
     snap.forEach(subject=>{
       categories.push(subject.val().subject);
+    });
+  });
+}
+
+// snap.forEach(subject=>{
+//   console.log(subject.val().subject);
+//   let value = "" + subject.val().subject;
+//   if(value instanceof String){
+//     let option = document.createElement('option');
+//     option.text = value;
+//     category.add(option);
+//   }
+//   else{
+//     alert(typeof text);
+//   }
+// });
+//
+// var subjects = snap.val();
+// var keys = Object.keys(subjects);
+// console.log(keys);
+// for(var i=0; i<keys.length;i++){
+//   var k = keys[i];
+//   var value = subjects[k].subject;
+//   var option = document.createElement('option');
+//   cate
+// }
+//creates a list of topics for the user to pick from to play
+function appendCategories(){
+  categoryRef.on('value',snap=>{
+    snap.forEach(subject=>{
+      // console.log(subject.val().subject);
+      let value = String(subject.val().subject);
+      let category = document.getElementById('categories');
+      console.log(value, typeof value);
+
+        //alert("inside of if statement");
+        let option = document.createElement('option');
+        option.text = value;
+        category.add(option);
+
     });
   });
 }
