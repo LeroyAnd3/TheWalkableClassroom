@@ -1,0 +1,53 @@
+<html>
+  <head>
+      <meta charset="UTF-8">
+    	<title>The Flippable Classroom</title>
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+      <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+    	<script>
+    	  // Initialize Firebase
+    	  var config = {
+    	    apiKey: "AIzaSyC0l1DWL8cQgrV_X5cMAHazd-MU-XNLQgs",
+    	    authDomain: "thewalkableclassroom.firebaseapp.com",
+    	    databaseURL: "https://thewalkableclassroom.firebaseio.com",
+    	    storageBucket: "thewalkableclassroom.appspot.com",
+    	    messagingSenderId: "880340132017"
+    	  };
+    	  firebase.initializeApp(config);
+    	</script>
+    	<script src="accessData.js" type="text/javascript"></script>
+      <script src="concentration.js" type="text/javascript"></script>
+    	<link rel="stylesheet" type="text/css" href="concentration.css" />
+
+      <script src="data.js" type="text/javascript"></script>
+      <script src="starter.js" type="text/javascript"></script>
+      <script src="collection.js" type="text/javascript"></script>
+      <script src="catalogue.js" type="text/javascript"></script>
+      <script src="maker.js" type="text/javascript"></script>
+      <script src="instructions.js" type="text/javascript"></script>
+      <script src="game.js" type="text/javascript"></script>
+      <script src="viewController.js" type="text/javascript"></script>
+      <script src="index.js" type="text/javascript"></script>
+
+    	<link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+
+      <div id="header">
+        <span id="greetings_tag">
+          Welcome back, Leroy!
+        </span>
+        <span id="header_title">
+          The Flippable Classroom
+        </span>
+        <button style="visibility: hidden" id="header_button2">FOWARD➞</button>
+        <button style="visibility: hidden" id="header_button1">⬅BACK</button>
+      </div>
+
+      <div id="view"></div>
+
+    </div>
+  </body>
+</html>
