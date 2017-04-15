@@ -47,7 +47,7 @@ function renderModal() {
   return (
     '<div class="modal">'+
       '<div id="deckMaker">'+
-        '<button class="deckModalXButton">'+
+        '<button id="submitCategory" class="deckModalXButton">'+
           'X'+
         '</button>'+
         renderSubjectInput() +
@@ -100,3 +100,9 @@ function deleteDeck(deckId) {
 //     return deck.id === Number(data.selectedDeck);
 //   })[0] || {cardIds:[]};
 // }
+
+$('#view').on('click','submitCategory',function(){
+  alert("listened to click");
+  console.log($('#subjectInput').val(selectedDeck.subject));
+  //createCategory($('#subjectInput').val(selectedDeck.subject));
+});
