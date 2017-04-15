@@ -8,7 +8,7 @@ function renderModalButton() {
 
 function renderTermInput() {
   var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCard);
+    return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
   return (
     '<div>'+
@@ -19,9 +19,9 @@ function renderTermInput() {
 }
 
 function renderHintList() {
-
+  $('.modal').css('display', 'block');
   var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCard);
+    return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
 
   return (
@@ -75,7 +75,7 @@ function renderHint(number, card) {
 
 function updateCardTerm() {
   var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCard);
+    return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
   selectedCard.term = $('#termInput').val();
   renderHintList();
@@ -83,7 +83,7 @@ function updateCardTerm() {
 
 function updateCardHint() {
   var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCard);
+    return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
   selectedCard.hints[0] = $('#hint1').val();
   selectedCard.hints[1] = $('#hint2').val();
@@ -107,7 +107,7 @@ function addCard() {
   );
   data.selectedCard = data.cardNumber;
   var deck = data.decks.filter(function(deck){
-    return deck.id === Number(data.selectedDeck);
+    return deck.id === Number(data.selectedDeckId);
   })[0] || {cardIds:[]};
   deck.cardIds.push(data.cardNumber);
   data.cardNumber++;
@@ -141,7 +141,7 @@ function renderCardCatalogue() {
   $view.html('');
 
   var deckToUse = data.decks.filter(function(deck){
-    return deck.id === Number(data.selectedDeck);
+    return deck.id === Number(data.selectedDeckId);
   })[0] || {cardIds:[]};
 
   var cardsToUse = data.cards.filter(function(card){

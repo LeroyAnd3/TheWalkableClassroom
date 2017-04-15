@@ -26,7 +26,7 @@ $(document).ready(function() {
   $('#header_button2').click(function() {
     switch (data.view) {
       case 1:
-        if(data.selectedDeck >= 0)
+        if(data.selectedDeckId >= 0)
           data.view = 2;
         else
           alert("You must choose a deck first");
@@ -125,18 +125,17 @@ $(document).ready(function() {
     'click',
     '.deckCard',
     function(){
-      $('.modal').css('display', 'block');
-      data.selectedCard = Number(this.id);
-      renderHintList();
+      // $('.modal').css('display', 'block');
+      // data.selectedCardId = Number(this.id);
+      setCardId(Number(this.id));
+      // renderHintList();
     }
   );
-  $('#view').on(
-    'click',
-    '.cardDiv',
-    function(e){
-      $('.modal').css('display', 'block');
-      data.selectedDeck = Number(this.id);
-      renderModal();
-    }
-  );
+  // $('#view').on(
+  //   'click',
+  //   '.cardDiv',
+  //   function(e){
+  //     setDeckId(Number(this.id));
+  //   }
+  // );
 });

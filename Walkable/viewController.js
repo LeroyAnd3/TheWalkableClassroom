@@ -1,5 +1,5 @@
 function renderView() {
-  // console.log(data);
+  // console.log(data.decks);
   switch (data.view) {
     case 0:
       renderStartScreen();

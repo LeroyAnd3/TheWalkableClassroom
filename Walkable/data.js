@@ -48,6 +48,8 @@ var data = {
 
   hints: [],
   hintCount: 0,
+
+  view: 0,
 };
 
 /** HELPER FUNCTIONS **/
@@ -65,20 +67,26 @@ function addDeck() {
     subject: '',
     cardIds: []
   });
+  data.selectedDeckId = data.deckCount;
   data.deckCount = data.deckCount + 1;
+  renderDeckCollection();
+  $('.modal').css('display', 'block');
 }
 function deleteDeck(id) {
   data.decks = data.decks.filter(function(deck) {
     return deck.selectedDeckId !== deck.id;
   });
 }
-function updateDeck(id, subject) {
+function updateDeckSubject() {
   for(var i = 0; i < data.decks.length; i++)
-    if(data.decks[i].id === id)
-      data.decks[i].subject = subject;
+    if(data.decks[i].id === data.selectedDeckId) {
+        data.decks[i].subject = $('#subjectInput').val();
+        renderModal();
+    }
 }
 function setDeckId(id) {
   data.selectedDeckId = id;
+  renderModal();
 }
 function submitDeck() {
   var deck = data.decks.filter(function(deck) {
@@ -100,6 +108,11 @@ function submitDeck() {
     });
     return C;
   }, []);
+}
+function getDeckById(id) {
+  return data.decks.filter(function(deck) {
+    return deck.id === id;
+  })[0] || {cardIds:[]};
 }
 function getSubject(id) {
   var deck = data.decks.filter(function(deck) {
@@ -141,6 +154,7 @@ function updateCard(id, term) {
 }
 function setCardId(id) {
   data.selectedCardId = id;
+  renderHintList();
 }
 function submitCard() {
   var card = getCard(data.selectedCardId);
