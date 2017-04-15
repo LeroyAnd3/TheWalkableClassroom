@@ -64,13 +64,7 @@ $(document).ready(function() {
 
   });
 
-  $('#view').on(
-    'click',
-    '#addDiv button',
-    function(){
-      addDeck();
-    }
-  );
+
   $('#view').on(
     'click',
     '.xButton',
@@ -82,20 +76,6 @@ $(document).ready(function() {
     }
   );
 
-  $('#view').on(
-    'click',
-    '#addCardDiv button',
-    function(){
-      addCard();
-    }
-  );
-  $('#view').on(
-    'click',
-    '.xCardButton',
-    function() {
-      deleteCard(this.id);
-    }
-  );
 
   $('#view').on(
     'click',
@@ -121,21 +101,15 @@ $(document).ready(function() {
     }
   );
 
-  $('#view').on(
-    'click',
-    '.deckCard',
-    function(){
-      // $('.modal').css('display', 'block');
-      // data.selectedCardId = Number(this.id);
-      setCardId(Number(this.id));
-      // renderHintList();
-    }
-  );
   // $('#view').on(
   //   'click',
-  //   '.cardDiv',
-  //   function(e){
-  //     setDeckId(Number(this.id));
+  //   '.deckCard',
+  //   function(){
+  //     // $('.modal').css('display', 'block');
+  //     // data.selectedCardId = Number(this.id);
+  //     setCardId(Number(this.id));
+  //     // renderHintList();
   //   }
   // );
+
 });

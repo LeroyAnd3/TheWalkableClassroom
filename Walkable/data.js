@@ -131,6 +131,7 @@ function addCard() {
     term: '',
     hintIds: new Array(8)
   };
+
   for(var i = 0; i < newCard.hintIds.length; i++){
     newCard.hintIds[i] = data.hintCount;
     data.hints.push({
@@ -139,18 +140,29 @@ function addCard() {
     });
     data.hintCount = data.hintCount + 1;
   }
+
   data.cards.push(newCard);
+  data.selectedCardId = data.cardCount;
   data.cardCount = data.cardCount + 1;
+  renderCardCatalogue();
+  $('.modal').css('display', 'block');
 }
-function deleteCard(id) {
-  data.cards = data.cards.filter(function(card) {
-    return card.selectedCardId !== card.id;
+function deleteCard(e) {
+  e.stopPropagation();
+  var id = e.target.id;
+
+  data.cards = data.cards.filter(function(card){
+    return card.id !== Number(id);
   });
+  card.selectedCardId = -1;
+  renderCardCatalogue();
 }
-function updateCard(id, term) {
-  for(var i = 0; i < data.cards.length; i++)
-    if(data.cards[i].id === id)
-      data.cards[i].term = term;
+function updateCardTerm(id, term) {
+  var selectedCard = data.cards.filter(function(card){
+    return card.id === Number(data.selectedCardId);
+  })[0] || {hints:[]};
+  selectedCard.term = $('#termInput').val();
+  renderHintList();
 }
 function setCardId(id) {
   data.selectedCardId = id;
@@ -180,7 +192,7 @@ function updateHint(id, text) {
     if(data.hints[i].id === id)
       data.hints[i].text = text;
 }
-function getHint(id) {
+function getHintById(id) {
   return data.hints.filter(function(hint) {
     return hint.id === id;
   })[0];

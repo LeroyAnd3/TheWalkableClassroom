@@ -29,7 +29,7 @@ function renderDeckCollection() {
   }
 
   $('#view').append(
-    '<div id="addDiv">'+
+    '<div id="addDiv" onclick=addDeck()>'+
       '<button id="addButton">'+
         '+'+
       '</button>'+

@@ -73,14 +73,6 @@ function renderHint(number, card) {
   );
 }
 
-function updateCardTerm() {
-  var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCardId);
-  })[0] || {hints:[]};
-  selectedCard.term = $('#termInput').val();
-  renderHintList();
-}
-
 function updateCardHint() {
   var selectedCard = data.cards.filter(function(card){
     return card.id === Number(data.selectedCardId);
@@ -97,30 +89,7 @@ function updateCardHint() {
   renderHintList();
 }
 
-function addCard() {
-  data.cards.push(
-    {
-      id: data.cardNumber,
-      term: '',
-      hints: ['','','','','','','','']
-    }
-  );
-  data.selectedCard = data.cardNumber;
-  var deck = data.decks.filter(function(deck){
-    return deck.id === Number(data.selectedDeckId);
-  })[0] || {cardIds:[]};
-  deck.cardIds.push(data.cardNumber);
-  data.cardNumber++;
-  renderCardCatalogue();
-  $('.modal').css('display', 'block');
-}
 
-function deleteCard(cardId) {
-  data.cards = data.cards.filter(function(card){
-    return card.id !== Number(cardId);
-  });
-  renderCardCatalogue();
-}
 
 function equalsOne(id, arr = []) {
   for(var i = 0; i < arr.length; i++)
@@ -149,14 +118,15 @@ function renderCardCatalogue() {
   });
 
   for(card of cardsToUse) {
-      let hintsCreated = card.hints.reduce(function(sum, hint){
+      let hintsCreated = card.hintIds.reduce(function(sum, hintId){
+        let hint = getHintById(hintId);
         if(hint !== '' && hint != undefined) return sum + 1;
         return sum;
       }, 0);
       $view.append(
-        '<div class="deckCardDiv">'+
+        '<div class="deckCardDiv" onclick= setCardId(' + Number(card.id) + ')>'+
           '<div id=' + `${card.id}` + ' class="deckCard">'+
-          '<div style="float:right;"><button class="xCardButton" id=' + `${card.id}`+'>x</button></div>'+
+          '<div style="float:right;"><button class="xCardButton" onclick=deleteCard(event) id=' + `${card.id}`+'>x</button></div>'+
             'Term:'+
             '<br></br>'+
             `${card.term}`+
@@ -169,7 +139,7 @@ function renderCardCatalogue() {
   }
 
   $view.append(
-    '<div id="addCardDiv">'+
+    '<div id="addCardDiv" onclick= addCard()>'+
       '<button id="addCardButton">'+
         '+'+
       '</button>'+
@@ -186,4 +156,5 @@ function renderCardCatalogue() {
       '</div>'+
     '</div>'
   );
+
 };
