@@ -1,0 +1,129 @@
+
+body {
+    background: #DCDCDC ;
+    font-size: 12pt;
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
+
+#space1 {
+  padding: 20px;
+}
+#space2 {
+  padding: 35px;
+}
+#space3 {
+  padding: 50px;
+}
+
+#logo {
+  font-size: 35pt;
+  text-align: left;
+  width: 100%;
+  border-top: 5px double #000;
+  border-bottom: 5px double #000;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  background: url('./resources/map_cropped.jpeg') no-repeat;
+  background-size: 100%;
+}
+
+#nav {
+  color: #ffffff;
+  font-size: 10pt;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#home {
+  color: #000000;
+}
+
+#home{
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#how {
+  color: #000000;
+}
+
+#how:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+#play {
+  color: #000000;
+}
+
+#play:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#login {
+  color: #000000;
+}
+
+#login:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#logout {
+  color: #000000;
+}
+
+#logout:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.navigation {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  margin-left; auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: inline-block;
+  margin-left: 350px;
+}
