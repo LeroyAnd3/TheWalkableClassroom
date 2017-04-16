@@ -47,7 +47,7 @@ function renderModal() {
   return (
     '<div class="modal">'+
       '<div id="deckMaker">'+
-        '<button id="submitCategory" class="deckModalXButton">'+
+        '<button onclick="callCreateCategory()" class="deckModalXButton">'+
           'X'+
         '</button>'+
         renderSubjectInput() +
@@ -101,8 +101,8 @@ function deleteDeck(deckId) {
 //   })[0] || {cardIds:[]};
 // }
 
-$('#view').on('click','submitCategory',function(){
+function callCreateCategory(){
   alert("listened to click");
   console.log($('#subjectInput').val(selectedDeck.subject));
   //createCategory($('#subjectInput').val(selectedDeck.subject));
-});
+}
