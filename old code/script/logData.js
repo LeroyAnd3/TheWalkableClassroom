@@ -15,6 +15,9 @@ $(document).ready(function(){
   var deleteButton = document.getElementById('deleteButton');
   var findButton = document.getElementById('findButton');
   var submitButton = document.getElementById('submitButton');
+  var moveCount = document.getElementById('moveCounter');
+  var score = document.getElementById('gameScore');
+  var streak = document.getElementById('streakCounter');
   var hintList = {};
   const rootRef = firebase.database().ref();
 

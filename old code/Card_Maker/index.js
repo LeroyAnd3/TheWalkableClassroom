@@ -1,3 +1,24 @@
+var testObject = {
+  make: "take",
+  rake: "bake"
+};
+
+localStorage.setItem(
+  'test',
+  JSON.stringify(testObject)
+);
+
+testObject = {
+  make: "take",
+  rake: "steak"
+};
+
+localStorage.setItem(
+  'test1',
+  JSON.stringify(testObject)
+);
+
+
 $(document).ready(function(){
   $('.accordion').click(function (e) {
     var className = ''
