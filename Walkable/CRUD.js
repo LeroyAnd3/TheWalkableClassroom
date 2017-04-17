@@ -58,26 +58,48 @@ function addDecksFromDB(data){
 //Undo section
 
 //delete section
-function removeCategory(category,id){
-  findKey(category)
-         .then(function(key){
-           console.log(key)
-         });
+//delete section
+function removeCategory(key,id){
+  alert("in remove Category");
+  alert(key);
+    var categoryRef = firebase.database().ref('categories/'+key);
+    var categoryTermsRef = firebase.database().ref('category-terms/'+key);
+
+    categoryRef.remove()
+      .then(function(){
+        console.log("Remove category successful!");
+        deleteDeck(id);
+      })
+      .catch(function(error){
+        console.log("Remove category failed: " + error.message);
+      });
+
+      categoryTermsRef.remove()
+        .then(function(){
+          console.log("Remove caetgory-terms successful!");
+        })
+        .catch(function(error){
+          console.log("Remove category-term failed: " + error.message);
+        });
 
   }
 
 //helper functions
-function findKey(category){
-  return new Promise(function(resolve,reject){
-    var categoryRef = rootRef.child('categories')
-                             .orderByChild('subject')
-                             .equalTo(category);
-    categoryRef.once('child_added')
-      .then(function(snapShot){
-        return snapShot.val().key;
-      })
-      .catch(function(error){
-        console.log("Failed to find key " + error.message);
+
+function findKey(value,call ,id){
+  var categoryRef = rootRef.child('categories')
+                           .orderByChild('subject')
+                           .equalTo(value)
+
+  categoryRef.once('child_added')
+    .then(function(data){
+      switch(call){
+        case 0:
+          removeCategory(data.val().key,id);
+          break;
+      }
+    })
+    .catch(function(error){
+      console.log("Failed to find key " + error.message);
       });
-  });
 }

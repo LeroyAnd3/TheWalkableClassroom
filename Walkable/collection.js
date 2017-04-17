@@ -123,5 +123,5 @@ function callRemoveCategory(){
   let object = $('#subjectInput').val(selectedDeck.subject);
   let id = selectedDeck.id;
   let value = object[0].value; //value of category
-  removeCategory(value,id);
+  findKey(value,0,id);
 }
