@@ -14,7 +14,7 @@ function renderDeckCollection() {
         '<div class="card1">'+
           '<div class="card2">'+
             '<div class="card3" style= ' + `${(deck.id === data.selectedDeckId)? "background-color:yellow": ""}`+ '>'+
-            '<div style="float:right;"><button onclick="callDeleteCategory()" class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
+            '<div style="float:right;"><button onclick="callRemoveCategory()" class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
               'Subject:'+
               '<br></br>'+
               `${deck.subject}`+
@@ -118,8 +118,7 @@ function callCreateCategory(){
  createCategory(value,id);
 }
 
-function callDeleteCategory(){
-  alert("in callDeleteCategory");
+function callRemoveCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
   let id = selectedDeck.id;

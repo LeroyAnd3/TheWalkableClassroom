@@ -1,42 +1,33 @@
 
 
 //Create section
-function createCategory(value,id){ //create a new caetgory
-  //alert("made it to createCategory");
-  var exist = false;
-  var categoryRef = rootRef.child('categories').orderByKey();
+function createCategory(value,id){ //create a new category
+  var categoryRef = rootRef.child('categories')
+                           .orderByChild("subject")
+                           .equalTo(value);
   categoryRef.once('value')
-  .then(function(categoryKeys){//check if subject exist
-    categoryKeys.forEach(function(snapSubjects){
-      var k = snapSubjects.val();
-      if(k.subject===value){
-        alert("Category already exist");
-        exist = true;
-        return deleteDeck(id);
-      }
-    });
-  })
-  .then(function(){
-    if(exist){//prevent promise
-      return false;
+  .then(function(snapShot){//check if subject exist
+    if(snapShot.exists()){
+      alert("This category already exist");
+      deleteDeck(id);
+    }else{
+      //A category entry
+      var newCategoryKey = rootRef.child('categories').push().key;
+      var categoryData = {
+        subject: value,
+        key:newCategoryKey,
+        count: 0
+      };
+      //Write new category data
+      var updates = {};
+      updates['/categories/' + newCategoryKey] = categoryData;
+      return rootRef.update(updates);
     }
-    var newCategoryKey = rootRef.child('categories').push().key
-    //A category entry
-    var categoryData = {
-      subject: value,
-      key: newCategoryKey,
-      count: 0
-    };
-    //Write new category data
-    var updates = {};
-    updates['/categories/' + newCategoryKey] = categoryData;
-    return rootRef.update(updates);
-
   },function(error){
       //something went wrong
       console.error(error);
       alert("Unable to create new category");
-      return deleteDeck(id);
+      deleteDeck(id);
     });
 }
 
@@ -45,12 +36,19 @@ function createTerm(category,term){
 }
 
 //Read section
-function addDecks(){
+function addDecksFromDB(data){
   var categoryRef = rootRef.child('categories').orderByChild('subject');
   categoryRef.once('value')
     .then(function(snapShot){
       snapShot.forEach(function(childSnapShot){
-
+        var k = childSnapShot.val();
+        data.decks.push({
+          id:data.deckCount,
+          subject:k.subject,
+          cardIds:[]
+        });
+        data.selectedCardId=data.deckCount;
+        data.selectedCardId=data.deckCount+1;
       });
     })
     .catch(function(error){
@@ -60,7 +58,9 @@ function addDecks(){
 //Undo section
 
 //delete section
+//delete section
 function removeCategory(key,id){
+
     var categoryRef = firebase.database().ref('categories/'+key);
     var categoryTermsRef = firebase.database().ref('category-terms/'+key);
 
@@ -86,7 +86,6 @@ function removeCategory(key,id){
 //helper functions
 
 function findKey(value,call ,id){
-
   var categoryRef = rootRef.child('categories')
                            .orderByChild('subject')
                            .equalTo(value)
@@ -97,6 +96,7 @@ function findKey(value,call ,id){
       switch(call){
         case 0:
           removeCategory(data.val().key,id);
+          break;
       }
     })
     .catch(function(error){
