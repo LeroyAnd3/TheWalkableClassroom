@@ -9,7 +9,7 @@ function createCategory(value,id){ //create a new category
   .then(function(snapShot){//check if subject exist
     if(snapShot.exists()){
       alert("This category already exist");
-      return deleteDeck(id);
+      deleteDeck(id);
     }else{
       //A category entry
       var newCategoryKey = rootRef.child('categories').push().key;
@@ -27,7 +27,7 @@ function createCategory(value,id){ //create a new category
       //something went wrong
       console.error(error);
       alert("Unable to create new category");
-      return deleteDeck(id);
+      deleteDeck(id);
     });
 }
 
@@ -58,44 +58,26 @@ function addDecksFromDB(data){
 //Undo section
 
 //delete section
-function removeCategory(key,id){
-
-    var categoryRef = firebase.database().ref('categories/'+key);
-    var categoryTermsRef = firebase.database().ref('category-terms/'+key);
-
-    categoryRef.remove()
-      .then(function(){
-        console.log("Remove category successful!");
-        deleteDeck(id);
-      })
-      .catch(function(error){
-        console.log("Remove category failed: " + error.message);
-      });
-
-      categoryTermsRef.remove()
-        .then(function(){
-          console.log("Remove caetgory-terms successful!");
-        })
-        .catch(function(error){
-          console.log("Remove category-term failed: " + error.message);
-        });
+function removeCategory(category,id){
+  findKey(category)
+         .then(function(key){
+           console.log(key)
+         });
 
   }
 
 //helper functions
-function findKey(category,call,id){
-  var categoryRef = rootRef.child('categories')
-                           .orderByChild('subject')
-                           .equalTo(category);
-  categoryRef.once('child_added')
-    .then(function(snapShot){
-      switch(call){
-        case 0:
-          removeCategory(snapShot.val().key,id);
-          break;
-      }
-    })
-    .catch(function(error){
-      console.log("Failed to find key " + error.message);
-    });
+function findKey(category){
+  return new Promise(function(resolve,reject){
+    var categoryRef = rootRef.child('categories')
+                             .orderByChild('subject')
+                             .equalTo(category);
+    categoryRef.once('child_added')
+      .then(function(snapShot){
+        return snapShot.val().key;
+      })
+      .catch(function(error){
+        console.log("Failed to find key " + error.message);
+      });
+  });
 }

@@ -74,7 +74,7 @@ function addDeck() {
 }
 
 //read from the database and push current decks
-addDecksFromDB(data);
+//addDecksFromDB(data);
 
 function deleteDeck(id) {
   data.decks = data.decks.filter(function(deck) {
