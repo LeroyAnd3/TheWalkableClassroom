@@ -72,6 +72,10 @@ function addDeck() {
   renderDeckCollection();
   $('.modal').css('display', 'block');
 }
+
+//read from the database and push current decks
+addDecksFromDB(data);
+
 function deleteDeck(id) {
   data.decks = data.decks.filter(function(deck) {
     return deck.selectedDeckId !== deck.id;
