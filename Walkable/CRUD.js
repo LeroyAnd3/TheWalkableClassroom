@@ -85,16 +85,19 @@ function removeCategory(key,id){
 
 //helper functions
 
-function findKey(value, id){
+function findKey(value,call ,id){
 
-  var categoryRef = rootRef.child('categories').orderByChild('subject').equalTo(value).limitToFirst(1);
+  var categoryRef = rootRef.child('categories')
+                           .orderByChild('subject')
+                           .equalTo(value)
+                           .limitToFirst(1);
 
-  categoryRef.once('value')
+  categoryRef.once('child_added')
     .then(function(data){
-      data.forEach(function(data2){
-        var object = data2.val();
-        removeCategory(object.key,id);
-      });
+      switch(call){
+        case 0:
+          removeCategory(data.val().key,id);
+      }
     })
     .catch(function(error){
       console.log("Failed to find key " + error.message);
