@@ -28,7 +28,7 @@ function getCategoryTerms(category,cardColllection){
 //fill an array with they current subjects available
 //categories is array to hold the results
 function getCategories(categories){
-  categoryRef.on('value',snap=>{
+  categoryRef.once('value',snap=>{
     snap.forEach(subject=>{
       categories.push(subject.val().subject);
     });

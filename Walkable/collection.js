@@ -14,7 +14,7 @@ function renderDeckCollection() {
         '<div class="card1">'+
           '<div class="card2">'+
             '<div class="card3" style= ' + `${(deck.id === data.selectedDeckId)? "background-color:yellow": ""}`+ '>'+
-            '<div style="float:right;"><button class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
+            '<div style="float:right;"><button onclick="callDeleteCategory()" class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
               'Subject:'+
               '<br></br>'+
               `${deck.subject}`+
@@ -27,6 +27,8 @@ function renderDeckCollection() {
       '</div>'
     );
   }
+
+
 
   $('#view').append(
     '<div id="addDiv" onclick=addDeck()>'+
@@ -102,7 +104,25 @@ function deleteDeck(deckId) {
 // }
 
 function callCreateCategory(){
-  alert("listened to click");
-  console.log($('#subjectInput').val(selectedDeck.subject));
-  //createCategory($('#subjectInput').val(selectedDeck.subject));
+  let selectedDeck = getDeckById(data.selectedDeckId);
+  let object = $('#subjectInput').val(selectedDeck.subject);
+  let id = selectedDeck.id;
+  let value = object[0].value; //value of category
+  if(value === null || value.length === 0 || value === "undefine"){
+    alert("The value for category is blank." +
+          " Please enter a name for this deck");
+    deleteDeck(id);
+    return false;
+  }
+  //console.log(value);
+ createCategory(value,id);
+}
+
+function callDeleteCategory(){
+  alert("in callDeleteCategory");
+  let selectedDeck = getDeckById(data.selectedDeckId);
+  let object = $('#subjectInput').val(selectedDeck.subject);
+  let id = selectedDeck.id;
+  let value = object[0].value; //value of category
+  findKey(value,id);
 }
