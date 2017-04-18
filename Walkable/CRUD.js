@@ -69,6 +69,7 @@ function addCardsFromDB(data){
           let query2 = categoryTermsRef.child(snap.key);//get terms from category
             query2.once('value',snap => {
                 snap.forEach(term => {
+                  deck.cardIds.push(data.cardCount);
                   let hint = [];
                   let k = term.val();
                   pushHint(hint,k.hint);
