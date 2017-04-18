@@ -1,8 +1,6 @@
 //retrieve a set a terms for a category
 
-const rootRef = firebase.database().ref();
-const categoryRef = rootRef.child('categories');
-const categoryTermsRef = rootRef.child('category-terms')
+
 let cardnumber = 0;// the card id in the collection of cards
 
 /*

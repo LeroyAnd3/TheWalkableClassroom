@@ -103,6 +103,7 @@ function deleteDeck(deckId) {
 //   })[0] || {cardIds:[]};
 // }
 
+//helper function for CRUD
 function callCreateCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
@@ -118,10 +119,17 @@ function callCreateCategory(){
  createCategory(value,id);
 }
 
+//helper function for CRUD
 function callRemoveCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
   let id = selectedDeck.id;
   let value = object[0].value; //value of category
-  findKey(value,0,id);
+  findKey(value)
+  .then(function(key){
+    return removeCategory(key,id)
+  })
+  .catch(function(error){
+    console.log(error.message);
+  });
 }
