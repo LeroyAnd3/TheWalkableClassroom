@@ -1,34 +1,18 @@
+title{
+   font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
 
 body {
-    background: #DCDCDC ;
+    background: #BCF8BC;
     font-size: 12pt;
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-#space1 {
-  padding: 20px;
-}
-#space2 {
-  padding: 35px;
-}
-#space3 {
-  padding: 50px;
 }
 
 #logo {
   font-size: 35pt;
-  text-align: left;
+  text-align: center;
+  border-bottom: 3px double #000;
   width: 100%;
-  border-top: 5px double #000;
-  border-bottom: 5px double #000;
-  height: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-  background: url('./resources/map_cropped.jpeg') no-repeat;
-  background-size: 100%;
 }
 
 #nav {
@@ -37,29 +21,35 @@ body {
   text-align: center;
   padding-right: 10px;
   padding-left: 10px;
-  padding-top: 10px;
+  padding-top: 20px;
   padding-bottom: 20px;
   width: 100%;
-  margin-top: 5px;
+}
+
+#textbox {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: white;
+  clear: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 3px double #000;
+  width: 80%;
+  margin: auto;
+}
+
+#instructions {
+  text-align: left;
 }
 
 #home {
   color: #000000;
 }
 
-#home{
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#create {
-  color: #000000;
-}
-
-#create:hover {
+#home:hover {
   color: #000000;
   text-align: center;
   border: 2px solid #000000;
@@ -71,12 +61,12 @@ body {
   color: #000000;
 }
 
-#how:hover {
-  color: #000000;
+#how {
   text-align: center;
   border: 2px solid #000000;
   border-radius: 10px;
   padding: 5px;
+  color: #000000;
   text-decoration: none;
 }
 
