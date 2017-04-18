@@ -1,0 +1,27 @@
+body {
+    background: #DCDCDC ;
+    font-size: 12pt;
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.deckStack {
+  text-align: center;
+    height: 150px;
+    width: 130px;
+    border: 1px solid #000;
+    border-radius: 15px;
+}
+
+.card1 {
+  
+}
+
+.card2 {
+
+}
+
+.card3 {
+
+}
