@@ -47,8 +47,9 @@ function addDecksFromDB(data){
           subject:k.subject,
           cardIds:[]
         });
-        data.selectedCardId=data.deckCount;
-        data.selectedCardId=data.deckCount+1;
+        console.log(data.deckCount);
+        data.selectedDeckId=data.deckCount;
+        data.deckCount=data.deckCount+1;
       });
     })
     .catch(function(error){
