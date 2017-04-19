@@ -107,6 +107,7 @@ function deleteDeck(deckId) {
 function callCreateCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
+  console.log(selectedDeck.subject);
   let id = selectedDeck.id;
   let value = object[0].value; //value of category
   if(value === null || value.length === 0 || value === "undefine"){

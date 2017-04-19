@@ -124,3 +124,73 @@
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Apr 19 2017 16:02:47 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Apr 19 2017 16:19:35 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Apr 19 2017 16:39:24 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Apr 19 2017 16:40:00 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.5.0
+[debug] Platform:     win32
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Apr 19 2017 16:54:30 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000

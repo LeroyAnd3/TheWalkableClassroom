@@ -203,10 +203,14 @@ function getHintById(id) {
 //read from the database and push current decks and associated terms
 addDecksFromDB(data)
   .then(function(){
-    return addCardsFromDB(data);
+      for (deck of data.decks){
+        console.log(deck.subject);
+        findKey(deck.subject)
+          .then(function(key){
+            addCardsFromDB(key,deck,data);
+          });
+      }
   })
   .catch(function(error){
     console.log(error);
   });
-
-  console.log(data);

@@ -61,46 +61,86 @@ function addDecksFromDB(data){
   });
 }
 
-function addCardsFromDB(data){
-  return new Promise(function(resolve,reject){
-    for(deck of data.decks){
-    //  console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
-      let query = categoryRef.orderByChild('subject').equalTo(deck.subject);
-        query.once('child_added',snap => {//get key from category
-          let query2 = categoryTermsRef.child(snap.key);//get terms from category
-            query2.once('value',snap => {
-                snap.forEach(term => {
-                  deck.cardIds.push(data.cardCount);
-                  let hint = [];
-                  let k = term.val();
-                  pushHint(hint,k.hint);
+// function addCardsFromDB(data){
+//   return new Promise(function(resolve,reject){
+//     for(deck of data.decks){
+//     //  console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
+//       let query = categoryRef.orderByChild('subject').equalTo(deck.subject);
+//         query.once('child_added',snap => {//get key from category
+//           let query2 = categoryTermsRef.child(snap.key);//get terms from category
+//             query2.once('value',snap => {
+//                 snap.forEach(term => {
+//                   deck.cardIds.push(data.cardCount);
+//                   let hint = [];
+//                   let k = term.val();
+//                   pushHint(hint,k.hint);
+//
+//                   let newCard = {
+//                   id: data.cardCount,
+//                   term: k.term,
+//                   hintIds: new Array(8)
+//                 };
+//
+//               for(var i = 0; i < hint.length; i++){
+//                   newCard.hintIds[i] = data.hintCount;
+//                   data.hints.push({
+//                     id: data.hintCount,
+//                     text: hint[i]
+//                   });
+//                   data.hintCount = data.hintCount + 1;
+//                 }
+//                 console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
+//                 console.log(newCard.term);
+//               data.cards.push(newCard);
+//               data.selectedCardId = data.cardCount;
+//               data.cardCount = data.cardCount + 1;
+//              });
+//           });
+//        });
+//        resolve();
+//       }
+//     });
+//   }
 
-                  let newCard = {
-                  id: data.cardCount,
-                  term: k.term,
-                  hintIds: new Array(8)
-                };
+function addCardsFromDB(key,selectedDeck,data){
+  return new Promise(function(resolve, reject) {
+    let query = categoryTermsRef.orderByKey().equalTo(key);
+    query.once('value')
+    .then(function(snapShot){
+      return snapShot.forEach(function(childSnapShot){
+                          deck.cardIds.push(data.cardCount);
+                          let hint = [];
+                          let k = childSnapShot.val();
+                          console.log(k);
+                          pushHint(hint,k.hint);
 
-              for(var i = 0; i < hint.length; i++){
-                  newCard.hintIds[i] = data.hintCount;
-                  data.hints.push({
-                    id: data.hintCount,
-                    text: hint[i]
-                  });
-                  data.hintCount = data.hintCount + 1;
-                }
-                console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
-                console.log(newCard.term);
-              data.cards.push(newCard);
-              data.selectedCardId = data.cardCount;
-              data.cardCount = data.cardCount + 1;
-             });
-          });
-       });
-       resolve();
-      }
+                          let newCard = {
+                          id: data.cardCount,
+                          term: k.term,
+                          hintIds: new Array(8)
+                        };
+
+                      for(var i = 0; i < hint.length; i++){
+                          newCard.hintIds[i] = data.hintCount;
+                          data.hints.push({
+                            id: data.hintCount,
+                            text: hint[i]
+                          });
+                          data.hintCount = data.hintCount + 1;
+                        }
+                        console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
+                        console.log(newCard.term);
+                      data.cards.push(newCard);
+                      data.selectedCardId = data.cardCount;
+                      data.cardCount = data.cardCount + 1;
+      })
+    })
+    .catch(function(error){
+      reject(error);
     });
-  }
+  });
+
+}
 
 function getCategoryTerms(category,cardColllection){
     cardnumber=0; //reset cardnumber for the next set of terms
@@ -214,7 +254,7 @@ function findKey(category){
                              .equalTo(category);
     categoryRef.once('child_added')
       .then(function(snapShot){
-        if(snapShot.exist()){
+        if(snapShot.exists()){
         let key = snapShot.val().key_category;
         resolve(key);
         }
