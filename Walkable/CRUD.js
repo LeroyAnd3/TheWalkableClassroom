@@ -17,7 +17,7 @@ function createCategory(value,id){ //create a new category
       let newCategoryKey = rootRef.child('categories').push().key;
       let categoryData = {
         subject: value,
-        key:newCategoryKey,
+        key_category:newCategoryKey,
         count: 0
       };
       //Write new category data
@@ -34,7 +34,7 @@ function createCategory(value,id){ //create a new category
 }
 
 function createTerm(category,term){
-
+  //TODO
 }
 
 //Read section
@@ -64,6 +64,7 @@ function addDecksFromDB(data){
 function addCardsFromDB(data){
   return new Promise(function(resolve,reject){
     for(deck of data.decks){
+    //  console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
       let query = categoryRef.orderByChild('subject').equalTo(deck.subject);
         query.once('child_added',snap => {//get key from category
           let query2 = categoryTermsRef.child(snap.key);//get terms from category
@@ -77,7 +78,7 @@ function addCardsFromDB(data){
                   let newCard = {
                   id: data.cardCount,
                   term: k.term,
-                  hintIds: []
+                  hintIds: new Array(8)
                 };
 
               for(var i = 0; i < hint.length; i++){
@@ -88,13 +89,15 @@ function addCardsFromDB(data){
                   });
                   data.hintCount = data.hintCount + 1;
                 }
-
+                console.log("Subject: " + deck.subject + ",ID: "+ deck.id);
+                console.log(newCard.term);
               data.cards.push(newCard);
               data.selectedCardId = data.cardCount;
               data.cardCount = data.cardCount + 1;
              });
           });
        });
+       resolve();
       }
     });
   }
@@ -123,7 +126,31 @@ function getCategories(categories){
     });
   });
 }
+
 //Update section
+function updateCategory(oldName,newName){
+  return new Promise(function(resolve, reject){
+    findKey(oldName)
+    .then(function(key){
+      categoryRef.orderByChild('key').equalTo(key);
+      categoryRef.once('child_added')
+        .then(function(snapShot){
+          let k = snapShot.val();
+          k.subject = newName;
+          let update = {};
+          update['/categories/'+key] = k;
+          return rootRef.update(update);
+        })
+        .catch(function(error){
+          reject(error);
+        });
+    });
+  });
+}
+
+function updateCategoryTerms(){
+  //TODO
+}
 
 //delete section
 
@@ -141,6 +168,10 @@ function removeCategory(key,id){
         reject("Remove category failed: " + error.message);
       });
   });
+}
+
+function removeCategoryTerm(){
+  //TODO
 }
 
 //helper functions
@@ -183,8 +214,13 @@ function findKey(category){
                              .equalTo(category);
     categoryRef.once('child_added')
       .then(function(snapShot){
-        let key = snapShot.val().key;
+        if(snapShot.exist()){
+        let key = snapShot.val().key_category;
         resolve(key);
+        }
+        else{
+          reject("Could not find " + category+ " key");
+        }
       })
       .catch(function(error){
         reject(error);
