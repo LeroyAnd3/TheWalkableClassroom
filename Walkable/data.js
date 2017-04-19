@@ -72,6 +72,7 @@ function addDeck() {
   renderDeckCollection();
   $('.modal').css('display', 'block');
 }
+
 function deleteDeck(id) {
   data.decks = data.decks.filter(function(deck) {
     return deck.selectedDeckId !== deck.id;
@@ -162,11 +163,16 @@ function updateCardTerm(id, term) {
     return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
   selectedCard.term = $('#termInput').val();
-  renderHintList();
+  renderCardModal();
 }
 function setCardId(id) {
   data.selectedCardId = id;
-  renderHintList();
+}
+function editCard(e){
+  console.log(e.target.name);
+  setCardId(
+    e.target.name);
+  renderCardModal();
 }
 function submitCard() {
   var card = getCard(data.selectedCardId);
@@ -181,13 +187,16 @@ function submitCard() {
     subject: getSubject(data.selectedDeckId)
   };
 }
-function getCard(id) {
+function getCardById(id) {
   return data.cards.filter(function(card) {
     return card.id === id;
-  })[0];
+  })[0] || {hintIds: []};
 }
 
-function updateHint(id, text) {
+function updateHint(e) {
+  console.log(e);
+  var id = e.target.id;
+  var text = e.target.text;
   for(var i = 0; i < data.hints.length; i++)
     if(data.hints[i].id === id)
       data.hints[i].text = text;
@@ -197,3 +206,15 @@ function getHintById(id) {
     return hint.id === id;
   })[0];
 }
+
+
+//read from the database and push current decks and associated terms
+addDecksFromDB(data)
+  .then(function(){
+    return addCardsFromDB(data);
+  })
+  .catch(function(error){
+    console.log(error);
+  });
+
+  console.log(data);

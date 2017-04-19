@@ -1,42 +1,35 @@
-
-
+const rootRef = firebase.database().ref();
+const categoryRef = rootRef.child('categories');
+const categoryTermsRef = rootRef.child('category-terms');
+let cardnumber = 0;// the card id in the collection of cards
 //Create section
-function createCategory(value,id){ //create a new caetgory
-  //alert("made it to createCategory");
-  var exist = false;
-  var categoryRef = rootRef.child('categories').orderByKey();
+function createCategory(value,id){ //create a new category
+  let categoryRef = rootRef.child('categories')
+                           .orderByChild("subject")
+                           .equalTo(value);
   categoryRef.once('value')
-  .then(function(categoryKeys){//check if subject exist
-    categoryKeys.forEach(function(snapSubjects){
-      var k = snapSubjects.val();
-      if(k.subject===value){
-        alert("Category already exist");
-        exist = true;
-        return deleteDeck(id);
-      }
-    });
-  })
-  .then(function(){
-    if(exist){//prevent promise
-      return false;
+  .then(function(snapShot){//check if subject exist
+    if(snapShot.exists()){
+      alert("This category already exist");
+      deleteDeck(id);
+    }else{
+      //A category entry
+      let newCategoryKey = rootRef.child('categories').push().key;
+      let categoryData = {
+        subject: value,
+        key:newCategoryKey,
+        count: 0
+      };
+      //Write new category data
+      let updates = {};
+      updates['/categories/' + newCategoryKey] = categoryData;
+      return rootRef.update(updates);
     }
-    var newCategoryKey = rootRef.child('categories').push().key
-    //A category entry
-    var categoryData = {
-      subject: value,
-      key: newCategoryKey,
-      count: 0
-    };
-    //Write new category data
-    var updates = {};
-    updates['/categories/' + newCategoryKey] = categoryData;
-    return rootRef.update(updates);
-
   },function(error){
       //something went wrong
       console.error(error);
       alert("Unable to create new category");
-      return deleteDeck(id);
+      deleteDeck(id);
     });
 }
 
@@ -45,58 +38,201 @@ function createTerm(category,term){
 }
 
 //Read section
-function addDecks(){
-  var categoryRef = rootRef.child('categories').orderByChild('subject');
-  categoryRef.once('value')
-    .then(function(snapShot){
-      snapShot.forEach(function(childSnapShot){
-
-      });
-    })
-    .catch(function(error){
-      console.log(error.message);
-    });
-}
-//Undo section
-
-//delete section
-function removeCategory(key,id){
-    var categoryRef = firebase.database().ref('categories/'+key);
-    var categoryTermsRef = firebase.database().ref('category-terms/'+key);
-
-    categoryRef.remove()
-      .then(function(){
-        console.log("Remove category successful!");
-        deleteDeck(id);
+function addDecksFromDB(data){
+  return new Promise(function(resolve,reject){
+    let categoryRef = rootRef.child('categories').orderByChild('subject');
+    categoryRef.once('value')
+      .then(function(snapShot){
+        snapShot.forEach(function(childSnapShot){
+          let k = childSnapShot.val();
+          data.decks.push({
+            id:data.deckCount,
+            subject:k.subject,
+            cardIds:[]
+          });
+          data.selectedDeckId = data.deckCount;
+          data.deckCount = data.deckCount + 1;
+        });
+        resolve();
       })
       .catch(function(error){
-        console.log("Remove category failed: " + error.message);
+        reject(error);
       });
+  });
+}
 
-      categoryTermsRef.remove()
-        .then(function(){
-          console.log("Remove caetgory-terms successful!");
-        })
-        .catch(function(error){
-          console.log("Remove category-term failed: " + error.message);
-        });
+function addCardsFromDB(data){
+  return new Promise(function(resolve,reject){
+    for(deck of data.decks){
+      let query = categoryRef.orderByChild('subject').equalTo(deck.subject);
+        query.once('child_added',snap => {//get key from category
+          let query2 = categoryTermsRef.child(snap.key);//get terms from category
+            query2.once('value',snap => {
+                snap.forEach(term => {
+                  deck.cardIds.push(data.cardCount);
+                  let hint = [];
+                  let k = term.val();
+                  pushHint(hint,k.hint);
 
+                  let newCard = {
+                  id: data.cardCount,
+                  term: k.term,
+                  hintIds: []
+                };
+
+              for(var i = 0; i < hint.length; i++){
+                  newCard.hintIds[i] = data.hintCount;
+                  data.hints.push({
+                    id: data.hintCount,
+                    text: hint[i]
+                  });
+                  data.hintCount = data.hintCount + 1;
+                }
+
+              data.cards.push(newCard);
+              data.selectedCardId = data.cardCount;
+              data.cardCount = data.cardCount + 1;
+             });
+          });
+       });
+      }
+    });
   }
 
+function getCategoryTerms(category,cardColllection){
+    cardnumber=0; //reset cardnumber for the next set of terms
+    let query = categoryRef.orderByChild('subject').equalTo(category);
+    query.once('child_added',snap => {//get key from category
+      let query2 = categoryTermsRef.child(snap.key);//get terms from category
+        query2.once('value',snap => {
+            snap.forEach(term => {
+              let card = []
+              let k = term.val();
+              makeCard(card,cardColllection,k.id,k.hint,k.term);
+      });
+    });
+  });
+}
+
+//fill an array with the current subjects available
+//categories is array to hold the results
+function getCategories(categories){
+  categoryRef.once('value',snap=>{
+    snap.forEach(subject=>{
+      categories.push(subject.val().subject);
+    });
+  });
+}
+//Update section
+
+//delete section
+
+function removeCategory(key,id){
+  return new Promise(function(resolve,reject){
+    let remove = {};
+    remove['/categories/'+key] = null;
+    remove['/category-term/'+key] = null;
+    rootRef.update(remove)
+      .then(function(){
+        deleteDeck(id);
+        resolve("Remove category successful!");
+      })
+      .catch(function(error){
+        reject("Remove category failed: " + error.message);
+      });
+  });
+}
+
 //helper functions
+function makeCard(card,cardArray,id,list,term){
+  card.push(cardnumber);
+  cardnumber++;
+  card.push(term);
+  if(getHint1(list)){
+    card.push(getHint1(list));
+  }
+  if(getHint2(list)){
+    card.push(getHint2(list));
+  }
+  if(getHint3(list)){
+    card.push(getHint3(list));
+  }
+  if(getHint4(list)){
+    card.push(getHint4(list));
+  }
+  if(getHint5(list)){
+    card.push(getHint5(list));
+  }
+  if(getHint6(list)){
+    card.push(getHint6(list));
+  }
+  if(getHint7(list)){
+    card.push(getHint7(list));
+  }
+  if(getHint8(list)){
+    card.push(getHint8(list));
+  }
+  cardArray.push(card);
 
-function findKey(value, id){
+}
 
-  var categoryRef = rootRef.child('categories').orderByChild('subject').equalTo(value).limitToFirst(1);
-
-  categoryRef.once('value')
-    .then(function(data){
-      data.forEach(function(data2){
-        var object = data2.val();
-        removeCategory(object.key,id);
+function findKey(category){
+  return new Promise(function(resolve,reject){
+    let categoryRef = rootRef.child('categories')
+                             .orderByChild('subject')
+                             .equalTo(category);
+    categoryRef.once('child_added')
+      .then(function(snapShot){
+        let key = snapShot.val().key;
+        resolve(key);
+      })
+      .catch(function(error){
+        reject(error);
       });
-    })
-    .catch(function(error){
-      console.log("Failed to find key " + error.message);
-      });
+  });
+}
+
+function pushHint(hint,hintObject){
+
+    hint.push(getHint1(hintObject));
+    hint.push(getHint2(hintObject));
+    hint.push(getHint3(hintObject));
+    hint.push(getHint4(hintObject));
+    hint.push(getHint5(hintObject));
+    hint.push(getHint6(hintObject));
+    hint.push(getHint7(hintObject));
+    hint.push(getHint8(hintObject));
+
+}
+
+function getHint1(hintObject){
+  return hintObject.hint1;
+}
+
+function getHint2(hintObject){
+  return hintObject.hint2;
+}
+
+function getHint3(hintObject){
+  return hintObject.hint3;
+}
+
+function getHint4(hintObject){
+  return hintObject.hint4;
+}
+
+function getHint5(hintObject){
+  return hintObject.hint5;
+}
+
+function getHint6(hintObject){
+  return hintObject.hint6;
+}
+
+function getHint7(hintObject){
+  return hintObject.hint7;
+}
+
+function getHint8(hintObject){
+  return hintObject.hint8;
 }

@@ -1,3 +1,14 @@
+function renderCardModal(){
+  return (
+    '<div id="cardMaker">'+
+      renderModalButton() +
+      '<br></br>'+
+      renderTermInput() +
+      renderHintList() +
+    '</div>'+
+  )
+}
+
 function renderModalButton() {
   return (
     '<button class="cardModalXButton">'+
@@ -10,6 +21,7 @@ function renderTermInput() {
   var selectedCard = data.cards.filter(function(card){
     return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
+  console.log(data.selectedCardId);
   return (
     '<div>'+
       '<label style="display: block;">Term:</label>'+
@@ -20,9 +32,7 @@ function renderTermInput() {
 
 function renderHintList() {
   $('.modal').css('display', 'block');
-  var selectedCard = data.cards.filter(function(card){
-    return card.id === Number(data.selectedCardId);
-  })[0] || {hints:[]};
+  var selectedCard = getCardById(data.selectedCardId);
 
   return (
     '<div>'+
@@ -45,15 +55,16 @@ function renderHintList() {
 
 function renderHint(number, card) {
   var $hint = $('#hint'+number)
-  var hints = card.hints || [];
+  var formerhint = getHintById(card.hintIds[number - 2] || -1) || {text: ''};
+  var hint = getHintById(card.hintIds[number - 1]) || {text: ''};
+
   $hint.val('');
-  $hint.val(''+hints[number-1]);
-  // let display = (hints[number-1] === '' || hints[number-1] === undefined)? 'none' : 'block';
-  // $hint.parent().css('display', display)
-  let disabled = (hints[number-2] === '' && number > 1)? true: false;
+  $hint.val(hint.text);
+  let disabled = (number !== 1 && formerhint.text === '')? 'disabled': '';
+
   return (
     '<div class="hint">'+
-      '<button class="hintButton">'+
+      '<button class="hintButton" '  + disabled + '>'+
         `<span style="float: left;">Hint #${number}</span>`+
         '<select style="float: right;" class="typeSelect">'+
           '<option key = "name">Name</option>'+
@@ -66,7 +77,7 @@ function renderHint(number, card) {
         '</select>'+
       '</button>'+
       '<div class="hintDropdown" style="">'+
-        '<textarea onkeyup="updateCardHint('+`${card.id}`+')" id=' + `hint${number}` + ' cols="125" rows="5">'+
+        '<textarea onkeyup="updateHint(event)" id=' + `hint${number}` + ' cols="125" rows="5">'+
         '</textarea>'+
       '</div>'+
     '</div>'
@@ -133,6 +144,8 @@ function renderCardCatalogue() {
             '<br></br>'+
             'Hints Created:'+
             hintsCreated+
+            '<br></br>'+
+            '<button name=' + Number(card.id) + ' onclick=editCard(event)>Edit Card</button>' +
           '</div>'+
         '</div>'
       );
@@ -148,12 +161,7 @@ function renderCardCatalogue() {
 
   $view.append(
     '<div class="modal">'+
-      '<div id="cardMaker">'+
-          renderModalButton() +
-          '<br></br>'+
-          renderTermInput() +
-          renderHintList() +
-      '</div>'+
+      renderCardModal()+
     '</div>'
   );
 

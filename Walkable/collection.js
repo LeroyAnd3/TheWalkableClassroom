@@ -14,7 +14,7 @@ function renderDeckCollection() {
         '<div class="card1">'+
           '<div class="card2">'+
             '<div class="card3" style= ' + `${(deck.id === data.selectedDeckId)? "background-color:yellow": ""}`+ '>'+
-            '<div style="float:right;"><button onclick="callDeleteCategory()" class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
+            '<div style="float:right;"><button onclick="callRemoveCategory()" class="xButton" id=' + `${deck.id}`+'>x</button></div>'+
               'Subject:'+
               '<br></br>'+
               `${deck.subject}`+
@@ -103,6 +103,7 @@ function deleteDeck(deckId) {
 //   })[0] || {cardIds:[]};
 // }
 
+//helper function for CRUD
 function callCreateCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
@@ -118,11 +119,17 @@ function callCreateCategory(){
  createCategory(value,id);
 }
 
-function callDeleteCategory(){
-  alert("in callDeleteCategory");
+//helper function for CRUD
+function callRemoveCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
   let object = $('#subjectInput').val(selectedDeck.subject);
   let id = selectedDeck.id;
   let value = object[0].value; //value of category
-  findKey(value,id);
+  findKey(value)
+  .then(function(key){
+    return removeCategory(key,id)
+  })
+  .catch(function(error){
+    console.log(error.message);
+  });
 }
