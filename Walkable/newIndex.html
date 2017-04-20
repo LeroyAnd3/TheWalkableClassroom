@@ -1,0 +1,75 @@
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>The Flippable Classroom</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  </head>
+
+  <body>
+    <div id="header">
+      <div id="logo"> <!-- Green: #BCF8BC; -->
+        <span id="space1"></span>The<br>
+        <span id="space2"></span>Flippable<br>
+        <span id="space3"></span>Classroom
+      </div>
+
+      <div id="nav">
+        <a class="navigation" href="index.html" id="home">Home</a>
+        <a class="navigation" href="create.html" id="create">Create Content</a>
+        <a class="navigation" href="instructions.html" id="how">How to Play</a>
+        <a class="navigation" href="concentration.html" id="play">Play Game</a>
+        <a class="navigation" href="login.html" id="login">Login</a>
+        <a class="navigation" href="logout.html" id="logout">Logout</a> <!-- end session and send to login page -->
+      </div>
+
+      <div class="hidden" id="view-1">1</div>
+      <div class="hidden" id="view-2">2</div>
+      <div class="hidden" id="view-3">3</div>
+      <div class="hidden" id="view-4">4</div>
+      <div class="hidden" id="view-5">
+
+        <div id="addDeckButton" class="deckStack">
+          <div class="card1" style="background: #F5F5F5;">
+            <div class="card2" style="background: #F5F5F5;">
+              <div class="card3" style="background: #F5F5F5;">
+                <br>Want to create<br> a new deck?<br>
+                <button>Click to Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="hidden" id="view-6">
+        <div class="card">
+          <br><span>data 1</span><br>
+          <span>data 2</span><br>
+          <button class="editButton">Edit</button>
+        </div>
+
+
+        <div class="card" style="background: #F5F5F5;">
+          <br>Want to create<br>a new card?<br>
+          <button class="createNew">Click to Create</button>
+        </div>
+
+      </div>
+      <div class="hidden" id="view-7">7</div>
+      <div class="hidden" id="view-8">8</div>
+
+      <div style="text-align:center;">
+        <button style="inline" id="button-1" value="1">button1</button>
+        <button style="inline" id="button-2" value="2">button2</button>
+        <button style="inline" id="button-3" value="3">button3</button>
+        <button style="inline" id="button-4" value="4">button4</button>
+        <button style="inline" id="button-5" value="5">button5</button>
+        <button style="inline" id="button-6" value="6">button6</button>
+        <button style="inline" id="button-7" value="7">button7</button>
+        <button style="inline" id="button-8" value="8">button8</button>
+      </div>
+
+  </body>
+  <script src="testData.js" type="text/javascript"></script>
+</html>
