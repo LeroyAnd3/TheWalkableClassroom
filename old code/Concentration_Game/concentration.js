@@ -485,11 +485,9 @@ $(document).ready( function(){
 
   $('#play').click( function() {
      topic = category.value;
-     alert(topic);
      getCategoryTerms(topic,terms);
      setTimeout(function(){
        checkBoardConfig();
-     },750)
   });
 
 
