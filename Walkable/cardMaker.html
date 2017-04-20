@@ -7,59 +7,94 @@
   </head>
 
   <body>
-    <div id="header">
-      <div id="logo"> <!-- Green: #BCF8BC; -->
-        <span id="space1"></span>The<br>
-        <span id="space2"></span>Flippable<br>
-        <span id="space3"></span>Classroom
-      </div>
+    <!-- VIEW below -->
 
-      <div id="nav">
-        <a class="navigation" href="index.html" id="home">Home</a>
-        <a class="navigation" href="create.html" id="create">Create Content</a>
-        <a class="navigation" href="instructions.html" id="how">How to Play</a>
-        <a class="navigation" href="concentration.html" id="play">Play Game</a>
-        <a class="navigation" href="login.html" id="login">Login</a>
-        <a class="navigation" href="logout.html" id="logout">Logout</a> <!-- end session and send to login page -->
-      </div>
+    <div class="topPane">
+      <div class="pageTitle">Card Maker</div>
     </div>
 
-    <div class="pageTitle">Card Maker</div>
+    <div class="container">
 
-    <!-- VIEW -->
-    <div class="leftSpacer"></div>
+      <div class="leftSideB"></div>
 
-    <div class="flexBox">
       <div class="leftHalf">
         <div class="subject">
-          <span>Subject:</span>
+          <span class="subject">Subject:</span>
           <span>[SUBJECT]</span>
         </div>
 
         <div class="term">
           <span>Term:</span>
-          <input></input>
+          <input style="width: 156px;"></input>
         </div>
 
+
         <div class="saveButtons">
-          <button>Save Changes</button>
-          <button>Delete</button>
+            <button class="cardMakerButtons"> Save Changes </button>
+            <button class="cardMakerButtons"> Delete Card </button>
         </div>
       </div>
+
       <div class="rightHalf">
+        <div class="hintListTitle" style="text-align: center; margin: 5px; font-size:13pt;">Hint List:</div>
         <div class="hintList">
           <div class="scrollable">
-            <div>
-              <button class="wholeWidth">Hint #x</button>
-              <textarea></textarea>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
             </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
+            <div class="indvHint">
+              <button class="hintButton">Hint #x</button><br>
+              <textarea class="hintText"></textarea>
+            </div>
+
           </div>
         </div>
       </div>
+
+      <div class="rightSideB"></div>
+
+      <div class="bottomPane">
+        <div class="saveButtons">
+          <button class="cardMakerButtons" style="float: left; margin-left:10px; margin-bottom:10px; margin-top:10px;"> Previous Card </button>
+          <button class="cardMakerButtons" style="float: right; margin-right:10px; margin-bottom:10px; margin-top:10px;"> Next Card </button>
+        </div>
+      </div>
+
     </div>
-
-    <div class="rightSpacer"></div>
-
+    <!-- VIEW ABOVE ^^^^ -->
     <div class="extraSpace"></div>
 
   </body>
