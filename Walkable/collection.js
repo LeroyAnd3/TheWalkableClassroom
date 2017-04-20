@@ -20,7 +20,7 @@ function renderDeckCollection() {
               `${deck.subject}`+
               '<br></br>'+
               'Card Count:'+
-              `${deck.count}`+
+              `${deck.cardIds.length}`+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -132,4 +132,10 @@ function callRemoveCategory(){
   .catch(function(error){
     console.log(error.message);
   });
+}
+
+function callUpdateCategory(){
+  let selectedDeck = getDeckById(data.selectedDeckId);
+  let newSubject = selectedDeck.subject;
+  updateCategory(selectedDeck.key_category,newSubject);
 }

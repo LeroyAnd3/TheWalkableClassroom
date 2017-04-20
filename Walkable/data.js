@@ -12,7 +12,7 @@
         id: <number>,
         subject: <string>,
         count:<number>
-        cardsIncluded:<boolean>
+        key_category:<string>
         cardIds: [<number>, <number>, ...]
       },
       ...
@@ -23,6 +23,7 @@
       {
         id: <number>,
         term: <string>,
+        key_term: <string>
         hintIds: [<number>, <number>, ...]
       },
       ...
@@ -68,7 +69,7 @@ function addDeck() {
     id: data.deckCount,
     subject: '',
     count:0,
-    cardsIncluded:false,
+    key_category:'',
     cardIds: []
   });
   data.selectedDeckId = data.deckCount;
@@ -134,6 +135,7 @@ function addCard() {
   var newCard = {
     id: data.cardCount,
     term: '',
+    key_term:'',
     hintIds: new Array(8)
   };
 
@@ -159,6 +161,7 @@ function deleteCard(e) {
   data.cards = data.cards.filter(function(card){
     return card.id !== Number(id);
   });
+  callDelet
   card.selectedCardId = -1;
   renderCardCatalogue();
 }
@@ -205,4 +208,13 @@ function getHintById(id) {
 
 
 //push current decks from the DB to local data model
-addDecksFromDB(data);
+addDecksFromDB(data)
+.then(function(error){
+  data.decks.forEach(function(deck){
+    addCardsFromDB(deck,data);
+  });
+}).catch(function(error){
+  console.log(error.message);
+});
+
+console.log(data);
