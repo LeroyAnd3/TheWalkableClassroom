@@ -6,6 +6,12 @@ body {
     overflow-x: hidden;
 }
 
+.pageTitle {
+  text-align: center;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
 .deckStack{
   display: inline-block;
   margin-left: 20px;
@@ -59,14 +65,44 @@ button{
   width: 130px;
   border: 2px solid #000;
   border-radius: 15px;
-  transform: translate(0px, 0px);
   background: #ADD8E6;
-  margin-top: 25px;
   box-shadow: 5px 5px 20px grey;
   display: inline-block;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-top: 25px;
+  margin-left: 12.5px;
+  margin-right: 12.5px;
+
+}
+
+.flexBox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rightHalf {
+  height: 200px;
+  width: 350px;
+}
+
+.leftHalf {
+  height: 200px;
+  width: 350px;
+}
+
+.leftSpacer{
+  float: left;
+  height: 500px;
+  width: 20%;
+}
+
+.rightSpacer{
+  float: right;
+  height: 500px;
+  width: 20%;
+}
+
+.extraSpace {
+  height: 100px;
 }
 
 
