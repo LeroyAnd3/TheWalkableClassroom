@@ -1,6 +1,6 @@
 function renderModalButton() {
   return (
-    '<button class="cardModalXButton">'+
+    '<button onclick="callCreateTerm()" class="cardModalXButton2">'+
       'X'+
     '</button>'
   );
@@ -158,3 +158,27 @@ function renderCardCatalogue() {
   );
 
 };
+
+  function callCreateTerm(){
+    alert("hi");
+    let selectedCard = getCard(data.selectedCardId);
+    let selectedDeck = getDeckById(data.selectedDeckId);
+    let term = selectedCard.term;
+    if(term===""||term.length===0||term===null||term==="undefined"){
+      alert("Term is blank. Please enter a term");
+      return false;
+    }
+    console.log(selectedCard);
+    console.log(selectedDeck);
+    //createTerm(selectedCard,selectedDeck);
+  }
+
+  function callDeleteTerm(){
+    //TODO
+    console.log(selectedCard);
+    console.log(selectedDeck);
+  }
+
+  function updateCategoryTerms(){
+
+  }
