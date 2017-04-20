@@ -11,7 +11,7 @@ function renderCardModal(){
 
 function renderModalButton() {
   return (
-    '<button onclick="callCreateTerm()" class="cardModalXButton2">'+
+    '<button onclick="callCreateTerm()" class="cardModalXButton">'+
       'X'+
     '</button>'
   );
