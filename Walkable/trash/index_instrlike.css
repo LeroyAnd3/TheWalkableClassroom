@@ -70,6 +70,18 @@ body {
   text-decoration: none;
 }
 
+#play {
+  color: #000000;
+}
+
+#play:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
 #login {
   color: #000000;
 }

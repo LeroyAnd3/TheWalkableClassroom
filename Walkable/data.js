@@ -170,11 +170,16 @@ function updateCardTerm(id, term) {
     return card.id === Number(data.selectedCardId);
   })[0] || {hints:[]};
   selectedCard.term = $('#termInput').val();
-  renderHintList();
+  renderCardModal();
 }
 function setCardId(id) {
   data.selectedCardId = id;
-  renderHintList();
+}
+function editCard(e){
+  console.log(e.target.name);
+  setCardId(
+    e.target.name);
+  renderCardModal();
 }
 function submitCard() {
   var card = getCard(data.selectedCardId);
@@ -189,13 +194,16 @@ function submitCard() {
     subject: getSubject(data.selectedDeckId)
   };
 }
-function getCard(id) {
+function getCardById(id) {
   return data.cards.filter(function(card) {
     return card.id === id;
-  })[0];
+  })[0] || {hintIds: []};
 }
 
-function updateHint(id, text) {
+function updateHint(e) {
+  console.log(e);
+  var id = e.target.id;
+  var text = e.target.text;
   for(var i = 0; i < data.hints.length; i++)
     if(data.hints[i].id === id)
       data.hints[i].text = text;
