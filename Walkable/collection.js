@@ -20,7 +20,7 @@ function renderDeckCollection() {
               `${deck.subject}`+
               '<br></br>'+
               'Card Count:'+
-              `${deck.cardIds.length}`+
+              `${deck.count}`+
             '</div>'+
           '</div>'+
         '</div>'+
@@ -106,26 +106,25 @@ function deleteDeck(deckId) {
 //helper function for CRUD
 function callCreateCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
-  let object = $('#subjectInput').val(selectedDeck.subject);
+  let subject = selectedDeck.subject;
   console.log(selectedDeck.subject);
   let id = selectedDeck.id;
-  let value = object[0].value; //value of category
-  if(value === null || value.length === 0 || value === "undefine"){
+  if(subject === null || subject.length === 0 || subject === "undefine"){
     alert("The value for category is blank." +
           " Please enter a name for this deck");
     deleteDeck(id);
     return false;
   }
   //console.log(value);
- createCategory(value,id);
+ createCategory(subject,id);
 }
 
 //helper function for CRUD
 function callRemoveCategory(){
   let selectedDeck = getDeckById(data.selectedDeckId);
-  let object = $('#subjectInput').val(selectedDeck.subject);
+  let subject = selectedDeck.subject;
   let id = selectedDeck.id;
-  let value = object[0].value; //value of category
+  let value = subject; //value of category
   findKey(value)
   .then(function(key){
     return removeCategory(key,id)

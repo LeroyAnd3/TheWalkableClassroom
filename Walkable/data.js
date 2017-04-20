@@ -11,6 +11,8 @@
       {
         id: <number>,
         subject: <string>,
+        count:<number>
+        cardsIncluded:<boolean>
         cardIds: [<number>, <number>, ...]
       },
       ...
@@ -65,6 +67,8 @@ function addDeck() {
   data.decks.push({
     id: data.deckCount,
     subject: '',
+    count:0,
+    cardsIncluded:false,
     cardIds: []
   });
   data.selectedDeckId = data.deckCount;
@@ -200,17 +204,5 @@ function getHintById(id) {
 }
 
 
-//read from the database and push current decks and associated terms
-addDecksFromDB(data)
-  .then(function(){
-      for (deck of data.decks){
-        console.log(deck.subject);
-        findKey(deck.subject)
-          .then(function(key){
-            addCardsFromDB(key,deck,data);
-          });
-      }
-  })
-  .catch(function(error){
-    console.log(error);
-  });
+//push current decks from the DB to local data model
+addDecksFromDB(data);
