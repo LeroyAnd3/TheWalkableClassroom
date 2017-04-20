@@ -36,7 +36,7 @@ function createCategory(newSubject, id) { //create a new category
 function createTerm(selectedCard, selectedDeck) {
   let query = categoryTermsRef
     .orderByChild("term")
-    .equalTo()
+    .equalTo(selectedCard.term);
 
   query.once('child_added')
   then(function(snapShot) {
@@ -109,8 +109,6 @@ function addCardsFromDB(deck, data) {
           deck.cardIds.push(data.cardCount);
           let hint = [];
           let k = childSnapShot.val();
-          //console.log(k);
-          //console.log(k.hint);
           pushHint(hint, k.hint);
 
           let newCard = {
@@ -143,28 +141,48 @@ function addCardsFromDB(deck, data) {
 }
 
 function getCategoryTerms(category, cardColllection) {
-  cardnumber = 0; //reset cardnumber for the next set of terms
-  let query = categoryRef.orderByChild('subject').equalTo(category);
-  query.once('child_added', snap => { //get key from category
-    let query2 = categoryTermsRef.child(snap.key); //get terms from category
-    query2.once('value', snap => {
-      snap.forEach(term => {
-        let card = []
-        let k = term.val();
-        makeCard(card, cardColllection, k.id, k.hint, k.term);
+  return new Promise(function(resolve, reject){
+    cardnumber = 0; //reset cardnumber for the next set of terms
+    let query = categoryRef.orderByChild('subject').equalTo(category);
+    query.once('child_added', snap => { //get key from category
+      let query2 = categoryTermsRef.child(snap.key); //get terms from category
+      query2.once('value', snap => {
+        snap.forEach(term => {
+          let card = []
+          let k = term.val();
+          makeCard(card, cardColllection, k.id, k.hint, k.term);
+        });
+        resolve();
+      })
+      .catch(function(error){
+        reject(error);
       });
-    });
+    })
+      .catch(function(error){
+        reject(error);
+      });
+
   });
+
 }
 
-//fill an array with the current subjects available
-//categories is array to hold the results
-function getCategories(categories) {
-  categoryRef.once('value', snap => {
-    snap.forEach(subject => {
-      categories.push(subject.val().subject);
+//append current categories to the concentration game to select from
+function appendCategories() {
+  return new Promise(function(resolve, reject) {
+    categoryRef.once('value', snap => {
+      snap.forEach(subject => {
+        let option = document.createElement("option");
+        let node = document.createTextNode(subject.val().subject);
+        option.appendChild(node);
+        let element = document.getElementById("categories");
+        element.appendChild(option);
+      });
+      resolve();
+    })
+    .catch(function(error) {
+      reject(error);
     });
-  });
+  })
 }
 
 //Update section
