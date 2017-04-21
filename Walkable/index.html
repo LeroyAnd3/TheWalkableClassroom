@@ -5,6 +5,19 @@
     <title>The Flippable Classroom</title>
     <link rel="stylesheet" type="text/css" href="newStyle.css" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyC0l1DWL8cQgrV_X5cMAHazd-MU-XNLQgs",
+        authDomain: "thewalkableclassroom.firebaseapp.com",
+        databaseURL: "https://thewalkableclassroom.firebaseio.com",
+        storageBucket: "thewalkableclassroom.appspot.com",
+        messagingSenderId: "880340132017"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src="CRUD.js" type="text/javascript"></script>
   </head>
 
   <body>
@@ -27,7 +40,6 @@
       <div class="hidden" id="view-3">3</div>
       <div class="hidden" id="view-4">4</div>
       <div class="hidden" id="view-5">
-
         <div class="deckStack">
           <div class="card1" style="background: #F5F5F5;">
             <div class="card2" style="background: #F5F5F5;">
@@ -38,7 +50,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <div class="hidden" id="view-6">
         <div class="card">

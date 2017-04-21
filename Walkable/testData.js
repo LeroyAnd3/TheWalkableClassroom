@@ -290,7 +290,7 @@ function DeckCollection(decks=[]) {
     $(this).parents().eq(3).remove();
 
     self.decks = self.decks.filter(function(deck) {
-      return deck.id !== id;
+    return deck.id !== id;
     });
   };
 
@@ -319,6 +319,12 @@ function DeckCollection(decks=[]) {
       $cancelButton.addClass('hidden');
     }
   }
+
+  self.getDeckById = function(id) {
+    return self.decks.filter(function(deck) {
+      return deck.id === id;
+    })[0];
+  };
 
   self.updateDeckTerm = function(e) {
     e.stopPropagation();
@@ -382,6 +388,7 @@ function DeckCollection(decks=[]) {
       }
     })[0];
     var deck = self.selectedDeck;
+    console.log(deck.emptyView);
     deck.emptyView();
     for(card of deck.cards) {
       deck.renderCard(card);
@@ -466,3 +473,5 @@ function DeckCollection(decks=[]) {
 }
 
 let deckcollection = new DeckCollection();
+addCardsFromDB(deckcollection);
+console.log(deckcollection);
