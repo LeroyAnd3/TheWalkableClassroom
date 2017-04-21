@@ -297,5 +297,4 @@ function DeckCollection(decks=[]) {
 }
 
 let deckcollection = new DeckCollection();
-addCardsFromDB(deckcollection);
-console.log(deckcollection);
+addDecksFromDB(deckcollection);
