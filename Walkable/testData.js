@@ -50,11 +50,12 @@ function Card(id,term,hints=[],key_term){
   this.key_term = key_term;
 }
 
-function Deck(id, subject, cardIds, category_key) {
+function Deck(id, subject, cards, category_key) {
   self = this;
   self.id = id;
   self.subject = subject;
   self.cards = cards;
+  self.category_key = category_key;
   self.cardCount = 0;
   self.selectedCard = null;
   self.$view = $('#view-6');
@@ -237,8 +238,10 @@ function Deck(id, subject, cardIds, category_key) {
     });
   }
 
-  self.addCard = function(e) {
+  self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', []);
+    if( typeof potentialCard === 'object')
+      newCard = potentialCard;
     self.cards.push(newCard);
     self.cardCount = self.cardCount + 1;
 
@@ -526,9 +529,11 @@ function DeckCollection(decks=[]) {
     self.selectedDeck.cancelUpdateHints();
   }
 
-  self.addDeck = function() {
-
+  self.addDeck = function(potentialDeck) {
+    alert("in add card");
     var newDeck = new Deck(self.deckCount, '', []);
+    if(typeof potentialDeck === 'object')
+      newDeck = potentialDeck;
     self.deckCount = self.deckCount + 1;
 
     self.$view.prepend(
@@ -578,12 +583,11 @@ function DeckCollection(decks=[]) {
 }
 
 let deckcollection = new DeckCollection();
-console.log(deckcollection);
+//console.log(deckcollection);
 
 addDecksFromDB(deckcollection)
 .then(function(){
   deckcollection.decks.forEach(function(decks){
-    console.log(decks);
     addCardsFromDB(decks);
   })
 })
