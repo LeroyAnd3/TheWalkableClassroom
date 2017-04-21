@@ -78,105 +78,108 @@ function createTerm(selectedCard, selectedDeck) {
 //Read section
 function addDecksFromDB(deckCollection) {
   return new Promise(function(resolve, reject) {
-    let categoryRef = rootRef.child('categories').orderByChild('subject');
-    categoryRef.once('value')
-      .then(function(snapShot) {
-        snapShot.forEach(function(childSnapShot) {
-          let k = childSnapShot.val();
-          var newDeck = new Deck(deckCollection.deckCount,k.subject,[],k.category_key);
-          deckCollection.deckCount = deckCollection.deckCount + 1;
-          $('#view').prepend(
-            `<div class="deckStack">` +
-              '<div class="card1">' +
+      alert("in deck from db");
+      let categoryRef = rootRef.child('categories').orderByChild('subject');
+      categoryRef.once('value')
+        .then(function(snapShot) {
+          snapShot.forEach(function(childSnapShot) {
+              let k = childSnapShot.val();
+              //console.log(k);
+              var newDeck = new Deck(deckCollection.deckCount, k.subject, [], k.category_key);
+              //console.log(newDeck);
+              deckCollection.deckCount = deckCollection.deckCount + 1;
+              deckCollection.$view.prepend(
+                `<div class="deckStack">` +
+                '<div class="card1">' +
                 '<div class="card2">' +
-                  `<div id=deck-${newDeck.id} class="card3">` +
-                    `<div id=delete-${newDeck.id} class="deckDeleteButton">x</div><br>` +
-                    '<br>' +
-                    `<span id=subject-${newDeck.id} >${newDeck.subject || "'Please Add Subject'"}</span><br>` +
-                    `<input id=input-${newDeck.id} size=12 class="hidden"></input><br>` +
-                    `<button id=edit-${newDeck.id} class="editButton">Edit</button>` +
-                    `<button id=addCards-${newDeck.id} value=6 class="addCardsButton">Add Cards</button>` +
-                    `<button id=submit-${newDeck.id} class="submitButton hidden">Submit</button>` +
-                    `<button id=cancel-${newDeck.id} class="cancelButton hidden">Cancel</button>` +
+                `<div id=deck-${newDeck.id} class="card3">` +
+                `<div id=delete-${newDeck.id} class="deckDeleteButton">x</div><br>` +
+                '<br>' +
+                `<span id=subject-${newDeck.id} >${newDeck.subject || "'Please Add Subject'"}</span><br>` +
+                `<input id=input-${newDeck.id} size=12 class="hidden"></input><br>` +
+                `<button id=edit-${newDeck.id} class="editButton">Edit</button>` +
+                `<button id=addCards-${newDeck.id} value=6 class="addCardsButton">Add Cards</button>` +
+                `<button id=submit-${newDeck.id} class="submitButton hidden">Submit</button>` +
+                `<button id=cancel-${newDeck.id} class="cancelButton hidden">Cancel</button>` +
                 '  </div>' +
                 '</div>' +
-              '</div>'+
-            '</div>'
-          );
-          deckCollection.decks.push(newDeck);
-          var domDeck = document.getElementById(`deck-${newDeck.id}`);
-          domDeck.addEventListener('mousedown', self.selectDeck);
+                '</div>' +
+                '</div>'
+              );
+              deckCollection.decks.push(newDeck);
 
-          var deckDeleteButton = document.getElementById(`delete-${newDeck.id}`);
-          deckDeleteButton.addEventListener('mousedown', self.deleteDeck);
+              var domDeck = document.getElementById(`deck-${newDeck.id}`);
+              domDeck.addEventListener('mousedown', self.selectDeck);
 
-          var deckEditButton = document.getElementById(`edit-${newDeck.id}`);
-          deckEditButton.addEventListener('mousedown', self.openDeckEditor);
+              var deckDeleteButton = document.getElementById(`delete-${newDeck.id}`);
+              deckDeleteButton.addEventListener('mousedown', self.deleteDeck);
 
-          var deckSubmitButton = document.getElementById(`submit-${newDeck.id}`);
-          deckSubmitButton.addEventListener('mousedown', self.updateDeckTerm);
-          // deckSubmitButton.addEventListener('mousedown',)
+              var deckEditButton = document.getElementById(`edit-${newDeck.id}`);
+              deckEditButton.addEventListener('mousedown', self.openDeckEditor);
 
-          var deckCancelButton = document.getElementById(`cancel-${newDeck.id}`);
-          deckCancelButton.addEventListener('mousedown', self.cancelUpdateDeckTerm);
+              var deckSubmitButton = document.getElementById(`submit-${newDeck.id}`);
+              deckSubmitButton.addEventListener('mousedown', self.updateDeckTerm);
+              // deckSubmitButton.addEventListener('mousedown',)
 
-          var addCardsButton = document.getElementById(`addCards-${newDeck.id}`);
-          addCardsButton.addEventListener('mousedown', self.addCards);
-        };
+              var deckCancelButton = document.getElementById(`cancel-${newDeck.id}`);
+              deckCancelButton.addEventListener('mousedown', self.cancelUpdateDeckTerm);
 
-        self.decks = decks.map(function(deck) {
-          self.addDeck(deck);
-        });
-        self.addDeckButton = document.getElementById('addDeckButton');
-        self.addDeckButton.addEventListener('mousedown', self.addDeck);
-        });
-        resolve();
-      })
-      .catch(function(error) {
-        reject(error);
-      });
-  });
-}
+              var addCardsButton = document.getElementById(`addCards-${newDeck.id}`);
+              addCardsButton.addEventListener('mousedown', self.addCards);
 
-function addCardsFromDB(deck, data) {
-  return new Promise(function(resolve, reject) {
-    let query = categoryTermsRef.orderByKey().equalTo(deck.key_category);
-    query.once('child_added')
-      .then(function(snapShot) {
-        return snapShot.forEach(function(childSnapShot) {
-          deck.cardIds.push(data.cardCount);
-          let hint = [];
-          let k = childSnapShot.val();
-          pushHint(hint, k.hint);
+              // deckCollection.decks = deckCollection.decks.map(function(deck) {
+              //   deckCollection.decks.addDeck(deck);
+              // });
+              deckCollection.decks.addDeckButton = document.getElementById('addDeckButton');
+              deckCollection.decks.addDeckButton.addEventListener('mousedown', self.addDeck);
 
-          let newCard = {
-            id: data.cardCount,
-            term: k.term,
-            key_term: k.key_term,
-            hintIds: new Array(8)
-          };
-
-          for (var i = 0; i < hint.length; i++) {
-            newCard.hintIds[i] = data.hintCount;
-            data.hints.push({
-              id: data.hintCount,
-              text: hint[i]
+              resolve();
             });
-            data.hintCount = data.hintCount + 1;
-          }
-          //  console.log("Subject: " + deck.subject + ",ID: " + deck.id);
-          //  console.log(newCard.term);
-          data.cards.push(newCard);
-          data.selectedCardId = data.cardCount;
-          data.cardCount = data.cardCount + 1;
         })
-      })
-      .catch(function(error) {
-        reject(error);
-      });
-  });
+        .catch(function(error) {
+          reject(error);
+        });
+    });
+  }
 
-}
+function addCardsFromDB(selectDeck) {
+    return new Promise(function(resolve, reject) {
+      let query = categoryTermsRef.orderByKey().equalTo(deck.key_category);
+      query.once('child_added')
+        .then(function(snapShot) {
+          return snapShot.forEach(function(childSnapShot) {
+            deck.cardIds.push(data.cardCount);
+            let hint = [];
+            let k = childSnapShot.val();
+            pushHint(hint, k.hint);
+
+            let newCard = {
+              id: data.cardCount,
+              term: k.term,
+              key_term: k.key_term,
+              hintIds: new Array(8)
+            };
+
+            // for (var i = 0; i < hint.length; i++) {
+            //   newCard.hintIds[i] = data.hintCount;
+            //   data.hints.push({
+            //     id: data.hintCount,
+            //     text: hint[i]
+            //   });
+            //   data.hintCount = data.hintCount + 1;
+            // }
+            // //  console.log("Subject: " + deck.subject + ",ID: " + deck.id);
+            // //  console.log(newCard.term);
+            // data.cards.push(newCard);
+            // data.selectedCardId = data.cardCount;
+            // data.cardCount = data.cardCount + 1;
+          })
+        })
+        .catch(function(error) {
+          reject(error);
+        });
+    });
+  }
 
 function getCategoryTerms(category, cardColllection) {
   return new Promise(function(resolve, reject){
