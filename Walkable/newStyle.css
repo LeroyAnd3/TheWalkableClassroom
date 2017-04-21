@@ -1,4 +1,4 @@
-body {
+/*body {
     background: #DCDCDC ;
     font-size: 12pt;
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
@@ -185,4 +185,198 @@ a.navigation {
   background-color: red;
   margin-top: 4px;
   margin-right: 4px;
+}*/
+
+body {
+    background: #DCDCDC ;
+    font-size: 12pt;
+    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.deckStack{
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.card1 {
+  text-align: center;
+  height: 200px;
+  width: 150px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  transform: translate(0px, 0px);
+  background: #ADD8E6;
+  margin-top: 25px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.card2 {
+  text-align: center;
+  height: 200px;
+  width: 150px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  transform: translate(5px, 5px);
+  background: #ADD8E6;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.card3 {
+  text-align: center;
+  height: 200px;
+  width: 150px;
+  border: 2px double #000;
+  border-radius: 15px;
+  transform: translate(5px, 5px);
+  background: #ADD8E6;
+  margin-bottom: 25px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+button{
+  margin-top: 50px;
+  left: 50%;
+}
+
+.card {
+  text-align: center;
+  height: 175px;
+  width: 150px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  transform: translate(0px, 0px);
+  background: #ADD8E6;
+  margin-top: 25px;
+  box-shadow: 5px 5px 20px grey;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+
+#space1 {
+  padding: 20px;
+}
+#space2 {
+  padding: 35px;
+}
+#space3 {
+  padding: 50px;
+}
+
+#logo {
+  font-size: 35pt;
+  text-align: left;
+  width: 100%;
+  border-top: 5px double #000;
+  border-bottom: 5px double #000;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  background: url('./resources/map_cropped.jpeg') no-repeat;
+  background-size: 100%;
+}
+
+#nav {
+  color: #ffffff;
+  font-size: 10pt;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#home, #create, #how, #play, #login, #logout {
+  color: #000000;
+}
+
+#home{
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#create:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#how:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+#play:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#login:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#logout:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.navigation {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+.hidden{
+    visibility: hidden;
+    display: none;
+}
+
+.selected {
+  background-color: yellow;
+}
+
+.deckDeleteButton, .cardDeleteButton{
+  float: right;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  background-color: red;
+  z-index: 2;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
+.block {
+  display: block;
 }

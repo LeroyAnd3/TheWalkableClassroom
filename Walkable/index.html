@@ -34,8 +34,6 @@
         <a class="navigation" href="create.html" id="create">Create Content</a>
         <a class="navigation" href="instructions.html" id="how">How to Play</a>
         <a class="navigation" href="concentration.html" id="play">Play Game</a>
-        <a class="navigation" href="login.html" id="login">Login</a>
-        <a class="navigation" href="logout.html" id="logout">Logout</a> <!-- end session and send to login page -->
       </div>
 
       <div class="hidden" id="view-1">1</div>
@@ -43,18 +41,16 @@
       <div class="hidden" id="view-3">3</div>
       <div class="hidden" id="view-4">4</div>
       <div class="hidden" id="view-5">
-
-        <div id="addDeckButton" class="deckStack">
+        <div class="deckStack">
           <div class="card1" style="background: #F5F5F5;">
             <div class="card2" style="background: #F5F5F5;">
               <div class="card3" style="background: #F5F5F5;">
                 <br>Want to create<br> a new deck?<br>
-                <button>Click to Create</button>
+                <button id="addDeckButton">Click to Create</button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
       <div class="hidden" id="view-6">
         <div class="card">
@@ -66,11 +62,31 @@
 
         <div class="card" style="background: #F5F5F5;">
           <br>Want to create<br>a new card?<br>
-          <button class="createNew">Click to Create</button>
+          <button id="addCardButton" class="addCardButton">Click to Create</button>
         </div>
 
       </div>
-      <div class="hidden" id="view-7">7</div>
+      <div class="hidden" id="view-7">
+        <div style="text-align: center;">
+          <span>{Subject}</span>
+          <span>{Terms}</span>
+          <span>HINT LIST</span>
+          <span>{Subject}</span>
+          <span>{Terms}</span>
+          <span>HINT LIST</span>
+          <br>
+          <div> 1: <input id="hint-1" size="12"></input> </div>
+          <div> 2: <input id="hint-2" size="12"></input> </div>
+          <div> 3: <input id="hint-3" size="12"></input> </div>
+          <div> 4: <input id="hint-4" size="12"></input> </div>
+          <div> 5: <input id="hint-5" size="12"></input> </div>
+          <div> 6: <input id="hint-6" size="12"></input> </div>
+          <div> 7: <input id="hint-7" size="12"></input> </div>
+          <div> 8: <input id="hint-8" size="12"></input> </div>
+          <button id="updateHintsButton">Save Changes</button>
+          <button id="cancelUpdateHintsButton">Delete Changes</button>
+        </div>
+      </div>
       <div class="hidden" id="view-8">8</div>
 
       <div style="text-align:center;">
