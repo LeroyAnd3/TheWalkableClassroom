@@ -40,25 +40,211 @@ class ViewManager {
 };
 let viewmanager = new ViewManager();
 
-function Deck(id, subject, cardIds) {
-
+function Card(id, term, hints=[]) {
+  var self = this;
   this.id = id;
-  this.subject = subject;
-  this.cardIds = cardIds;
+  this.term = term;
+  this.hints = hints;
+}
 
-  this.deleteButton = null;;
+function Deck(id, subject, cards=[]) {
+  self = this;
+  self.id = id;
+  self.subject = subject;
+  self.cards = cards;
+  self.cardCount = 0;
+  self.selectedCard = null;
+  self.$view = $('#view-6');
 
-  this.setId = function(id) { this.id = id; };
-  this.setSubject = function(subject) { this.subject = subject; };
-  this.addCardId = function(cardId) { this.cardIds.push(cardId); };
-  this.deleteCardId = function(cardId) {
-    this.cardIds = this.cardIds.filter(function(id) { return id !== cardId });
-  };
-  this.getCardIds = function() { return cardIds; }
-  this.setDeleteButton = function(deleteButton, func) {
-    this.deleteButton = document.getElementById(`deck-${id}`);
-    this.deleteButton.addEventListener('mousedown', func);
+  self.renderButton = function() {
+    self.$view.append(
+      '<div class="card" style="background: #F5F5F5;">' +
+        '<br>Want to create<br>a new card?<br>' +
+        '<button id="addCardButton" class="addCardButton">Click to Create</button>' +
+      '</div>'
+    );
   }
+
+  self.renderCard = function(card) {
+    self.$view.prepend(
+      `<div id=card-${card.id} class="card">` +
+        `<button id="deleteCard-${card.id}" class="cardDeleteButton">x</button>`+
+        `<input id=inputCard-${card.id} size=12 class="hidden"></input><br>` +
+        `<span>Card #${card.id}</span><br>` +
+        `<span id=term-${card.id} >${card.term || "Add Term"}</span><br>` +
+        `<button id=editCardTerm-${card.id}>Term</button>` +
+        `<button id=editCardHints-${card.id}>Hints</button>` +
+        `<button id=updateCardTerm-${card.id} class="hidden">Update</button>` +
+        `<button id=cancelCardTerm-${card.id} class="hidden">Cancel</button>` +
+      `</div>`
+    );
+    var domCard = document.getElementById(`card-${card.id}`);
+    domCard.addEventListener('click', self.selectCard);
+
+    var editButton = document.getElementById(`editCardTerm-${card.id}`);
+    editButton.addEventListener('click', self.openCardTermEditor);
+
+    var hintsButton = document.getElementById(`editCardHints-${card.id}`);
+    hintsButton.addEventListener('click', self.openHintView);
+
+    var updateTermButton = document.getElementById(`updateCardTerm-${card.id}`);
+    updateTermButton.addEventListener('click', self.updateCardTerm);
+
+    var cancelUpdateTermButton = document.getElementById(`cancelCardTerm-${card.id}`);
+    cancelUpdateTermButton.addEventListener('click', self.cancelUpdateCardTerm);
+
+
+    //Deletion doesn't bind to event listener well, so just adding it to the selectCard method as edge case
+  }
+
+  self.getCardId = function(string) {
+    return Number(string.split('-')[1]);
+  }
+
+  self.selectCard = function(e) {
+    e.stopPropagation();
+    var id = self.getCardId(e.target.id);
+    var $clickedCard = $(`#card-${id}`);
+
+    //Handle deletion logic here because of strange bug in event listener code
+    if( e.target.id === `deleteCard-${id}`) {
+      $(`#card-${id}`).removeClass('selected');
+      $(`#card-${id}`).remove();
+      self.cards = self.cards.filter(function(card) {
+        return card.id !== id;
+      });
+      return;
+    }
+    $clickedCard.addClass('selected');
+
+    self.selectedCard = self.cards.filter(function(card) {
+      if(card.id === id)
+        return true;
+      else {
+        $(`#card-${card.id}`).removeClass('selected');
+      }
+    })[0];
+  }
+
+  self.toggleCardTermEditorView = function(id, toggleOpen) {
+    var $termInput = $(`#inputCard-${id}`);
+    var $term = $(`#term-${id}`);
+    var $editTermButton = $(`#editCardTerm-${id}`);
+    var $editHintsButton = $(`#editCardHints-${id}`);
+    var $termUpdateButton = $(`#updateCardTerm-${id}`);
+    var $cancelButton = $(`#cancelCardTerm-${id}`);
+
+    if(toggleOpen) {
+      $termInput.removeClass('hidden');
+      $termUpdateButton.removeClass('hidden');
+      $cancelButton.removeClass('hidden');
+      $term.addClass('hidden');
+      $editTermButton.addClass('hidden');
+      $editHintsButton.addClass('hidden');
+    } else {
+      $termInput.addClass('hidden');
+      $termUpdateButton.addClass('hidden');
+      $cancelButton.addClass('hidden');
+      $term.removeClass('hidden');
+      $editTermButton.removeClass('hidden');
+      $editHintsButton.removeClass('hidden');
+    }
+  }
+
+  self.openCardTermEditor = function(e) {
+    e.stopPropagation();
+    var id = self.getCardId(this.id);
+
+    self.toggleCardTermEditorView(id, true);
+  }
+
+  self.updateCardTerm = function(e) {
+    e.stopPropagation();
+    var id = self.getCardId(this.id);
+
+    self.toggleCardTermEditorView(id, false);
+
+    var $termInput = $(`#inputCard-${id}`);
+    var $term = $(`#term-${id}`);
+    var newTerm = $termInput.val();
+    $termInput.val('');
+
+    self.cards.map(function(card) {
+      if(id === card.id){
+        cards.term = newTerm;
+        $term.html(newTerm);
+      }
+    });
+  }
+
+  self.cancelUpdateCardTerm = function(e) {
+    e.stopPropagation();
+    var id = self.getCardId(this.id);
+
+    self.toggleCardTermEditorView(id, false);
+
+    $(`#inputCard-${id}`).val('');
+  }
+
+  self.openHintView = function(e) {
+    self.selectCard(e);
+
+    var card = self.selectedCard;
+    card.hints = (card.hints.length > 0)? card.hints : new Array(8);
+
+    $('#hint-1').val(card.hints[0]);
+    $('#hint-2').val(card.hints[1]);
+    $('#hint-3').val(card.hints[2]);
+    $('#hint-4').val(card.hints[3]);
+    $('#hint-5').val(card.hints[4]);
+    $('#hint-6').val(card.hints[5]);
+    $('#hint-7').val(card.hints[6]);
+    $('#hint-8').val(card.hints[7]);
+
+    viewmanager.updateView({
+      target: {value:7}
+    });
+  }
+
+  self.emptyView = function() {
+    self.$view.empty();
+  }
+
+  self.updateHints = function() {
+    var card = self.selectedCard;
+    card.hints = new Array(8);
+
+    card.hints[0] = $('#hint-1').val();
+    card.hints[1] = $('#hint-2').val();
+    card.hints[2] = $('#hint-3').val();
+    card.hints[3] = $('#hint-4').val();
+    card.hints[4] = $('#hint-5').val();
+    card.hints[5] = $('#hint-6').val();
+    card.hints[6] = $('#hint-7').val();
+    card.hints[7] = $('#hint-8').val();
+
+    viewmanager.updateView({
+      target: {value:6}
+    });
+  }
+
+  self.cancelUpdateHints = function() {
+    viewmanager.updateView({
+      target: {value:6}
+    });
+  }
+
+  self.addCard = function(e) {
+    var newCard = new Card(self.cardCount, '', []);
+    self.cards.push(newCard);
+    self.cardCount = self.cardCount + 1;
+
+    self.renderCard(newCard);
+  }
+
+  self.cards = cards.map(function(card) {
+    self.addCard(card);
+  });
 
 }
 
@@ -70,70 +256,85 @@ function DeckCollection(decks=[]) {
   self.deckCount = 0;
   self.$view = $('#view-5');
 
-  self.toggleDeckSelect = function(element) {
-    element.toggleClass('selected');
-  }
-
   self.getDeckId = function(string) {
     return Number(string.split('-')[1]);
   }
 
+  self.getDeckById = function(id) {
+    return self.decks.filter(function(deck) {
+      return deck.id === id;
+    })[0];
+  }
+
   self.selectDeck = function(e) {
-    let clickedDeck = this;
-    let id = self.getDeckId(clickedDeck.id);
-    var $clickedDeck = $(clickedDeck);
+    var clickedDeck = e.target;
+    var id = self.getDeckId(clickedDeck.id);
+    var $clickedDeck = $(`#deck-${id}`);
 
-    $clickedDeck.toggleClass('selected');
+    $clickedDeck.addClass('selected');
 
-    if($clickedDeck.hasClass('selected')){
-      self.selectedDeck = self.decks.filter(function(deck) {
-        if(deck.id === id)
-          return true;
-        else {
-          $(`#deck-${deck.id}`).removeClass('selected');
-        }
-      })[0];
-    } else {
-      self.selectedDeck = null;
-    }
-
+    self.selectedDeck = self.decks.filter(function (deck) {
+      if( deck.id === id ) {
+        return true;
+      } else {
+        $(`#deck-${deck.id}`).removeClass('selected');
+      }
+    })[0];
   }
 
   self.deleteDeck = function(e) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
+
     $(`#deck-${id}`).removeClass('selected');
     $(this).parents().eq(3).remove();
+
     self.decks = self.decks.filter(function(deck) {
       return deck.id !== id;
     });
   };
 
+  self.toggleDeckEditor = function(id, toggleOpen) {
+    var $subjectTitle = $(`#subject-${id}`);
+    var $inputArea = $(`#input-${id}`);
+    var $editButton = $(`#edit-${id}`);
+    var $addCardsButton = $(`#addCards-${id}`);
+    var $submitButton = $(`#submit-${id}`);
+    var $cancelButton = $(`#cancel-${id}`);
+
+    if(toggleOpen) {
+      $subjectTitle.addClass('hidden');
+      $inputArea.removeClass('hidden');
+      $editButton.addClass('hidden');
+      $addCardsButton.addClass('hidden');
+      $submitButton.removeClass('hidden');
+      $cancelButton.removeClass('hidden');
+      $inputArea.val($subjectTitle.html());
+    } else {
+      $subjectTitle.removeClass('hidden');
+      $inputArea.addClass('hidden');
+      $editButton.removeClass('hidden');
+      $addCardsButton.removeClass('hidden');
+      $submitButton.addClass('hidden');
+      $cancelButton.addClass('hidden');
+    }
+  }
+
   self.updateDeckTerm = function(e) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
 
-    var edit = $(`#edit-${id}`);
-    var addCardsButton = $(`#addCards-${id}`);
-    var subject = $(`#subject-${id}`);
-    var input = $(`#input-${id}`);
-    var submitButton = $(`#submit-${id}`);
-    var cancelButton = $(`#cancel-${id}`);
+    self.toggleDeckEditor(id, false);
 
-    edit.removeClass('hidden');
-    addCardsButton.removeClass('hidden');
-    subject.removeClass('hidden');
-    input.addClass('hidden');
-    submitButton.addClass('hidden');
-    cancelButton.addClass('hidden');
-
-    var newSubject = input.val();
-    input.val('');
+    var $inputArea = $(`#input-${id}`);
+    var $subjectTitle = $(`#subject-${id}`);
+    var newSubject = $inputArea.val();
+    $inputArea.val('');
 
     self.decks.map(function(deck) {
       if(id === deck.id){
-        deck.setSubject(newSubject);
-        subject.html(newSubject);
+        deck.subject = newSubject;
+        $subjectTitle.html(newSubject);
       }
     });
 
@@ -143,42 +344,27 @@ function DeckCollection(decks=[]) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
 
-    var edit = $(`#edit-${id}`);
-    var addCardsButton = $(`#addCards-${id}`);
-    var subject = $(`#subject-${id}`);
-    var input = $(`#input-${id}`);
-    var submitButton = $(`#submit-${id}`);
-    var cancelButton = $(`#cancel-${id}`);
+    self.toggleDeckEditor(id, false);
 
-    edit.removeClass('hidden');
-    addCardsButton.removeClass('hidden');
-    subject.removeClass('hidden');
-    input.addClass('hidden');
-    submitButton.addClass('hidden');
-    cancelButton.addClass('hidden');
-
-    input.val('');
+    var $inputArea = $(`#input-${id}`);
+    $inputArea.val('');
   };
 
   self.openDeckEditor = function(e) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
 
-    var edit = $(`#edit-${id}`);
-    var addCardsButton = $(`#addCards-${id}`);
-    var subject = $(`#subject-${id}`);
-    var input = $(`#input-${id}`);
-    var submitButton = $(`#submit-${id}`);
-    var cancelButton = $(`#cancel-${id}`);
+    self.selectedDeck = self.decks.filter(function(deck) {
+      if(deck.id === id) {
+        $(`#deck-${deck.id}`).addClass('selected');
+        return true;
+      } else {
+        $(`#deck-${deck.id}`).removeClass('selected');
+      }
+    })[0];
 
-    edit.addClass('hidden');
-    addCardsButton.addClass('hidden');
-    subject.addClass('hidden');
-    input.removeClass('hidden');
-    submitButton.removeClass('hidden');
-    cancelButton.removeClass('hidden');
+    self.toggleDeckEditor(id, true);
 
-    input.val(String(subject.html()));
   };
 
   self.addCards = function(e) {
@@ -194,14 +380,42 @@ function DeckCollection(decks=[]) {
         $(`#deck-${deck.id}`).removeClass('selected');
         return false
       }
-    });
+    })[0];
+    var deck = self.selectedDeck;
+    deck.emptyView();
+    for(card of deck.cards) {
+      deck.renderCard(card);
+    }
+    deck.renderButton();
+
+    self.addCardButton = document.getElementById(`addCardButton`);
+    self.addCardButton.addEventListener('click', self.addCard);
+
+    self.updateHintsButton = document.getElementById('updateHintsButton');
+    self.updateHintsButton.addEventListener('click', self.updateHints);
+
+    self.cancelUpdateHintsButton = document.getElementById('cancelUpdateHintsButton');
+    self.cancelUpdateHintsButton.addEventListener('click', self.cancelUpdateHints)
 
     viewmanager.updateView({
       target: {value:6}
-    })
+    });
   };
 
+  self.addCard = function(e) {
+    self.selectedDeck.addCard();
+  }
+
+  self.updateHints = function(e) {
+    self.selectedDeck.updateHints();
+  }
+
+  self.cancelUpdateHints = function(e) {
+    self.selectedDeck.cancelUpdateHints();
+  }
+
   self.addDeck = function() {
+
     var newDeck = new Deck(self.deckCount, '', []);
     self.deckCount = self.deckCount + 1;
 
@@ -210,9 +424,9 @@ function DeckCollection(decks=[]) {
         '<div class="card1">' +
           '<div class="card2">' +
             `<div id=deck-${newDeck.id} class="card3">` +
-              `<div id=delete-${newDeck.id} class="deckDeleteButton">x</div><br>` +
+              `<div id=deleteDeck-${newDeck.id} class="deckDeleteButton">x</div><br>` +
               '<br>' +
-              `<span id=subject-${newDeck.id} >${newDeck.subject || "'Please Add Subject'"}</span><br>` +
+              `<span id=subject-${newDeck.id} >${newDeck.subject || "Add Subject"}</span><br>` +
               `<input id=input-${newDeck.id} size=12 class="hidden"></input><br>` +
               `<button id=edit-${newDeck.id} class="editButton">Edit</button>` +
               `<button id=addCards-${newDeck.id} value=6 class="addCardsButton">Add Cards</button>` +
@@ -226,29 +440,29 @@ function DeckCollection(decks=[]) {
     self.decks.push(newDeck);
 
     var domDeck = document.getElementById(`deck-${newDeck.id}`);
-    domDeck.addEventListener('mousedown', self.selectDeck);
+    domDeck.addEventListener('click', self.selectDeck);
 
-    var deckDeleteButton = document.getElementById(`delete-${newDeck.id}`);
-    deckDeleteButton.addEventListener('mousedown', self.deleteDeck);
+    var deckDeleteButton = document.getElementById(`deleteDeck-${newDeck.id}`);
+    deckDeleteButton.addEventListener('click', self.deleteDeck);
 
     var deckEditButton = document.getElementById(`edit-${newDeck.id}`);
-    deckEditButton.addEventListener('mousedown', self.openDeckEditor);
+    deckEditButton.addEventListener('click', self.openDeckEditor);
 
     var deckSubmitButton = document.getElementById(`submit-${newDeck.id}`);
-    deckSubmitButton.addEventListener('mousedown', self.updateDeckTerm);
+    deckSubmitButton.addEventListener('click', self.updateDeckTerm);
 
     var deckCancelButton = document.getElementById(`cancel-${newDeck.id}`);
-    deckCancelButton.addEventListener('mousedown', self.cancelUpdateDeckTerm);
+    deckCancelButton.addEventListener('click', self.cancelUpdateDeckTerm);
 
     var addCardsButton = document.getElementById(`addCards-${newDeck.id}`);
-    addCardsButton.addEventListener('mousedown', self.addCards);
+    addCardsButton.addEventListener('click', self.addCards);
   };
 
   self.decks = decks.map(function(deck) {
     self.addDeck(deck);
   });
   self.addDeckButton = document.getElementById('addDeckButton');
-  self.addDeckButton.addEventListener('mousedown', self.addDeck);
+  self.addDeckButton.addEventListener('click', self.addDeck);
 }
 
 let deckcollection = new DeckCollection();
