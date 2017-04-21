@@ -40,17 +40,20 @@ class ViewManager {
 };
 let viewmanager = new ViewManager();
 
-function Deck(id, subject, cardIds) {
+function Deck(id, subject, cardIds, category_key) {
 
   this.id = id;
   this.subject = subject;
   this.cardIds = cardIds;
+  this.category_key = category_key;
 
   this.deleteButton = null;;
 
   this.setId = function(id) { this.id = id; };
   this.setSubject = function(subject) { this.subject = subject; };
+  this.setCategoryKey = function(category_key){this.category_key = category_key;}
   this.addCardId = function(cardId) { this.cardIds.push(cardId); };
+
   this.deleteCardId = function(cardId) {
     this.cardIds = this.cardIds.filter(function(id) { return id !== cardId });
   };
@@ -102,23 +105,40 @@ function DeckCollection(decks=[]) {
   self.deleteDeck = function(e) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
+    let deck = self.getDeckById(id);
+    console.log(deck);
+    removeCategory(deck.category_key)
+    .catch(function(error){
+      alert("Unable to remove deck");
+      console.log(error.message);
+      return false;
+    });
+
     $(`#deck-${id}`).removeClass('selected');
     $(this).parents().eq(3).remove();
     self.decks = self.decks.filter(function(deck) {
-      return deck.id !== id;
+    return deck.id !== id;
     });
+  };
+
+  self.getDeckById = function(id) {
+    return self.decks.filter(function(deck) {
+      return deck.id === id;
+    })[0];
   };
 
   self.updateDeckTerm = function(e) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
-
+    var deck = self.getDeckById(id);
     var edit = $(`#edit-${id}`);
     var addCardsButton = $(`#addCards-${id}`);
     var subject = $(`#subject-${id}`);
     var input = $(`#input-${id}`);
     var submitButton = $(`#submit-${id}`);
     var cancelButton = $(`#cancel-${id}`);
+
+
 
     edit.removeClass('hidden');
     addCardsButton.removeClass('hidden');
@@ -129,13 +149,37 @@ function DeckCollection(decks=[]) {
 
     var newSubject = input.val();
     input.val('');
-
-    self.decks.map(function(deck) {
-      if(id === deck.id){
-        deck.setSubject(newSubject);
-        subject.html(newSubject);
-      }
+//if key_category has not been added then create a new deck
+//Otherwise, the deck already exists and just update the category name
+  if (deck.category_key != '') {
+    console.log(deck.category_key);
+  updateCategory(deck.category_key, newSubject)
+    .then(function() {
+      self.decks.map(function(deck) {
+        if (id === deck.id) {
+          deck.setSubject(newSubject);
+          subject.html(newSubject);
+        }
+      });
+    })
+    .catch(function(error) {
+      console.log(error.message);
     });
+  } else {
+  createCategory(newSubject)
+    .then(function(category_key) {
+      self.decks.map(function(deck) {
+        if (id === deck.id) {
+          deck.setSubject(newSubject);
+          deck.setCategoryKey(category_key);
+          subject.html(newSubject);
+        }
+      });
+    })
+    .catch(function(error) {
+      console.log(error.message);
+    });
+}
 
   };
 
@@ -202,7 +246,7 @@ function DeckCollection(decks=[]) {
   };
 
   self.addDeck = function() {
-    var newDeck = new Deck(self.deckCount, '', []);
+    var newDeck = new Deck(self.deckCount, '', [],'');
     self.deckCount = self.deckCount + 1;
 
     self.$view.prepend(
@@ -236,6 +280,7 @@ function DeckCollection(decks=[]) {
 
     var deckSubmitButton = document.getElementById(`submit-${newDeck.id}`);
     deckSubmitButton.addEventListener('mousedown', self.updateDeckTerm);
+    // deckSubmitButton.addEventListener('mousedown',)
 
     var deckCancelButton = document.getElementById(`cancel-${newDeck.id}`);
     deckCancelButton.addEventListener('mousedown', self.cancelUpdateDeckTerm);
@@ -252,3 +297,5 @@ function DeckCollection(decks=[]) {
 }
 
 let deckcollection = new DeckCollection();
+addCardsFromDB(deckcollection);
+console.log(deckcollection);

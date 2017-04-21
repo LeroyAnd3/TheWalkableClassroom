@@ -3,16 +3,17 @@ const categoryRef = rootRef.child('categories');
 const categoryTermsRef = rootRef.child('category-terms');
 let cardnumber = 0; // the card id in the collection of cards
 //Create section
-function createCategory(newSubject, id) { //create a new category
-  let categoryRef = rootRef.child('categories')
-    .orderByChild("subject")
-    .equalTo(newSubject);
-  categoryRef.once('value')
-    .then(function(snapShot) { //check if subject exist
-      if (snapShot.exists()) {
-        alert("This category already exist");
-        deleteDeck(id);
-      } else {
+function createCategory(newSubject) { //create a new category
+  return new Promise(function(resolve, reject) {
+    let categoryRef = rootRef.child('categories')
+      .orderByChild("subject")
+      .equalTo(newSubject);
+    categoryRef.once('value')
+      .then(function(snapShot) { //check if subject exist
+        if (snapShot.exists()) {
+          alert("You are making a category with the same name of another");
+          //deleteDeck(id);
+        }
         //A category entry
         let newCategoryKey = rootRef.child('categories').push().key;
         let categoryData = {
@@ -23,15 +24,16 @@ function createCategory(newSubject, id) { //create a new category
         //Write new category data
         let updates = {};
         updates['/categories/' + newCategoryKey] = categoryData;
-        return rootRef.update(updates);
-      }
-    }, function(error) {
-      //something went wrong
-      console.error(error);
-      alert("Unable to create new category");
-      deleteDeck(id);
-    });
+        rootRef.update(updates);
+        resolve(newCategoryKey);
+
+      }, function(error) {
+        //something went wrong
+        reject(error);
+      });
+  });
 }
+
 
 function createTerm(selectedCard, selectedDeck) {
   let query = categoryTermsRef
@@ -74,23 +76,15 @@ function createTerm(selectedCard, selectedDeck) {
 }
 
 //Read section
-function addDecksFromDB(data) {
+function addDecksFromDB(deckCollection) {
   return new Promise(function(resolve, reject) {
     let categoryRef = rootRef.child('categories').orderByChild('subject');
     categoryRef.once('value')
       .then(function(snapShot) {
         snapShot.forEach(function(childSnapShot) {
           let k = childSnapShot.val();
-          //console.log(k.count);
-          data.decks.push({
-            id: data.deckCount,
-            subject: k.subject,
-            count: k.count,
-            key_category: k.key_category,
-            cardIds: []
-          });
-          data.selectedDeckId = data.deckCount;
-          data.deckCount = data.deckCount + 1;
+          var newDeck = new Deck(deckCollection.deckCount,k.subject,[],k.category_key);
+          deckCollection.addDeck()
         });
         resolve();
       })
@@ -186,15 +180,15 @@ function appendCategories() {
 }
 
 //Update section
-function updateCategory(selectedDeck,newName) {
+function updateCategory(selectedDeckKey,newName) {
   return new Promise(function(resolve, reject) {
-    categoryRef.orderByChild('key').equalTo(selectedDeck);
+    categoryRef.orderByChild('key').equalTo(selectedDeckKey);
     categoryRef.once('child_added')
       .then(function(snapShot) {
         let k = snapShot.val();
         k.subject = newName;
         let update = {};
-        update['/categories/' + selectedDeck] = k;
+        update['/categories/' + selectedDeckKey] = k;
         return rootRef.update(update);
       })
       .catch(function(error) {
@@ -229,15 +223,14 @@ function updateCategoryTerms(selectedDeck, selectedCard) {
 
 //delete section
 
-function removeCategory(key, id) {
+function removeCategory(key) {
   return new Promise(function(resolve, reject) {
     let remove = {};
     remove['/categories/' + key] = null;
     remove['/category-term/' + key] = null;
     rootRef.update(remove)
       .then(function() {
-        deleteDeck(id);
-        resolve("Remove category successful!");
+        resolve();
       })
       .catch(function(error) {
         reject("Remove category failed: " + error.message);
