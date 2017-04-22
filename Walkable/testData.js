@@ -266,6 +266,14 @@ function Deck(id, subject, cards, category_key) {
     });
   }
 
+  self.setSubject = function (subject) {
+    self.subject = subject;
+  }
+
+  self.setCategoryKey = function (category_key) {
+    self.category_key = category_key;
+  }
+
   self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', []);
     if( typeof potentialCard === 'object')
@@ -406,6 +414,7 @@ function DeckCollection(decks=[]) {
     input.val('');
     //if key_category has not been added then create a new deck
     //Otherwise, the deck already exists and just update the category name
+    console.log(deck);
     if (deck.category_key != '') {
       //console.log(deck.category_key);
       updateCategory(deck.category_key, newSubject)
@@ -571,10 +580,13 @@ function DeckCollection(decks=[]) {
   }
 
   self.addDeck = function(potentialDeck) {
-    //alert("in add card");
-    var newDeck = new Deck(self.deckCount, '', []);
-    if(typeof potentialDeck === 'object')
+
+    alert("in add card");
+    var newDeck = new Deck(self.deckCount, '', [], '');
+    if(typeof potentialDeck === 'object' && typeof potentialDeck.id === 'number'){
       newDeck = potentialDeck;
+      console.log("I am working");
+    }
     self.deckCount = self.deckCount + 1;
 
     self.$view.prepend(
