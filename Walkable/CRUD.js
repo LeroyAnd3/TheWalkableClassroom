@@ -37,8 +37,8 @@ function createCategory(newSubject) { //create a new category
 
 function createTerm(selectedCard, selectedDeck) {
   let query = categoryTermsRef
-    .orderByChild("term")
-    .equalTo(selectedCard.term);
+    .orderByChild("key_term")
+    .equalTo(selectedCard.key_term);
 
   query.once('child_added')
   then(function(snapShot) {
@@ -111,8 +111,8 @@ function addCardsFromDB(selectDeck) {
               hints: hint,
               key_term: k.key_term
             };
-            console.log(newCard);
-            console.log(selectDeck.cardCount);
+            //console.log(newCard);
+            //console.log(selectDeck.cardCount);
             selectDeck.addCard(newCard);
             // for (var i = 0; i < hint.length; i++) {
             //   newCard.hintIds[i] = data.hintCount;
