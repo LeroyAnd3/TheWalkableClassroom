@@ -581,7 +581,7 @@ function DeckCollection(decks=[]) {
 
   self.addDeck = function(potentialDeck) {
 
-    alert("in add card");
+    //alert("in add card");
     var newDeck = new Deck(self.deckCount, '', [], '');
     if(typeof potentialDeck === 'object' && typeof potentialDeck.id === 'number'){
       newDeck = potentialDeck;
@@ -639,12 +639,6 @@ let deckcollection = new DeckCollection();
 //console.log(deckcollection);
 
 addDecksFromDB(deckcollection)
-.then(function(){
-  deckcollection.decks.forEach(function(decks){
-    addCardsFromDB(decks);
-  })
-})
 .catch(function(error){
   console.log(error.message);
 });
-console.log(deckcollection);
