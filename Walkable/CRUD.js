@@ -35,44 +35,19 @@ function createCategory(newSubject) { //create a new category
 }
 
 
-function createTerm(selectedCard, selectedDeck) {
-  let query = categoryTermsRef
-    .orderByChild("term")
-    .equalTo(selectedCard.term);
+function createTerm(termName, selectedDeckKey) {
+  return new Promise(function(resolve,reject){
+    let query = categoryRef.equalTo(selectedDeckKey);
+    query.once('value')
+      .then(function(snapShot){
+        console.log(snapShot.val());
+        resolve();
+      });
+  });
+}
 
-  query.once('child_added')
-  then(function(snapShot) {
-      if (snapShot.exists()) {
-        alert("This term alread exists. Please make a new one or update the existing one!");
-        //deleteCard()
-        return false;
-      } else {
-        let category_key = selectedDeck.key_category;
-        let term_key = categoryTermsRef.orderByKey().equalTo(category_key).push().key;
-        let hintArray = selectedCard.hintIds;
-        let h1, h2, h3, h4, h5, h6, h7, h8;
-        h1 = hintArray[0];
-        h2 = hintArray[1];
-        h3 = hintArray[2];
-        h4 = hintArray[3];
-        h5 = hintArray[4];
-        h6 = hintArray[5];
-        h7 = hintArray[6];
-        h7 = hintArray[7];
-        let hintList = pushHint(h1, h2, h3, h4, h5, h6, h7, h8);
-        let newCard = {
-          term: selectedCard.term,
-          key_term: term_key,
-          hint: hintList
-        }
-        let update = {};
-        update['/category-terms/' + category_key + '/' + term_key] = newCard;
-        rootRef.update(update);
-      }
-    })
-    .catch(function(error) {
-      console.log(error.message);
-    });
+function addHints(){
+  //TODO
 }
 
 //Read section

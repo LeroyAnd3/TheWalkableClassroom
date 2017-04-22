@@ -42,12 +42,13 @@ class ViewManager {
 };
 let viewmanager = new ViewManager();
 
-function Card(id,term,hints=[],key_term){
+function Card(id,term,hints=[],key_term,category_key){
   var self = this;
   this.id = id;
   this.term;
   this.hints = hints;
   this.key_term = key_term;
+  this.category_key = category_key;
 }
 
 function Deck(id, subject, cards, category_key) {
@@ -103,6 +104,12 @@ function Deck(id, subject, cards, category_key) {
 
   self.getCardId = function(string) {
     return Number(string.split('-')[1]);
+  }
+
+  self.getCardById = function(id) {
+    return self.cards.filter(function(card) {
+      return card.id === id;
+    })[0];
   }
 
   self.selectCard = function(e) {
@@ -165,14 +172,13 @@ function Deck(id, subject, cards, category_key) {
   self.updateCardTerm = function(e) {
     e.stopPropagation();
     var id = self.getCardId(this.id);
-
+    var card = self.getCardById(id);
     self.toggleCardTermEditorView(id, false);
-
     var $termInput = $(`#inputCard-${id}`);
     var $term = $(`#term-${id}`);
     var newTerm = $termInput.val();
     $termInput.val('');
-
+    //createTerm(newTerm,category_key);
     self.cards.map(function(card) {
       if(id === card.id){
         cards.term = newTerm;
@@ -239,7 +245,7 @@ function Deck(id, subject, cards, category_key) {
   }
 
   self.addCard = function(potentialCard) {
-    var newCard = new Card(self.cardCount, '', []);
+    var newCard = new Card(self.cardCount, '', [],'',category_key);
     if( typeof potentialCard === 'object')
       newCard = potentialCard;
     self.cards.push(newCard);
@@ -334,12 +340,6 @@ function DeckCollection(decks=[]) {
       $cancelButton.addClass('hidden');
     }
   }
-
-  self.getDeckById = function(id) {
-    return self.decks.filter(function(deck) {
-      return deck.id === id;
-    })[0];
-  };
 
   self.updateDeckTerm = function(e) {
     e.stopPropagation();
@@ -530,8 +530,8 @@ function DeckCollection(decks=[]) {
   }
 
   self.addDeck = function(potentialDeck) {
-    alert("in add card");
-    var newDeck = new Deck(self.deckCount, '', []);
+    //  alert("in add card");
+    var newDeck = new Deck(self.deckCount, '', [],'');
     if(typeof potentialDeck === 'object')
       newDeck = potentialDeck;
     self.deckCount = self.deckCount + 1;
@@ -586,11 +586,6 @@ let deckcollection = new DeckCollection();
 //console.log(deckcollection);
 
 addDecksFromDB(deckcollection)
-.then(function(){
-  deckcollection.decks.forEach(function(decks){
-    addCardsFromDB(decks);
-  })
-})
 .catch(function(error){
   console.log(error.message);
 });
