@@ -11,8 +11,8 @@ function createCategory(newSubject) { //create a new category
     categoryRef.once('value')
       .then(function(snapShot) { //check if subject exist
         if (snapShot.exists()) {
-          alert("You are making a category with the same name of another");
-          //deleteDeck(id);
+          alert("You are making a category with the same name of another. Please change the name of the category");
+          reject("Deck already exists");
         }
         //A category entry
         let newCategoryKey = rootRef.child('categories').push().key;
@@ -34,20 +34,40 @@ function createCategory(newSubject) { //create a new category
   });
 }
 
-
-function createTerm(termName, selectedDeckKey) {
+function createTerm(newTerm, selectedDeckKey) {
   return new Promise(function(resolve,reject){
-    let query = categoryRef.equalTo(selectedDeckKey);
+    let query = categoryTermsRef.child(selectedDeckKey).orderByChild('term').equalTo(newTerm);
     query.once('value')
       .then(function(snapShot){
-        console.log(snapShot.val());
-        resolve();
+        if(snapShot.exists()){
+          alert("This card already exist. Please name this card something else");
+          reject("This card already exist!");
+        }else{
+          let newTermKey = categoryTermsRef.child(selectedDeckKey).push().key;
+          let newCard = {
+            term:newTerm,
+            key_term:newTermKey,
+            hint:{
+              hint1:'',
+              hint2:'',
+              hint3:'',
+              hint4:'',
+              hint5:'',
+              hint6:'',
+              hint7:'',
+              hint8:''
+            }
+          };
+          let update = {};
+          update["/category-terms/"+selectedDeckKey+"/"+newTermKey]=newCard;
+          rootRef.update(update);
+          resolve(newTermKey);
+        }
+      })
+      .catch(function(error){
+        reject(error);
       });
   });
-}
-
-function addHints(){
-  //TODO
 }
 
 //Read section
@@ -174,37 +194,56 @@ function updateCategory(selectedDeckKey,newName) {
   });
 }
 
-function updateCategoryTerms(selectedDeck, selectedCard) {
-  let category_key = selectedDeck.key_category;
-  let term_key = selectedCard.key_term;
-  let hintArray = selectedCard.hintIds;
-  let h1, h2, h3, h4, h5, h6, h7, h8;
-  h1 = hintArray[0];
-  h2 = hintArray[1];
-  h3 = hintArray[2];
-  h4 = hintArray[3];
-  h5 = hintArray[4];
-  h6 = hintArray[5];
-  h7 = hintArray[6];
-  h7 = hintArray[7];
-  let hintList = pushHint(h1, h2, h3, h4, h5, h6, h7, h8);
-  let newCard = {
-    term: selectedCard.term,
-    key_term: term_key,
-    hint: hintList
-  }
-  let update = {};
-  update['/category-terms/' + category_key + '/' + term_key];
-  rootRef.update(update);
+function updateTerm(newTerm,deckKey, termKey) {
+  return new Promise(function (resolve,reject){
+    let query = categoryTermsRef.child(deckKey).orderByChild('key_term').equalTo(termKey);
+    query.once('child_added')
+      .then(function(snapShot){
+        if(!snapShot.exists())
+          reject("Term key does not exist in DB: " + termKey);
+        let k = snapShot.val();
+        k.term = newTerm;
+        let update = {};
+        update['/category-terms/' + deckKey + '/' + termKey]=k;
+        rootRef.update(update);
+        resolve();
+      })
+      .catch(function(error){
+        reject(error);
+      });
+
+  });
+
 }
 
+function updateHints(deckKey,termKey,hintArray){
+  return new Promise(function(resolve, reject) {
+    console.log(deckKey);
+    console.log(termKey);
+    console.log(hintArray);
+    let query = categoryTermsRef.child(deckKey).orderByChild('key_term').equalTo(termKey);
+    query.once('child_added')
+      .then(function(snapShot){
+        let k = snapShot.val();
+        let hint = pushHints(hintArray);
+        k.hint = hint;
+        let update = {};
+        update['/category-terms/' + deckKey + '/' + termKey]=k;
+        rootRef.update(update);
+        resolve("successfully updated hints");
+      })
+      .catch(function(error){
+        reject(error);
+      });
+  });
+}
 //delete section
 
 function removeCategory(key) {
   return new Promise(function(resolve, reject) {
     let remove = {};
     remove['/categories/' + key] = null;
-    remove['/category-term/' + key] = null;
+    remove['/category-terms/' + key] = null;
     rootRef.update(remove)
       .then(function() {
         resolve();
@@ -215,19 +254,16 @@ function removeCategory(key) {
   });
 }
 
-function removeCategoryTerm(selectedDeck, selectedCard) {
+function removeTerm(deckKey, termKey) {
   return new Promise(function(resolve, reject) {
     let remove = {};
-    let term_key = selectedCard.key_term;
-    let category_key = selectedDeck.category_key;
-    remove['/category-term/' + category_key + '/' + term_key] = null;
+    remove['/category-terms/' + deckKey + '/' + termKey] = null;
     rootRef.update(remove)
       .then(function() {
-        //deleteDeck(id);
         resolve("Remove category successful!");
       })
       .catch(function(error) {
-        reject("Remove category failed: " + error.message);
+        reject(error);
       });
   });
 }
@@ -285,16 +321,16 @@ function findKey(category) {
   });
 }
 
-function pushHints(h1, h2, h3, h4, h5, h6, h7, h8) {
+function pushHints(hintArray) {
   var list = {
-    hint1: h1,
-    hint2: h2,
-    hint3: h3,
-    hint4: h4,
-    hint5: h5,
-    hint6: h6,
-    hint7: h7,
-    hint8: h8
+    hint1: hintArray[0],
+    hint2: hintArray[1],
+    hint3: hintArray[2],
+    hint4: hintArray[3],
+    hint5: hintArray[4],
+    hint6: hintArray[5],
+    hint7: hintArray[6],
+    hint8: hintArray[7]
   };
   return list;
 }

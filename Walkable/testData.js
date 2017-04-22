@@ -115,16 +115,24 @@ function Deck(id, subject, cards, category_key) {
   self.selectCard = function(e) {
     e.stopPropagation();
     var id = self.getCardId(e.target.id);
+    var card = self.getCardById(id);
     var $clickedCard = $(`#card-${id}`);
 
     //Handle deletion logic here because of strange bug in event listener code
     if( e.target.id === `deleteCard-${id}`) {
-      $(`#card-${id}`).removeClass('selected');
-      $(`#card-${id}`).remove();
-      self.cards = self.cards.filter(function(card) {
-        return card.id !== id;
+      removeTerm(card.category_key,card.key_term)
+      .then(function(){
+        $(`#card-${id}`).removeClass('selected');
+        $(`#card-${id}`).remove();
+        self.cards = self.cards.filter(function(card) {
+          return card.id !== id;
+        });
+        return;
+      })
+      .catch(function(){
+        console.log(error.message);
       });
-      return;
+
     }
     $clickedCard.addClass('selected');
 
@@ -178,13 +186,40 @@ function Deck(id, subject, cards, category_key) {
     var $term = $(`#term-${id}`);
     var newTerm = $termInput.val();
     $termInput.val('');
-    //createTerm(newTerm,category_key);
-    self.cards.map(function(card) {
-      if(id === card.id){
-        cards.term = newTerm;
-        $term.html(newTerm);
-      }
-    });
+    console.log(card.key_term.length);
+    if (card.key_term.length !=0 ) {
+      //alert("update term");
+      updateTerm(newTerm, card.category_key,card.key_term)
+        .then(function() {
+          self.cards.map(function(cards) {
+            if (id === cards.id) {
+              cards.term = newTerm;
+              $term.html(newTerm);
+            }
+          });
+        })
+        .catch(function(error) {
+          console.log(error)
+        });
+    } else {
+      //alert("create new term");
+      createTerm(newTerm, card.category_key)
+        .then(function(termKey) {
+          self.cards.map(function(cards) {
+            if (id === cards.id) {
+              cards.term = newTerm;
+              cards.key_term = termKey
+              $term.html(newTerm);
+              console.log(cards);
+            }
+          });
+          //console.log(card);
+        })
+        .catch(function(error) {
+          alert("Failed to update card");
+          console.log(error)
+        });
+    }
   }
 
   self.cancelUpdateCardTerm = function(e) {
@@ -222,6 +257,7 @@ function Deck(id, subject, cards, category_key) {
 
   self.updateHints = function() {
     var card = self.selectedCard;
+    //console.log(card);
     card.hints = new Array(8);
 
     card.hints[0] = $('#hint-1').val();
@@ -233,9 +269,18 @@ function Deck(id, subject, cards, category_key) {
     card.hints[6] = $('#hint-7').val();
     card.hints[7] = $('#hint-8').val();
 
-    viewmanager.updateView({
-      target: {value:6}
+    updateHints(card.category_key,card.key_term,card.hints)
+    .then(function(){
+      viewmanager.updateView({
+        target: {value:6}
+      });
+    })
+    .catch(function(error){
+      alert("Unable to update hints");
+      console.log(error);
     });
+
+
   }
 
   self.cancelUpdateHints = function() {
@@ -246,6 +291,7 @@ function Deck(id, subject, cards, category_key) {
 
   self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', [],'',category_key);
+    console.log(newCard);
     if( typeof potentialCard === 'object')
       newCard = potentialCard;
     self.cards.push(newCard);
@@ -531,9 +577,11 @@ function DeckCollection(decks=[]) {
 
   self.addDeck = function(potentialDeck) {
     //  alert("in add card");
-    var newDeck = new Deck(self.deckCount, '', [],'');
-    if(typeof potentialDeck === 'object')
+    var newDeck = new Deck(self.deckCount, '', [], '');
+    if(typeof potentialDeck === 'object' && typeof potentialDeck.id === 'number'){
       newDeck = potentialDeck;
+      console.log("I am working");
+    }
     self.deckCount = self.deckCount + 1;
 
     self.$view.prepend(
