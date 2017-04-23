@@ -22,9 +22,11 @@ function createCategory(newSubject) { //create a new category
           updates['/categories/' + newCategoryKey] = categoryData;
           rootRef.update(updates);
           resolve(newCategoryKey);
+        }else{
+          alert("This deck already exists. Please change the name of the deck");
+          reject(new Error("Deck already exists"));
         }
-        alert("This deck already exists. Please change the name of the deck");
-        reject(new Error("Deck already exists"));
+
       })
       .catch(function(error) {
         //something went wrong
@@ -73,7 +75,6 @@ function createTerm(newTerm, selectedDeckKey) {
 //Read section
 function addDecksFromDB(deckCollection) {
   return new Promise(function(resolve, reject) {
-      alert("in deck from db");
       let categoryRef = rootRef.child('categories').orderByChild('subject');
       categoryRef.once('value')
         .then(function(snapShot) {

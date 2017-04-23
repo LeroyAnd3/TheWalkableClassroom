@@ -203,7 +203,7 @@ function Deck(id, subject, cards, category_key) {
         });
     } else {
       //alert("create new term");
-      createTerm(newTerm, card.category_key)
+      createTerm(newTerm, card.category_key,card.key_term)
         .then(function(termKey) {
           self.cards.map(function(cards) {
             if (id === cards.id) {
