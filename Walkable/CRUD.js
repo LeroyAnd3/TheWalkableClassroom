@@ -301,26 +301,6 @@ function makeCard(card, cardArray, id, list, term) {
 
 }
 
-function findKey(category) {
-  return new Promise(function(resolve, reject) {
-    let categoryRef = rootRef.child('categories')
-      .orderByChild('subject')
-      .equalTo(category);
-    categoryRef.once('child_added')
-      .then(function(snapShot) {
-        if (snapShot.exists()) {
-          let key = snapShot.val().key_category;
-          resolve(key);
-        } else {
-          reject("Could not find " + category + " key");
-        }
-      })
-      .catch(function(error) {
-        reject(error);
-      });
-  });
-}
-
 function pushHints(hintArray) {
   var list = {
     hint1: hintArray[0],
