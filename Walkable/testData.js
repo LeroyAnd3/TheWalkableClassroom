@@ -217,7 +217,7 @@ function Deck(id, subject, cards, category_key) {
         })
         .catch(function(error) {
           alert("Failed to update card");
-          console.log(error)
+          console.log(error.message);
         });
     }
   }
@@ -277,7 +277,7 @@ function Deck(id, subject, cards, category_key) {
     })
     .catch(function(error){
       alert("Unable to update hints");
-      console.log(error);
+      console.log(error.message);
     });
 
 
@@ -417,7 +417,7 @@ function DeckCollection(decks=[]) {
         .then(function() {
           self.decks.map(function(deck) {
             if (id === deck.id) {
-              deck.setSubject(newSubject);
+              deck.subject=newSubject;
               subject.html(newSubject);
             }
           });
@@ -430,8 +430,8 @@ function DeckCollection(decks=[]) {
         .then(function(category_key) {
           self.decks.map(function(deck) {
             if (id === deck.id) {
-              deck.setSubject(newSubject);
-              deck.setCategoryKey(category_key);
+              deck.subject=newSubject;
+              deck.category_key=category_key;
               subject.html(newSubject);
             }
           });
