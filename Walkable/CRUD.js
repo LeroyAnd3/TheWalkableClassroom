@@ -10,24 +10,23 @@ function createCategory(newSubject) { //create a new category
       .equalTo(newSubject);
     categoryRef.once('value')
       .then(function(snapShot) { //check if subject exist
-        if (snapShot.exists()) {
-          alert("You are making a category with the same name of another. Please change the name of the category");
-          reject("Deck already exists");
+        if (!snapShot.exists()) {
+          //A category entry
+          let newCategoryKey = rootRef.child('categories').push().key;
+          let categoryData = {
+            subject: newSubject,
+            key_category: newCategoryKey
+          };
+          //Write new category data
+          let updates = {};
+          updates['/categories/' + newCategoryKey] = categoryData;
+          rootRef.update(updates);
+          resolve(newCategoryKey);
         }
-        //A category entry
-        let newCategoryKey = rootRef.child('categories').push().key;
-        let categoryData = {
-          subject: newSubject,
-          key_category: newCategoryKey,
-          count: 0
-        };
-        //Write new category data
-        let updates = {};
-        updates['/categories/' + newCategoryKey] = categoryData;
-        rootRef.update(updates);
-        resolve(newCategoryKey);
-
-      }, function(error) {
+        alert("This deck already exists. Please change the name of the deck");
+        reject(new Error("Deck already exists"));
+      })
+      .catch(function(error) {
         //something went wrong
         reject(error);
       });
@@ -39,10 +38,7 @@ function createTerm(newTerm, selectedDeckKey) {
     let query = categoryTermsRef.child(selectedDeckKey).orderByChild('term').equalTo(newTerm);
     query.once('value')
       .then(function(snapShot){
-        if(snapShot.exists()){
-          alert("This card already exist. Please name this card something else");
-          reject("This card already exist!");
-        }else{
+        if(!snapShot.exists()){
           let newTermKey = categoryTermsRef.child(selectedDeckKey).push().key;
           let newCard = {
             term:newTerm,
@@ -62,6 +58,10 @@ function createTerm(newTerm, selectedDeckKey) {
           update["/category-terms/"+selectedDeckKey+"/"+newTermKey]=newCard;
           rootRef.update(update);
           resolve(newTermKey);
+
+        }else{
+          alert("This card already exist.");
+          reject(new Error("This card already exist"));
         }
       })
       .catch(function(error){
@@ -171,7 +171,7 @@ function appendCategories() {
       resolve();
     })
     .catch(function(error) {
-      reject(error);
+      reject(new Error("Failed to append categories: " + error.message));
     });
   })
 }
@@ -189,7 +189,7 @@ function updateCategory(selectedDeckKey,newName) {
         return rootRef.update(update);
       })
       .catch(function(error) {
-        reject(error);
+        reject(new Error("Failed to update deck: " + error.message));
       });
   });
 }
@@ -200,7 +200,7 @@ function updateTerm(newTerm,deckKey, termKey) {
     query.once('child_added')
       .then(function(snapShot){
         if(!snapShot.exists())
-          reject("Term key does not exist in DB: " + termKey);
+          reject(new Error("Term key does not exist in DB: " + termKey));
         let k = snapShot.val();
         k.term = newTerm;
         let update = {};
@@ -209,7 +209,7 @@ function updateTerm(newTerm,deckKey, termKey) {
         resolve();
       })
       .catch(function(error){
-        reject(error);
+        reject(new Error("Failed to update term: " + error.message));
       });
 
   });
@@ -233,7 +233,7 @@ function updateHints(deckKey,termKey,hintArray){
         resolve("successfully updated hints");
       })
       .catch(function(error){
-        reject(error);
+        reject(new Error("Failed to update hint: " + error.message));
       });
   });
 }
@@ -249,7 +249,7 @@ function removeCategory(key) {
         resolve();
       })
       .catch(function(error) {
-        reject("Remove category failed: " + error.message);
+        reject(new Error("Remove category failed: " + error.message));
       });
   });
 }
@@ -263,7 +263,7 @@ function removeTerm(deckKey, termKey) {
         resolve("Remove category successful!");
       })
       .catch(function(error) {
-        reject(error);
+        reject(new Error("Failed to remove term: " + error.message));
       });
   });
 }
