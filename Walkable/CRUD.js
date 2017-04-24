@@ -93,6 +93,7 @@ function addDecksFromDB(deckCollection) {
 
 function addCardsFromDB(selectDeck) {
     return new Promise(function(resolve, reject) {
+      //console.log(selectDeck);
       let query = categoryTermsRef.orderByKey().equalTo(selectDeck.category_key);
       query.once('child_added')
         .then(function(snapShot) {
@@ -105,29 +106,16 @@ function addCardsFromDB(selectDeck) {
               id: selectDeck.cardCount,
               term: k.term,
               hints: hint,
-              key_term: k.key_term
+              key_term: k.key_term,
+              category_key: selectDeck.category_key
             };
-            //console.log(newCard);
-            //console.log(selectDeck.cardCount);
-            selectDeck.addCard(newCard);
-            // for (var i = 0; i < hint.length; i++) {
-            //   newCard.hintIds[i] = data.hintCount;
-            //   data.hints.push({
-            //     id: data.hintCount,
-            //     text: hint[i]
-            //   });
-            //   data.hintCount = data.hintCount + 1;
-            // }
-            // //  console.log("Subject: " + deck.subject + ",ID: " + deck.id);
-            // //  console.log(newCard.term);
-            // data.cards.push(newCard);
-            // data.selectedCardId = data.cardCount;
-            // data.cardCount = data.cardCount + 1;
+
+            selectDeck.cards = selectDeck.addCard(newCard);
           });
           resolve();
         })
         .catch(function(error) {
-          reject(error);
+          reject(new Error("Failed to load cards from DB: " + error.message));
         });
     });
   }

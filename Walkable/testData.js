@@ -291,13 +291,19 @@ function Deck(id, subject, cards, category_key) {
 
   self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', [],'',category_key);
-    console.log(newCard);
-    if( typeof potentialCard === 'object')
+    //console.log(newCard);
+
+    if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
+      // console.log("I am adding a new card");
+      // console.log(self.cards);
+      //console.log(newCard);
+    }
     self.cards.push(newCard);
     self.cardCount = self.cardCount + 1;
 
     self.renderCard(newCard);
+    return self.cards;
   }
 
   self.cards = cards.map(function(card) {
@@ -313,6 +319,10 @@ function DeckCollection(decks=[]) {
   self.selectedDeck = null;
   self.deckCount = 0;
   self.$view = $('#view-5');
+
+  self.setSelectedDeck = function(deckToSet) {
+    self.selectedDeck = deckToSet;
+  }
 
   self.getDeckId = function(string) {
     return Number(string.split('-')[1]);
@@ -580,7 +590,7 @@ function DeckCollection(decks=[]) {
     var newDeck = new Deck(self.deckCount, '', [], '');
     if(typeof potentialDeck === 'object' && typeof potentialDeck.id === 'number'){
       newDeck = potentialDeck;
-      console.log("I am working");
+      //console.log("I am working");
     }
     self.deckCount = self.deckCount + 1;
 
@@ -634,7 +644,19 @@ let deckcollection = new DeckCollection();
 //console.log(deckcollection);
 
 addDecksFromDB(deckcollection)
+.then(function(){
+  // deckcollection.decks.forEach(function(selectedDeck){
+  deckcollection.decks.forEach(function(deckToSelect){
+    // console.log("I am the deck to be", deckToSelect);
+    deckcollection.setSelectedDeck(deckToSelect);
+    addCardsFromDB(deckcollection.selectedDeck);
+    // console.log(selectedDeck.subject);
+    // addCardsFromDB(selectedDeck);
+  });
+}).then(function(){
+  // console.log(deckcollection);
+  console.log(deckcollection.decks);
+})
 .catch(function(error){
   console.log(error.message);
 });
-console.log(deckcollection);
