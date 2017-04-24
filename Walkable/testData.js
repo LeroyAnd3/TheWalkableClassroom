@@ -107,10 +107,9 @@ function Deck(id, subject, cards, category_key) {
   }
 
   self.getCardById = function(id) {
-    return self.cards.filter(function (card) {
+    return self.cards.filter(function(card) {
       return card.id === id;
-    });
-
+    })[0];
   }
 
   self.selectCard = function(e) {
@@ -290,14 +289,6 @@ function Deck(id, subject, cards, category_key) {
     });
   }
 
-  self.setSubject = function (subject) {
-    self.subject = subject;
-  }
-
-  self.setCategoryKey = function (category_key) {
-    self.category_key = category_key;
-  }
-
   self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', [],'',category_key);
     console.log(newCard);
@@ -353,23 +344,10 @@ function DeckCollection(decks=[]) {
     e.stopPropagation();
     let id = self.getDeckId(this.id);
     let deck = self.getDeckById(id);
-    let undefine = false;
-    if(deck===undefined){
-      undefine=true;
-    //  console.log(undefine);
-    }
-    //console.log(typeof deck);
-    if(undefine != true){
+    if(deck.category_key!=''){
       removeCategory(deck.category_key)
       .catch(function(error){
-        //alert("unable to delete deck");
-        console.log(error.message);
-        return false;
-      });
-    }else if( deck.category_key!==''){
-      removeCategory(deck.category_key)
-      .catch(function(error){
-        //alert("unable to delete deck");
+        alert("unable to delete deck");
         console.log(error.message);
         return false;
       });
@@ -433,9 +411,8 @@ function DeckCollection(decks=[]) {
     input.val('');
     //if key_category has not been added then create a new deck
     //Otherwise, the deck already exists and just update the category name
-    console.log(deck);
     if (deck.category_key != '') {
-      //console.log(deck.category_key);
+      console.log(deck.category_key);
       updateCategory(deck.category_key, newSubject)
         .then(function() {
           self.decks.map(function(deck) {
@@ -599,6 +576,7 @@ function DeckCollection(decks=[]) {
   }
 
   self.addDeck = function(potentialDeck) {
+    //  alert("in add card");
     var newDeck = new Deck(self.deckCount, '', [], '');
     if(typeof potentialDeck === 'object' && typeof potentialDeck.id === 'number'){
       newDeck = potentialDeck;
@@ -659,3 +637,4 @@ addDecksFromDB(deckcollection)
 .catch(function(error){
   console.log(error.message);
 });
+console.log(deckcollection);
