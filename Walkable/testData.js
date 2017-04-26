@@ -295,15 +295,12 @@ function Deck(id, subject, cards, category_key) {
 
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
-      // console.log("I am adding a new card");
-      // console.log(self.cards);
-      //console.log(newCard);
     }
-    self.cards.push(newCard);
-    self.cardCount = self.cardCount + 1;
 
-    self.renderCard(newCard);
-    return self.cards;
+    this.cards.push(newCard);
+    this.cardCount = this.cardCount + 1;
+    this.renderCard(newCard);
+    return this.cards;
   }
 
   self.cards = cards.map(function(card) {

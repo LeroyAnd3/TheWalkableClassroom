@@ -109,7 +109,7 @@ function addCardsFromDB(selectDeck) {
               key_term: k.key_term,
               category_key: selectDeck.category_key
             };
-
+            
             selectDeck.cards = selectDeck.addCard(newCard);
           });
           resolve();
