@@ -1,280 +1,116 @@
 [debug] ----------------------------------------------------------------------
 [debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
+[debug] CLI Version:  3.6.1
 [debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Fri Apr 21 2017 05:54:40 GMT-0400 (Eastern Daylight Time)
+[debug] Node Version: v6.10.2
+[debug] Time:         Wed Apr 26 2017 23:40:29 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/T_mgBTu0_rlr4ZlZMXQH6Ote6_QlI6-Q1poUQTxKrqM',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Wed Apr 26 2017 23:40:29 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:40:29 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Wed Apr 26 2017 23:40:29 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:40:30 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
+ Wed Apr 26 2017 23:40:30 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000
 [debug] ----------------------------------------------------------------------
 [debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
+[debug] CLI Version:  3.6.1
 [debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Fri Apr 21 2017 05:58:01 GMT-0400 (Eastern Daylight Time)
+[debug] Node Version: v6.10.2
+[debug] Time:         Wed Apr 26 2017 23:45:16 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:45:16 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Wed Apr 26 2017 23:45:16 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:45:16 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
+ Wed Apr 26 2017 23:45:17 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000
 [debug] ----------------------------------------------------------------------
 [debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
+[debug] CLI Version:  3.6.1
 [debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 13:43:17 GMT-0400 (Eastern Daylight Time)
+[debug] Node Version: v6.10.2
+[debug] Time:         Wed Apr 26 2017 23:52:22 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:52:22 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Wed Apr 26 2017 23:52:23 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:52:23 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
+ Wed Apr 26 2017 23:52:24 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000
 [debug] ----------------------------------------------------------------------
 [debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
+[debug] CLI Version:  3.6.1
 [debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 14:16:58 GMT-0400 (Eastern Daylight Time)
+[debug] Node Version: v6.10.2
+[debug] Time:         Wed Apr 26 2017 23:54:07 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:54:07 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Wed Apr 26 2017 23:54:07 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 14:40:50 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 14:57:16 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 21:33:32 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 22:00:53 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 23:59:40 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 22:00:53 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 23:59:40 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 22:00:53 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sat Apr 22 2017 23:59:40 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sun Apr 23 2017 00:41:45 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Sun Apr 23 2017 00:45:14 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Mon Apr 24 2017 13:57:45 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Mon Apr 24 2017 14:00:45 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Mon Apr 24 2017 14:06:07 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Mon Apr 24 2017 14:10:02 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
-[info] Public Directory: Walkable
-[info] 
-[info] Server listening at: http://localhost:5000
-[debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] CLI Version:  3.5.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Mon Apr 24 2017 15:25:44 GMT-0400 (Eastern Daylight Time)
-[debug] ----------------------------------------------------------------------
-[debug] 
-[info] Starting Firebase development server...
-[info] 
-[info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
+ Wed Apr 26 2017 23:54:08 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
+ Wed Apr 26 2017 23:54:08 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000

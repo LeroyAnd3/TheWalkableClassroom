@@ -395,6 +395,7 @@ function DeckCollection(decks=[]) {
   }
 
   self.updateDeckTerm = function(e) {
+    console.log("inside updateDeckTerm");
     e.stopPropagation();
     let id = self.getDeckId(this.id);
     var deck = self.getDeckById(id);
@@ -418,8 +419,10 @@ function DeckCollection(decks=[]) {
     input.val('');
     //if key_category has not been added then create a new deck
     //Otherwise, the deck already exists and just update the category name
-    if (deck.category_key != '') {
-      console.log(deck.category_key);
+    console.log(deck.category_key.length);
+    if (deck.category_key.length != 0) {
+      console.log("key exist, update category");
+      console.log(deck);
       updateCategory(deck.category_key, newSubject)
         .then(function() {
           self.decks.map(function(deck) {
@@ -433,6 +436,7 @@ function DeckCollection(decks=[]) {
           console.log(error.message);
         });
     } else {
+      console.log("category does not exist, update term");
       createCategory(newSubject)
         .then(function(category_key) {
           self.decks.map(function(deck) {
@@ -651,7 +655,7 @@ addDecksFromDB(deckcollection)
     // addCardsFromDB(selectedDeck);
   });
 }).then(function(){
-  // console.log(deckcollection);
+  console.log(deckcollection);
   console.log(deckcollection.decks);
 })
 .catch(function(error){
