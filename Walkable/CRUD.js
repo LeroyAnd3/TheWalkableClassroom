@@ -37,6 +37,7 @@ function createCategory(newSubject) { //create a new category
 
 function createTerm(newTerm, selectedDeckKey) {
   return new Promise(function(resolve,reject){
+    console.log(selectedDeckKey);
     let query = categoryTermsRef.child(selectedDeckKey).orderByChild('term').equalTo(newTerm);
     query.once('value')
       .then(function(snapShot){
@@ -109,7 +110,7 @@ function addCardsFromDB(selectDeck) {
               key_term: k.key_term,
               category_key: selectDeck.category_key
             };
-            
+
             selectDeck.cards = selectDeck.addCard(newCard);
           });
           resolve();

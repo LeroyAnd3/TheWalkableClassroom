@@ -107,6 +107,9 @@ function Deck(id, subject, cards, category_key) {
   }
 
   self.getCardById = function(id) {
+    //alert("inside getCardById");
+    //console.log(self.cards);
+    //console.log(cards);
     return self.cards.filter(function(card) {
       return card.id === id;
     })[0];
@@ -117,7 +120,8 @@ function Deck(id, subject, cards, category_key) {
     var id = self.getCardId(e.target.id);
     var card = self.getCardById(id);
     var $clickedCard = $(`#card-${id}`);
-
+    console.log(id);
+    console.log(card);
     //Handle deletion logic here because of strange bug in event listener code
     if( e.target.id === `deleteCard-${id}`) {
       removeTerm(card.category_key,card.key_term)
