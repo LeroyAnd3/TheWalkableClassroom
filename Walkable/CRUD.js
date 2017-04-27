@@ -168,15 +168,23 @@ function appendCategories() {
 
 //Update section
 function updateCategory(selectedDeckKey,newName) {
+  console.log("this is the key for the selected deck: "+ selectedDeckKey);
+  let ref = rootRef.child('/categories/' + selectedDeckKey);
   return new Promise(function(resolve, reject) {
-    categoryRef.orderByChild('key').equalTo(selectedDeckKey);
-    categoryRef.once('child_added')
-      .then(function(snapShot) {
-        let k = snapShot.val();
-        k.subject = newName;
-        let update = {};
-        update['/categories/' + selectedDeckKey] = k;
-        return rootRef.update(update);
+    ref.once('value')
+      .then(function(snapShot){
+        if(!snapShot.exists()){
+          alert("Could not update deck name");
+          //console.log(snapShot.val());
+          reject(new Error("unable to find deck in DB"));
+        }else{
+          let k = snapShot.val();
+          k.subject = newName;
+          let update = {};
+          update['/categories/' + selectedDeckKey] = k;
+          rootRef.update(update);
+          resolve();
+        }
       })
       .catch(function(error) {
         reject(new Error("Failed to update deck: " + error.message));

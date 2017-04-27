@@ -134,7 +134,7 @@ function Deck(id, subject, cards, category_key) {
         return;
       })
       .catch(function(){
-        console.log(error.message);
+        console.log(error);
       });
 
     }
@@ -221,7 +221,7 @@ function Deck(id, subject, cards, category_key) {
         })
         .catch(function(error) {
           alert("Failed to update card");
-          console.log(error.message);
+          console.log(error);
         });
     }
   }
@@ -281,7 +281,7 @@ function Deck(id, subject, cards, category_key) {
     })
     .catch(function(error){
       alert("Unable to update hints");
-      console.log(error.message);
+      console.log(error);
     });
 
 
@@ -359,7 +359,7 @@ function DeckCollection(decks=[]) {
       removeCategory(deck.category_key)
       .catch(function(error){
         alert("unable to delete deck");
-        console.log(error.message);
+        console.log(error);
         return false;
       });
     }
@@ -423,27 +423,33 @@ function DeckCollection(decks=[]) {
     input.val('');
     //if key_category has not been added then create a new deck
     //Otherwise, the deck already exists and just update the category name
-    console.log(deck.category_key.length);
+    //console.log("This is the selected deck: ");
+    // console.log(deck);
+    // console.log(deck.category_key.length);
     if (deck.category_key.length != 0) {
       console.log("key exist, update category");
-      console.log(deck);
+      console.log("Deck key before update and being sent to updateCategory() " + deck.category_key);
       updateCategory(deck.category_key, newSubject)
         .then(function() {
+          console.log("inside the Promise for updateCategory");
           self.decks.map(function(deck) {
+            //console.log("inside map function for updating a deck");
             if (id === deck.id) {
+            //  console.log("Deck key after update " + deck.category_key);
               deck.subject=newSubject;
               subject.html(newSubject);
             }
           });
         })
         .catch(function(error) {
-          console.log(error.message);
+          console.log(error);
         });
     } else {
-      console.log("category does not exist, update term");
+      //console.log("category does not exist, create deck");
       createCategory(newSubject)
         .then(function(category_key) {
           self.decks.map(function(deck) {
+            //console.log("inside map function for creating a new deck");
             if (id === deck.id) {
               deck.subject=newSubject;
               deck.category_key=category_key;
@@ -452,7 +458,7 @@ function DeckCollection(decks=[]) {
           });
         })
         .catch(function(error) {
-          console.log(error.message);
+          console.log(error);
         });
     }
   };
@@ -663,5 +669,5 @@ addDecksFromDB(deckcollection)
   console.log(deckcollection.decks);
 })
 .catch(function(error){
-  console.log(error.message);
+  console.log(error);
 });
