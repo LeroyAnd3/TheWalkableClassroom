@@ -61,7 +61,10 @@ function createTerm(newTerm, selectedDeckKey) {
           update["/category-terms/"+selectedDeckKey+"/"+newTermKey]=newCard;
           rootRef.update(update);
           resolve(newTermKey);
-
+          return {
+            term: newCard.term,
+            key_term: newCard.newTermKey
+          };
         }else{
           alert("This card already exist.");
           reject(new Error("This card already exist"));

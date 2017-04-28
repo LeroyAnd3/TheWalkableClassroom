@@ -58,18 +58,19 @@ function Deck(id, subject, cards, category_key) {
   self.cardCount = 0;
   self.selectedCard = null;
   self.$view = $('#view-6');
+  this.$view = $('#view-6');
 
   self.renderButton = function() {
-    self.$view.append(
+    this.$view.append(
       '<div class="card" style="background: #F5F5F5;">' +
         '<br>Want to create<br>a new card?<br>' +
         '<button id="addCardButton" class="addCardButton">Click to Create</button>' +
       '</div>'
     );
-  }
+  }.bind(this);
 
   self.renderCard = function(card) {
-    self.$view.prepend(
+    this.$view.prepend(
       `<div id=card-${card.id} class="card">` +
         `<button id="deleteCard-${card.id}" class="cardDeleteButton">x</button>`+
         `<input id=inputCard-${card.id} size=12 class="hidden"></input><br>` +
@@ -82,70 +83,70 @@ function Deck(id, subject, cards, category_key) {
       `</div>`
     );
     var domCard = document.getElementById(`card-${card.id}`);
-    domCard.addEventListener('click', self.selectCard);
+    domCard.addEventListener('click', this.selectCard);
 
     var editButton = document.getElementById(`editCardTerm-${card.id}`);
-    editButton.addEventListener('click', self.openCardTermEditor);
+    editButton.addEventListener('click', this.openCardTermEditor);
 
     var hintsButton = document.getElementById(`editCardHints-${card.id}`);
-    hintsButton.addEventListener('click', self.openHintView);
+    hintsButton.addEventListener('click', this.openHintView);
 
     var updateTermButton = document.getElementById(`updateCardTerm-${card.id}`);
-    updateTermButton.addEventListener('click', self.updateCardTerm);
+    updateTermButton.addEventListener('click', this.updateCardTerm);
 
     var cancelUpdateTermButton = document.getElementById(`cancelCardTerm-${card.id}`);
-    cancelUpdateTermButton.addEventListener('click', self.cancelUpdateCardTerm);
+    cancelUpdateTermButton.addEventListener('click', this.cancelUpdateCardTerm);
 
 
     //Deletion doesn't bind to event listener well, so just adding it to the selectCard method as edge case
-  }
+  }.bind(this);
 
   self.getCardId = function(string) {
     return Number(string.split('-')[1]);
-  }
+  }.bind(this);
 
   self.getCardById = function(id) {
-    //alert("inside getCardById");
-    //console.log(self.cards);
-    //console.log(cards);
-    return self.cards.filter(function(card) {
+    return this.cards.filter(function(card) {
       return card.id === id;
     })[0];
-  }
+  }.bind(this);
 
   self.selectCard = function(e) {
     e.stopPropagation();
-    var id = self.getCardId(e.target.id);
-    var card = self.getCardById(id);
+    var id = this.getCardId(e.target.id);
+    var card = this.getCardById(id);
     var $clickedCard = $(`#card-${id}`);
-    console.log(id);
-    console.log(card);
+
     //Handle deletion logic here because of strange bug in event listener code
     if( e.target.id === `deleteCard-${id}`) {
+      console.log(card);
+      console.log(this.cards);
       removeTerm(card.category_key,card.key_term)
       .then(function(){
         $(`#card-${id}`).removeClass('selected');
         $(`#card-${id}`).remove();
-        self.cards = self.cards.filter(function(card) {
+
+        this.cards = this.cards.filter(function(card) {
           return card.id !== id;
         });
+
         return;
       })
       .catch(function(){
         console.log(error);
       });
-
+    return;
     }
     $clickedCard.addClass('selected');
 
-    self.selectedCard = self.cards.filter(function(card) {
+    this.selectedCard = this.cards.filter(function(card) {
       if(card.id === id)
         return true;
       else {
         $(`#card-${card.id}`).removeClass('selected');
       }
     })[0];
-  }
+  }.bind(this);
 
   self.toggleCardTermEditorView = function(id, toggleOpen) {
     var $termInput = $(`#inputCard-${id}`);
@@ -170,35 +171,31 @@ function Deck(id, subject, cards, category_key) {
       $editTermButton.removeClass('hidden');
       $editHintsButton.removeClass('hidden');
     }
-  }
+  }.bind(this);
 
   self.openCardTermEditor = function(e) {
     e.stopPropagation();
-    var id = self.getCardId(this.id);
+    var id = this.getCardId(e.target.id);
 
-    self.toggleCardTermEditorView(id, true);
-  }
+    this.toggleCardTermEditorView(id, true);
+  }.bind(this);
 
   self.updateCardTerm = function(e) {
     e.stopPropagation();
-    var id = self.getCardId(this.id);
-    var card = self.getCardById(id);
-    self.toggleCardTermEditorView(id, false);
+    var id = this.getCardId(e.target.id);
+    var card = this.getCardById(id);
+    this.toggleCardTermEditorView(id, false);
+    console.log(this.cards);
     var $termInput = $(`#inputCard-${id}`);
     var $term = $(`#term-${id}`);
     var newTerm = $termInput.val();
     $termInput.val('');
-    console.log(card.key_term.length);
-    if (card.key_term.length !=0 ) {
-      //alert("update term");
+
+    if (card.key_term !== '') {
       updateTerm(newTerm, card.category_key,card.key_term)
         .then(function() {
-          self.cards.map(function(cards) {
-            if (id === cards.id) {
-              cards.term = newTerm;
-              $term.html(newTerm);
-            }
-          });
+          card.term = newTerm;
+          $term.html(newTerm);
         })
         .catch(function(error) {
           console.log(error)
@@ -207,36 +204,29 @@ function Deck(id, subject, cards, category_key) {
       //alert("create new term");
       createTerm(newTerm, card.category_key,card.key_term)
         .then(function(termKey) {
-          self.cards.map(function(cards) {
-            if (id === cards.id) {
-              cards.term = newTerm;
-              cards.key_term = termKey
-              $term.html(newTerm);
-              console.log(cards);
-            }
-          });
-          //console.log(card);
+          card.term = newTerm;
+          $term.html(newTerm);
         })
         .catch(function(error) {
           alert("Failed to update card");
           console.log(error);
         });
     }
-  }
+  }.bind(this);
 
   self.cancelUpdateCardTerm = function(e) {
     e.stopPropagation();
-    var id = self.getCardId(this.id);
+    var id = this.getCardId(e.target.id);
 
-    self.toggleCardTermEditorView(id, false);
+    this.toggleCardTermEditorView(id, false);
 
     $(`#inputCard-${id}`).val('');
-  }
+  }.bind(this);
 
   self.openHintView = function(e) {
-    self.selectCard(e);
+    this.selectCard(e);
 
-    var card = self.selectedCard;
+    var card = this.selectedCard;
     card.hints = (card.hints.length > 0)? card.hints : new Array(8);
 
     $('#hint-1').val(card.hints[0]);
@@ -251,14 +241,14 @@ function Deck(id, subject, cards, category_key) {
     viewmanager.updateView({
       target: {value:7}
     });
-  }
+  }.bind(this);
 
   self.emptyView = function() {
-    self.$view.empty();
-  }
+    this.$view.empty();
+  }.bind(this)
 
   self.updateHints = function() {
-    var card = self.selectedCard;
+    var card = this.selectedCard;
     //console.log(card);
     card.hints = new Array(8);
 
@@ -283,13 +273,13 @@ function Deck(id, subject, cards, category_key) {
     });
 
 
-  }
+  }.bind(this)
 
   self.cancelUpdateHints = function() {
     viewmanager.updateView({
       target: {value:6}
     });
-  }
+  }.bind(this);
 
   self.addCard = function(potentialCard) {
     var newCard = new Card(self.cardCount, '', [],'',category_key);
@@ -300,7 +290,7 @@ function Deck(id, subject, cards, category_key) {
     this.cards.push(newCard);
     this.cardCount = this.cardCount + 1;
     this.renderCard(newCard);
-  }
+  }.bind(this);
 
   self.cards = cards.map(function(card) {
     self.addCard(card);
@@ -568,15 +558,15 @@ function DeckCollection(decks=[]) {
 let deckcollection = new DeckCollection();
 
 addDecksFromDB(deckcollection)
-.then(function(){
-  deckcollection.decks.forEach(function(deckToSelect){
-    deckcollection.setSelectedDeck(deckToSelect);
-    addCardsFromDB(deckcollection.selectedDeck);
+  .then(function(){
+    deckcollection.decks.forEach(function(deckToSelect){
+      deckcollection.setSelectedDeck(deckToSelect);
+      addCardsFromDB(deckcollection.selectedDeck);
+    });
+  }).then(function(){
+    // console.log(deckcollection);
+    // console.log(deckcollection.decks);
+  })
+  .catch(function(error){
+    console.log(error);
   });
-}).then(function(){
-  // console.log(deckcollection);
-  // console.log(deckcollection.decks);
-})
-.catch(function(error){
-  console.log(error);
-});
