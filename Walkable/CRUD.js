@@ -35,16 +35,21 @@ function createCategory(newSubject) { //create a new category
   });
 }
 
-function createTerm(newTerm, selectedDeckKey) {
+function createTerm(selectedDeckKey) {
   return new Promise(function(resolve,reject){
     console.log(selectedDeckKey);
-    let query = categoryTermsRef.child(selectedDeckKey).orderByChild('term').equalTo(newTerm);
+    //console.log(newCard);
+    let query = categoryTermsRef.orderByKey().equalTo(selectedDeckKey);
     query.once('value')
       .then(function(snapShot){
-        if(!snapShot.exists()){
+        //console.log(snapShot.val());
+        if(snapShot.exists()){
+          //console.log("got into if statement");
           let newTermKey = categoryTermsRef.child(selectedDeckKey).push().key;
+          //console.log("pushing key to categoryTermsRef");
+          //console.log(newTermKey);
           let newCard = {
-            term:newTerm,
+            term:'',
             key_term:newTermKey,
             hint:{
               hint1:'',
@@ -57,17 +62,15 @@ function createTerm(newTerm, selectedDeckKey) {
               hint8:''
             }
           };
+          //console.log("before update");
           let update = {};
           update["/category-terms/"+selectedDeckKey+"/"+newTermKey]=newCard;
           rootRef.update(update);
+          //console.log("after update");
           resolve(newTermKey);
-          return {
-            term: newCard.term,
-            key_term: newCard.newTermKey
-          };
         }else{
-          alert("This card already exist.");
-          reject(new Error("This card already exist"));
+          alert("unable to make new card");
+          reject(new Error("Could not find the deck in the DB. Check query"));
         }
       })
       .catch(function(error){

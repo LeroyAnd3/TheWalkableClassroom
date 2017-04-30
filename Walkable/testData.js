@@ -43,7 +43,7 @@ let viewmanager = new ViewManager();
 function Card(id, term, hints=[], key_term, category_key){
   var self = this;
   this.id = id;
-  this.term;
+  this.term = term;
   this.hints = hints;
   this.key_term = key_term;
   this.category_key = category_key;
@@ -191,7 +191,7 @@ function Deck(id, subject, cards, category_key) {
     var newTerm = $termInput.val();
     $termInput.val('');
 
-    if (card.key_term !== '') {
+
       updateTerm(newTerm, card.category_key,card.key_term)
         .then(function() {
           card.term = newTerm;
@@ -200,18 +200,7 @@ function Deck(id, subject, cards, category_key) {
         .catch(function(error) {
           console.log(error)
         });
-    } else {
-      //alert("create new term");
-      createTerm(newTerm, card.category_key,card.key_term)
-        .then(function(termKey) {
-          card.term = newTerm;
-          $term.html(newTerm);
-        })
-        .catch(function(error) {
-          alert("Failed to update card");
-          console.log(error);
-        });
-    }
+
   }.bind(this);
 
   self.cancelUpdateCardTerm = function(e) {
@@ -285,11 +274,28 @@ function Deck(id, subject, cards, category_key) {
     var newCard = new Card(self.cardCount, '', [],'',category_key);
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
+      //console.log(typeof newCard);
+      this.cards.push(newCard);
+      this.cardCount = this.cardCount + 1;
+      this.renderCard(newCard);
+    }else{
+      createTerm(newCard.category_key)
+        .then(function(newCardKey){
+          newCard.key_term = newCardKey;
+          console.log(newCard);
+          //console.log()
+          console.log(this.cards);
+          this.cards.push(newCard); //this.cards is undefined
+          console.log("pushed card to database");
+          this.cardCount = this.cardCount + 1;
+          this.renderCard(newCard);
+        })
+        .catch(function(error){
+          console.log(error);
+          return false;
+        });
     }
 
-    this.cards.push(newCard);
-    this.cardCount = this.cardCount + 1;
-    this.renderCard(newCard);
   }.bind(this);
 
   self.cards = cards.map(function(card) {
