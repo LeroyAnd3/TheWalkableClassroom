@@ -22,11 +22,23 @@
 </head>
 
 <body>
+	<div id="header">
+		<div id="logo"> <!-- Green: #BCF8BC; -->
+			<span id="space1"></span>The<br>
+			<span id="space2"></span>Flippable<br>
+			<span id="space3"></span>Classroom
+		</div>
+
+		<div id="nav">
+			<a class="navigation" href="index.html" id="home">Home</a>
+			<a class="navigation" href="instructions.html" id="how">How to Play</a>
+			<a class="navigation" href="concentration.html" id="playnav">Play Game</a>
+		</div>
+	</div>
 
   <div class="container">
-    <header>
-      <h1 id="gametitle">Concentration Game</h1>
-    </header>
+
+		<h1 id="gametitle">Concentration Game</h1>
 
 		<form class="userInputs">
 			<select id="boardconfig">
@@ -39,13 +51,13 @@
 
 			<select id="cardbackground">
 				<option id="defaultback" value="defaultback">Select card background</option>
-				<option id="naturalwhite" value="naturalwhite">Natural White</option>
-				<option id="naturalblack" value="naturalblack">Natural Black</option>
-				<option id="sayagata" value="sayagata">Sayagata</option>
+				<option id="naturalwhite" value="naturalwhite">White Floor Tile</option>
+				<option id="naturalblack" value="naturalblack">Starry Galaxy</option>
+				<option id="sayagata" value="sayagata">Sayagata Gray & White</option>
 				<option id="retinawood" value="retinawood">Retina Wood</option>
-				<option id="circlesround" value="circlesround">Circles and Roundabouts</option>
-				<option id="oldmap" value="oldmap">Old Map</option>
-				<option id="skulls" value="skulls">Skulls</option>
+				<option id="circlesround" value="circlesround">Abstract Gray</option>
+				<option id="oldmap" value="oldmap">Tan Specks</option>
+				<option id="skulls" value="skulls">Beige Peter Max</option>
 			</select>
 
 			<select id="categories">
@@ -58,7 +70,7 @@
 			<button type="button" id="quit"> Quit </button>
 		</form>
 	<div>
-		<span id="time" style="visibility:hidden">00:00</span>
+		<span id="time" style="visibility:hidden, text-align:center;">00:00</span>
 	</div>
   </div>
 
@@ -74,7 +86,7 @@
 		Streak Count: <input type="number" id="streakCounter" value="0" readonly>
 	</form>
 
-	<footer>Copyright © 2017</footer>
+	<footer></footer>
 
 
 </body>

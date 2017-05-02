@@ -110,19 +110,7 @@ button{
   color: #000000;
 }
 
-#home{
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#create {
-  color: #000000;
-}
-
-#create:hover {
+#home:hover{
   color: #000000;
   text-align: center;
   border: 2px solid #000000;

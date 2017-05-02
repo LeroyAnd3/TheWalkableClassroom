@@ -1,8 +1,9 @@
 body {
-    background: #00BFFF;
+    background: #DCDCDC ;
     font-size: 12pt;
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-    text-align: center;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 p {
   font-size: 11pt;
@@ -10,16 +11,132 @@ p {
 
 form {
   text-align: center;
-  padding: 30px;
+  padding: 10px;
 }
 
-header, footer {
-    padding: 25px;
-    color: white;
-    background-color: black;
-    clear: center;
-    text-align: center;
-    border-radius: 10px;
+#space1 {
+  padding: 20px;
+}
+#space2 {
+  padding: 35px;
+}
+#space3 {
+  padding: 50px;
+}
+
+#logo {
+  font-size: 35pt;
+  text-align: left;
+  width: 100%;
+  border-top: 5px double #000;
+  border-bottom: 5px double #000;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  background: url('./resources/map_cropped.jpeg') no-repeat;
+  background-size: 100%;
+}
+
+#nav {
+  color: #ffffff;
+  font-size: 10pt;
+  text-align: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+#home {
+  color: #000000;
+}
+
+#home:hover{
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#create {
+  color: #000000;
+}
+
+#create:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#how {
+  color: #000000;
+}
+
+#how:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+#playnav {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#login {
+  color: #000000;
+}
+
+#login:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#logout {
+  color: #000000;
+}
+
+#logout:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a.navigation {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+#gametitle {
+  text-align: center;
+  font-size: 16pt;
+  margin: 0px;
+}
+
+#time {
+  display: table;
+  text-align: center;
 }
 
 .card {
@@ -66,17 +183,6 @@ button:not(#pause, #restart, #quit, #play, #hint, #solve) {
   text-align: center;
   float: center;
   width: auto;
-}
-
-#statusFace {
-  width:40px;
-  height:40px;
-  vertical-align: middle;
-}
-
-#gameStatus {
-  text-align: center;
-  padding-bottom: 15px;
 }
 
 #textBox {
