@@ -90,6 +90,6 @@ button:not(#pause, #restart, #quit, #play, #hint, #solve) {
 }
 
 .flipping {
-    transform: translate(0, 20px) rotateY(90deg);
-    -webkit-transform: translate(0, 20px) rotateY(90deg);
+    transform: translate(0, 0px) rotateY(90deg);
+    -webkit-transform: translate(0, 0px) rotateY(90deg);
 }

@@ -31,11 +31,11 @@ var selectTog=false;
 var initialized = false;
 var cardFlipDelay = 500; 					//delay of card flipping in ms
 var isAnimating = false;					//keeps track of ongoing animations going on
-var musicCardIdentifierString = " MUSIC CARD ";			//string used to identify if a card plays music
+var musicCardIdentifierString = " AUDIO CARD ";			//string used to identify if a card plays music
 var imageCardIdentifierString = " IMAGE CARD ";
 var ans0,ans1,hint0,hint1,id0,id1,litID0,litID1,termID0,termID1;
 var list;
-
+var gameCleared = false;
 
 class Card{
         constructor(id,answer,hint,itemid){
@@ -56,6 +56,7 @@ function playMusic(element){
 	if(cardSoundPlayer!=null) cardSoundPlayer.pause(); cardSoundPlayer = null;	
 	//Determine which song to play based off of the element's parameters
 	cardSoundPlayer = new Audio("./resources/ffxiv_sunleth_sunscape.mp3");
+	//cardSoundPlayer = new Audio("http://66.90.93.122/ost/fire-emblem-6-sword-of-seals-gamerip-/xzrqmlzryi/10-beyond-the-sky.mp3"); //this version works with a url!
 	cardSoundPlayer.volume = 0.25;
 	cardSoundPlayer.play();
  }else{
@@ -65,16 +66,16 @@ function playMusic(element){
 }
 
 function checkBoardConfig(){
-  $('#rectangle3x4').each(function() {
-    if (this.selected) {if(terms.length>=6){num=12; makeRectBoard(12,3,4);}else{failedToStart();}}
+  $('#rectangle2x4').each(function() {
+    if (this.selected) {if(terms.length>=4){num=8; makeRectBoard(8,2,4);}else{failedToStart();}}
+  });
+
+  $('#rectangle3x4').each(function(){
+    if(this.selected) {if(terms.length>=6){num=12; makeRectBoard(12,3,4);}else{failedToStart();}}
   });
 
   $('#rectangle3x6').each(function(){
     if(this.selected) {if(terms.length>=9){num=18; makeRectBoard(18,3,6);}else{failedToStart();}}
-  });
-
-  $('#rectangle4x7').each(function(){
-    if(this.selected) {if(terms.length>=14){num=28; makeRectBoard(28,4,7);}else{failedToStart();}}
   });
 
   $('#square').each(function() {
@@ -82,7 +83,7 @@ function checkBoardConfig(){
   });
 
   $('#default').each(function() {
-    if (this.selected) {if(terms.length>=9){num=18; makeRectBoard(18,3,6);}else{failedToStart();}}
+    if (this.selected) {if(terms.length>=9){num=12; makeRectBoard(12,3,4);}else{failedToStart();}}
   });
 }
 
@@ -152,6 +153,7 @@ function initializeGame(numcards){
   checkCardBackgrounds();
   handleMusicCards();
   initialized = true;
+  disableBoxes();
   var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
   var pairsCleared = 0;
   $('.card').on('click',function(){
@@ -186,6 +188,7 @@ function initializeGame(numcards){
 			if(ans0==ans1){
 				//CORRECT MATCH: DO THE FOLLOWING
 				//Reveal the matched pair
+				
 				turnCardCSS($('#'+id0),ans0);
 				turnCardCSS($('#'+id1),ans1);
 				//"Remove" the matched pair
@@ -193,6 +196,16 @@ function initializeGame(numcards){
 					$('#'+id0).replaceWith(blankdiv);
 					$('#'+id1).replaceWith(blankdiv);
 					isAnimating = false;
+					//Check if the board has been cleared
+					if(pairsCleared==(numcards/2)){
+						gameCleared = true;
+						//Stuff when the board is cleared
+						//If the player matched all cards without breaking the streak...
+						if(streakCount==(numcards/2)) {$('#winText').text("PERFECT CLEAR!");}
+						else{$('#winText').text("YOU WIN!");
+						}
+						$('#winText').show();
+				}
 				},5*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Add the cleared cards to the cleared card list by their literal ID
@@ -210,12 +223,7 @@ function initializeGame(numcards){
 				snd.play();
 				//Check if all the pairs have been cleared
 				pairsCleared++;
-				if(pairsCleared==(numcards/2)){
-					//Stuff when the board is cleared
-					//If the player matched all cards without breaking the streak...
-					if(streakCount==(numcards/2)) {alert("Perfect clear!");}
-					else{alert("You cleared the board!");}
-				}
+				
 				$('#gameScore').val(score);
 				$('#streakCounter').val(streakCount);
 			}else{
@@ -235,6 +243,9 @@ function initializeGame(numcards){
 					setCardBackground(id0);
 					setCardBackground(id1);
 					isAnimating = false;
+					setImageCardDetails($('#'+id0));
+					setImageCardDetails($('#'+id1));
+					handleImageCards();
 				},3*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Decrement the player's score for wrong match (resets streak multiplier)
@@ -267,7 +278,7 @@ function handleMusicCards(){
 
 function setMusicCardDetails(element){
  //console.log($(element).attr('hint'));
- $(element).text(" MUSIC CARD ");
+ $(element).text(" AUDIO CARD ");
 }
 
 //Sets the images for image cards; often used to reset the images as well
@@ -276,15 +287,19 @@ function handleImageCards(){
  for(i=0; i<cardlist.length; i++){
  	var div = cardlist[i].div;
 	var id = $(div).attr('id');
-	if($(div).attr('hint')==imageCardIdentifierString){setImageCardDetails('#'+id);}
+	//if($(div).attr('hint')==imageCardIdentifierString){setImageCardDetails('#'+id);}
+	if($(div).text()==imageCardIdentifierString){setImageCardDetails('#'+id);}
+
  }
 }
 
 function setImageCardDetails(element){
- console.log("Setting Image Card Background, Checking Image Card Hint",$(element).attr('hint'));
- if($(element).attr('hint')==imageCardIdentifierString){
- 	console.log("Will set background image");
- 	$(element).css("background-image","url(./resources/cowboy_bebop.jpeg)");
+ //console.log("Setting Image Card Background, Checking Image Card Hint",$(element).attr('hint'));
+ if($(element).attr('hint')==imageCardIdentifierString||$(element).text()==imageCardIdentiferString){
+ 	$(element).css("background-color","none");
+	$(element).css("border","3px solid black");
+	$(element).css('background-image','url(./resources/cowboy_bebop.jpeg)');
+	//$(element).css('background-image','url(https://s-media-cache-ak0.pinimg.com/736x/eb/79/d3/eb79d39b2d87943eb3b640b550af0ab2.jpg)'); //this version works with url
 	$(element).text(" ");
   }else{
 	$(element).css("background-image","none");
@@ -325,8 +340,8 @@ function turnCardCSS(elem, textToSet){
  setTimeout(function(){
  	$(element).text(text);
 	$(element).attr("hint",text);
-	console.log("Card's New Hint",$(element).attr('hint'));
 	handleImageCards();
+	//console.log($(element).text());
  },cardFlipDelay)
 }
 
@@ -443,10 +458,7 @@ function startTimer(duration, display) {
 		minutes = minutes < 10 ? "0" + minutes : minutes;
 		seconds = seconds < 10 ? "0" + seconds : seconds;
 		display.text(minutes + ":" + seconds);
-		timer++;
-	//	if (--timer < 0) {
-	//        	timer = duration;
-	//	}
+		if(!gameCleared) timer++;
 	}, 1000);
 }
 
@@ -515,8 +527,14 @@ function setCardBackground(id){
  });
 }
 
+function disableBoxes(){
+	$('#play').attr("disabled","disabled");
+	$('#boardconfig').attr("disabled","disabled");
+	$('#categories').attr("disabled","disabled");
+}
 
 $(document).ready(function() {
+  $('#winText').hide();			//hide the winText on start
   appendCategories()
     .catch(function(error) {
       console.log(error.message);
@@ -539,14 +557,9 @@ $(document).ready(function() {
 
 
   $('#quit').click(function() {
-    $("#play").attr("disabled", "disabled");
-    $("#quit").attr("disabled", "disabled");
-  });
-
-
-  $('#restart').click(function() {
     window.location.reload();
   });
+
 
   $('#hint').click(function() {
     if (initialized) {
