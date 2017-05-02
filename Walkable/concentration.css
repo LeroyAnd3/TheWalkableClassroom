@@ -137,6 +137,14 @@ a.navigation {
 #time {
   display: table;
   text-align: center;
+  width: 100%;
+}
+
+#winText {
+  display: table;
+  text-align: center;
+  font-size: 200%;
+  width: 100%;
 }
 
 .card {
