@@ -271,7 +271,8 @@ function Deck(id, subject, cards, category_key) {
   }.bind(this);
 
   self.addCard = function(potentialCard) {
-    var newCard = new Card(self.cardCount, '', [],'',category_key);
+    var theCurrentDeck = this;
+    var newCard = new Card(self.cardCount, '', [],'', this.category_key);
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
       //console.log(typeof newCard);
@@ -282,13 +283,14 @@ function Deck(id, subject, cards, category_key) {
       createTerm(newCard.category_key)
         .then(function(newCardKey){
           newCard.key_term = newCardKey;
-          console.log(newCard);
-          //console.log()
-          console.log(this.cards);
-          this.cards.push(newCard); //this.cards is undefined
-          console.log("pushed card to database");
-          this.cardCount = this.cardCount + 1;
-          this.renderCard(newCard);
+
+          // this.cards.push(newCard); //this.cards is undefined
+          // console.log("pushed card to database");
+          // this.cardCount = this.cardCount + 1;
+          // this.renderCard(newCard);
+          theCurrentDeck.cards.push(newCard);
+          theCurrentDeck.cardCount = this.cardCount + 1;
+          theCurrentDeck.renderCard(newCard);
         })
         .catch(function(error){
           console.log(error);
@@ -498,7 +500,7 @@ function DeckCollection(decks=[]) {
 
   self.addCard = function(e) {
     self.selectedDeck.addCard();
-  }
+  }.bind(this);
 
   self.updateHints = function(e) {
     self.selectedDeck.updateHints();
