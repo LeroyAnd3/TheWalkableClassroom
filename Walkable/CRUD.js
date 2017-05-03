@@ -39,15 +39,15 @@ function createTerm(selectedDeckKey) {
   return new Promise(function(resolve,reject){
     console.log(selectedDeckKey);
     //console.log(newCard);
-    let query = categoryTermsRef.orderByKey().equalTo(selectedDeckKey);
+    let query = categoryRef.orderByKey().equalTo(selectedDeckKey);
     query.once('value')
       .then(function(snapShot){
         //console.log(snapShot.val());
         if(snapShot.exists()){
-          //console.log("got into if statement");
+          console.log("got into if statement");
           let newTermKey = categoryTermsRef.child(selectedDeckKey).push().key;
-          //console.log("pushing key to categoryTermsRef");
-          //console.log(newTermKey);
+          console.log("pushing key to categoryTermsRef");
+          console.log(newTermKey);
           let newCard = {
             term:'',
             key_term:newTermKey,
