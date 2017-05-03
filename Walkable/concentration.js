@@ -333,6 +333,7 @@ function startGameTimer(){
 
 //Flips an elem over and sets its text to the string parameter
 //Designed for divs
+
 function turnCardCSS(elem, textToSet){
  isAnimating = true;
  var element = elem;
@@ -348,7 +349,7 @@ function turnCardCSS(elem, textToSet){
  	$(element).text(text);
 	$(element).attr("hint",text);
 	handleImageCards();
-	//console.log($(element).text());
+	if(hintClear){setCardToYellow(element);}
  },cardFlipDelay)
 }
 
@@ -384,9 +385,12 @@ function resetSelections(){
 }
 
 //Automatically clears a pair of uncleared cards. Checks the cleared card list values
+
+var hintClear = false;
 function hintFunction(){
  //Don't allow hint functionality if an animation is already in progress
  if(isAnimating) {console.log("Animation in progress, try hint functionality later"); return;}
+ hintClear = true;
  var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
  var i = getRandomIntInclusive(0,num-1);
  var delay1 = 4*cardFlipDelay;
@@ -407,6 +411,7 @@ function hintFunction(){
 	setTimeout(function(){
 		$('#card'+i).replaceWith(blankdiv);
 		$('#card'+(i+1)).replaceWith(blankdiv);
+		hintClear = false;
 		isAnimating = false;
 	},delay2)
  		clearedCardList.push(i.toString()); clearedCardList.push((i+1).toString());
@@ -477,10 +482,12 @@ function startTimer(duration, display) {
 //card to set itself to an image
 function startImageChecker(element){
 	setInterval(function (){
-		if($(element).text()==imageCardIdentifierString||$(element).text()==" "){setImageCardDetails(element);}
-		if($(element).attr("chosen")=="false"&&$(element).text()!=imageCardIdentifierString&&$(element).text()!=" "){$(element).css("background-image","none"); setCardBackground($(element).attr("id"));}
-		if($(element).attr("chosen")=="true"&&($(element).text()==" "||$(element).text()==imageCardIdentifierString)){$(element).css("border","3px solid yellow");}else{$(element).css("border","3px solid black");}
-	},100);
+		if(!isAnimating){
+			if($(element).text()==imageCardIdentifierString||$(element).text()==" "){setImageCardDetails(element);}
+			if($(element).attr("chosen")=="false"&&$(element).text()!=imageCardIdentifierString&&$(element).text()!=" "){$(element).css("background-image","none"); setCardBackground($(element).attr("id"));}
+			if($(element).attr("chosen")=="true"&&($(element).text()==" "||$(element).text()==imageCardIdentifierString)){$(element).css("border","3px solid yellow");}else{$(element).css("border","3px solid black");}
+		}
+			},100);
 }
 
 function failedToStart(){
