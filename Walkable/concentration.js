@@ -43,11 +43,13 @@ class Card{
         this.answer = answer;
         this.hint = hint;
 	this.itemid = itemid;
-        this.div='<div onmouseover="playMusic(this)" class ="card" termID ='+itemid+' hint="'+hint+'"  answer="'+answer+'" literalID = '+id+' id="card' +id +'">'+hint+'</div>';
+        this.div='<div onmouseover="playMusic(this)" chosen="false" class ="card" termID ='+itemid+' hint="'+hint+'"  answer="'+answer+'" literalID = '+id+' id="card' +id +'">'+hint+'</div>';
  }
 }
 
 function playMusic(element){
+ //Horribly lazy but functional way to ensure that image cards get set to images properly
+ startImageChecker(element);		
  //Exit method if animation is in progress
  if(isAnimating) return;
  //Check for music card identifying hint to determine if music should play
@@ -168,6 +170,7 @@ function initializeGame(numcards){
 		id0 = $(this).attr('id');
 		termID0 = $(this).attr('termID');
 		litID0 = $(this).attr('literalID');
+		$(this).attr("chosen","true");
 		setCardToYellow($(this));
 		selectTog = true;
 		//console.log("Answer:",ans0," Hint:",hint0," TermID:",termID0);
@@ -177,6 +180,7 @@ function initializeGame(numcards){
 		id1 = $(this).attr('id');
 		termID1 = $(this).attr('termID');
 		litID1 = $(this).attr('literalID');
+		$(this).attr("chosen","true");
 		setCardToYellow($(this));
 		//console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
@@ -188,7 +192,6 @@ function initializeGame(numcards){
 			if(ans0==ans1){
 				//CORRECT MATCH: DO THE FOLLOWING
 				//Reveal the matched pair
-				
 				turnCardCSS($('#'+id0),ans0);
 				turnCardCSS($('#'+id1),ans1);
 				//"Remove" the matched pair
@@ -243,9 +246,11 @@ function initializeGame(numcards){
 					setCardBackground(id0);
 					setCardBackground(id1);
 					isAnimating = false;
-					setImageCardDetails($('#'+id0));
-					setImageCardDetails($('#'+id1));
+					//setImageCardDetails($('#'+id0));
+					//setImageCardDetails($('#'+id1));
 					handleImageCards();
+					$('#'+id0).attr("chosen","false");
+				        $('#'+id1).attr("chosen","false");
 				},3*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Decrement the player's score for wrong match (resets streak multiplier)
@@ -259,6 +264,8 @@ function initializeGame(numcards){
 		 setCardBackground(id0);
 		 setCardBackground(id1);
 		 handleImageCards();
+		 $('#'+id0).attr("chosen","false");
+		 $('#'+id1).attr("chosen","false");
 		}
 	}
 	}
@@ -288,21 +295,21 @@ function handleImageCards(){
  	var div = cardlist[i].div;
 	var id = $(div).attr('id');
 	//if($(div).attr('hint')==imageCardIdentifierString){setImageCardDetails('#'+id);}
-	if($(div).text()==imageCardIdentifierString){setImageCardDetails('#'+id);}
+	if($(div).text()==imageCardIdentifierString||$(div).attr('hint')==imageCardIdentifierString){setImageCardDetails('#'+id);}
 
  }
 }
 
 function setImageCardDetails(element){
  //console.log("Setting Image Card Background, Checking Image Card Hint",$(element).attr('hint'));
- if($(element).attr('hint')==imageCardIdentifierString||$(element).text()==imageCardIdentiferString){
+ if($(element).attr('hint')==imageCardIdentifierString||$(element).text()==imageCardIdentifierString){
  	$(element).css("background-color","none");
 	$(element).css("border","3px solid black");
 	$(element).css('background-image','url(./resources/cowboy_bebop.jpeg)');
 	//$(element).css('background-image','url(https://s-media-cache-ak0.pinimg.com/736x/eb/79/d3/eb79d39b2d87943eb3b640b550af0ab2.jpg)'); //this version works with url
 	$(element).text(" ");
   }else{
-	$(element).css("background-image","none");
+	setCardBackground($(element).attr('id'));
   }
  }
 
@@ -368,6 +375,8 @@ function getRandomIntInclusive(min,max){
 
 //Resets the selection vars and appropriate fields
 function resetSelections(){
+ $('#'+id0).attr("chosen","false");
+ $('#'+id1).attr("chosen","false");
  ans0 = null; ans1 = null;
  hint0 = null; hint1 = null;
  termID0 = null; termID1 = null;
@@ -460,6 +469,18 @@ function startTimer(duration, display) {
 		display.text(minutes + ":" + seconds);
 		if(!gameCleared) timer++;
 	}, 1000);
+}
+
+//A lazy but functional way to ensure that image cards get their images set properly.
+//This code is started in each card's onMouseOver event and will check every second 
+//if the card says " IMAGE CARD ".  When it encounters this situation, it will force that 
+//card to set itself to an image
+function startImageChecker(element){
+	setInterval(function (){
+		if($(element).text()==imageCardIdentifierString||$(element).text()==" "){setImageCardDetails(element);}
+		if($(element).attr("chosen")=="false"&&$(element).text()!=imageCardIdentifierString&&$(element).text()!=" "){$(element).css("background-image","none"); setCardBackground($(element).attr("id"));}
+		if($(element).attr("chosen")=="true"&&($(element).text()==" "||$(element).text()==imageCardIdentifierString)){$(element).css("border","3px solid yellow");}else{$(element).css("border","3px solid black");}
+	},100);
 }
 
 function failedToStart(){
