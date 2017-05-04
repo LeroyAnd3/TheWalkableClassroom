@@ -210,6 +210,7 @@ function initializeGame(numcards){
 						}
 						$('#winText').show();
 				}
+					id0 = null; id1 = null;
 				},5*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Add the cleared cards to the cleared card list by their literal ID
@@ -252,6 +253,7 @@ function initializeGame(numcards){
 					handleImageCards();
 					$('#'+id0).attr("chosen","false");
 				        $('#'+id1).attr("chosen","false");
+					id0 = false; id1 = false;
 				},3*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Decrement the player's score for wrong match (resets streak multiplier)
@@ -397,6 +399,7 @@ function hintFunction(){
  var delay1 = 4*cardFlipDelay;
  var delay2 = 8*cardFlipDelay;
  if(clearedCardList.length==num) {console.log("No more hints to clear..."); return;}
+ if(id0!=null){selectiveHintFunction(); return;}
  while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
  isAnimating = true;
  if(i%2==0){
@@ -437,6 +440,42 @@ function hintFunction(){
  streakCount = 0;
  $('#gameScore').text("Score: "+score);
  $('#streakCounter').text("Streak: "+streakCount);
+}
+
+function selectiveHintFunction(){
+ var x;
+ var tempCardX; 
+ var tempCardDiv;
+ for(x=0; x<cardlist.length; x++){
+ 	tempCardX = cardlist[x];
+	tempCardDiv = tempCardX.div;
+	if($(tempCardDiv).attr("answer")==$('#'+id0).attr("answer")&&$(tempCardDiv).attr("id")!=id0){
+		isAnimating = true;
+		//Found the selectively matched card to match.  Do what you need to in here.
+		setCardToYellow('#'+$(tempCardDiv).attr("id"));
+		turnCardCSS('#'+id0,$('#'+id0).attr("answer"));
+		turnCardCSS('#'+$(tempCardDiv).attr("id"),$(tempCardDiv).attr("answer"));
+		handleFoundSelection('#'+$(tempCardDiv).attr("id"));
+		break;
+	}else{
+		isAnimating = false;
+		hintClear = false;
+	}
+ }
+}
+
+function handleFoundSelection(element){
+	var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+	setTimeout(function(){
+		$(element).replaceWith(blankdiv);
+		$('#'+id0).replaceWith(blankdiv);
+		isAnimating = false;
+		clearedCardList.push(id0.toString());
+		clearedCardList.push($(element).attr("id").toString());
+		hintClear = false;
+		id0 = null;
+		selectTog = false;
+	},4*cardFlipDelay);
 }
 
 //Automatically solve the entire board
