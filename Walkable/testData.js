@@ -132,7 +132,7 @@ function Deck(id, subject, cards, category_key) {
 
         return;
       })
-      .catch(function(){
+      .catch(function(error){
         console.log(error);
       });
     return;
