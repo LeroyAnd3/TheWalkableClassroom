@@ -119,8 +119,8 @@ function Deck(id, subject, cards, category_key) {
 
     //Handle deletion logic here because of strange bug in event listener code
     if( e.target.id === `deleteCard-${id}`) {
-      console.log(card);
-      console.log(this.cards);
+      // console.log(card);
+      // console.log(this.cards);
       removeTerm(card.category_key,card.key_term)
       .then(function(){
         $(`#card-${id}`).removeClass('selected');
@@ -270,32 +270,61 @@ function Deck(id, subject, cards, category_key) {
     });
   }.bind(this);
 
+  self.doesntExist = function(newCard, cards) {
+    for (var i = 0; i < cards.length; i++) {
+      if(cards[i].key_term === newCard.key_term)
+        return false;
+    }
+    return true;
+  };
+
   self.addCard = function(potentialCard) {
     var theCurrentDeck = this;
-    var newCard = new Card(self.cardCount, '', [],'', this.category_key);
+    var newCard = {
+      id: theCurrentDeck.cardCount,
+      term: '',
+      hints: [],
+      key_term: '',
+      category_key: theCurrentDeck.category_key
+    };
+
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
-      //console.log(typeof newCard);
-      this.cards.push(newCard);
-      this.cardCount = this.cardCount + 1;
-      this.renderCard(newCard);
+      console.log(newCard);
+      // theCurrentDeck.cards.push(newCard);
+      // theCurrentDeck.cardCount = theCurrentDeck.cardCount + 1;
+      //
+      // console.log(
+      //   {
+      //     deckSubject: theCurrentDeck.subject,
+      //     cardCount: theCurrentDeck.cardCount,
+      //     theCurrentDeck
+      //   }
+      // );
+      //
+      // theCurrentDeck.renderCard(newCard);
     }else{
       createTerm(newCard.category_key)
         .then(function(newCardKey){
           newCard.key_term = newCardKey;
 
-          // this.cards.push(newCard); //this.cards is undefined
-          // console.log("pushed card to database");
-          // this.cardCount = this.cardCount + 1;
-          // this.renderCard(newCard);
-          theCurrentDeck.cards.push(newCard);
-          theCurrentDeck.cardCount = this.cardCount + 1;
-          theCurrentDeck.renderCard(newCard);
+          if(self.doesntExist(newCard, theCurrentDeck.cards)) {
+            theCurrentDeck.cards.push(newCard);
+            theCurrentDeck.cardCount = theCurrentDeck.cardCount + 1;
+            theCurrentDeck.renderCard(newCard);
+          }
+
         })
         .catch(function(error){
           console.log(error);
           return false;
         });
+    }
+    // console.log(newCard);
+    if(newCard.key_term !== "") {
+      theCurrentDeck.cards.push(newCard);
+      theCurrentDeck.cardCount = theCurrentDeck.cardCount + 1;
+      theCurrentDeck.renderCard(newCard);
     }
 
   }.bind(this);
