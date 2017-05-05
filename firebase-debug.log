@@ -1,26 +1,85 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
 [debug] CLI Version:  3.6.1
 [debug] Platform:     win32
 [debug] Node Version: v6.10.2
-[debug] Time:         Wed May 03 2017 09:05:29 GMT-0400 (Eastern Daylight Time)
+[debug] Time:         Wed May 03 2017 09:26:52 GMT-0400 (Eastern Daylight Time)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
- Wed May 03 2017 09:05:29 GMT-0400 (Eastern Daylight Time)
+ Wed May 03 2017 09:26:52 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
- Wed May 03 2017 09:05:30 GMT-0400 (Eastern Daylight Time)
+ Wed May 03 2017 09:26:53 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'thewalkableclassroom'...
+[info] 
+[info] i  deploying database, functions, hosting
+[info] +  database: rules ready to deploy.
+[debug] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "dependencies": {
+    "firebase-admin": "^4.1.2",
+    "firebase-functions": "^0.5"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[info] i  runtimeconfig: ensuring necessary APIs are enabled...
+[debug] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/thewalkableclassroom?view=CONSUMER_VIEW  
+ Wed May 03 2017 09:26:53 GMT-0400 (Eastern Daylight Time)
+[debug] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/thewalkableclassroom?view=CONSUMER_VIEW  
+ Wed May 03 2017 09:26:53 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] +  runtimeconfig: all necessary APIs are enabled
+[debug] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/thewalkableclassroom  
+ Wed May 03 2017 09:26:54 GMT-0400 (Eastern Daylight Time)
+[debug] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/thewalkableclassroom/apiKeys  
+ Wed May 03 2017 09:26:54 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/thewalkableclassroom/configs  
+ Wed May 03 2017 09:26:59 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] > [functions] runtime config materialized as: {
+  "firebase": {
+    "databaseURL": "https://thewalkableclassroom.firebaseio.com",
+    "storageBucket": "thewalkableclassroom.appspot.com",
+    "apiKey": "AIzaSyCx8ks1IwQCCQUX9eXivlRUrijcqxm-u68",
+    "authDomain": "thewalkableclassroom.firebaseapp.com"
+  }
+}
+[debug] > [functions] parsed triggers: []
+[info] i  hosting: preparing Walkable directory for upload...
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.6.1
+[debug] Platform:     win32
+[debug] Node Version: v6.10.2
+[debug] Time:         Wed May 03 2017 09:27:09 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Wed May 03 2017 09:27:09 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Wed May 03 2017 09:27:10 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
 [info] Starting Firebase development server...
 [info] 
 [info] Project Directory: C:\Users\ejchen\TheWalkableClassroom
 [debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
- Wed May 03 2017 09:05:30 GMT-0400 (Eastern Daylight Time)
+ Wed May 03 2017 09:27:10 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
 [debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
- Wed May 03 2017 09:05:31 GMT-0400 (Eastern Daylight Time)
+ Wed May 03 2017 09:27:10 GMT-0400 (Eastern Daylight Time)
 [debug] <<< HTTP RESPONSE 200
 [info] Public Directory: Walkable
 [info] 
