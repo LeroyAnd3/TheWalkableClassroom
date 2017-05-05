@@ -65,12 +65,20 @@
 			</select>
 
 			<button type="button" id="play"> Play! </button>
-			<button type="button" id="hint"> Hint </button>
 			<button type="button" id="solve"> Solve </button>
+			<button type="button" id="clear"> Clear </button>
+			<button type="button" id="reset"> Reset </button>
 			<button type="button" id="quit"> Quit </button>
 		</form>
 	<div>
-		<span id="time" style="visibility:hidden, text-align:center;">00:00</span>
+		
+		<form id="scoreBoard">
+		<p style="display:inline">Time: </p>
+		<p style="display:inline" id="time">00:00</p>
+		<p style="display:inline" id="moveCounter">Move Count: 0</p>
+		<p style="display:inline" id="streakCounter">Streak: 0</p>
+		<p style="display:inline" id="gameScore">Score: 0</p>
+	</form>
 	</div>
   </div>
 
@@ -78,13 +86,7 @@
 	<p id="winText"> </p>
 
  <div id="deck"></div>
-
-
-	<form id="scoreBoard">
-		Move Count: <input type="number" id="moveCounter" value="0" readonly>
-		Score: <input type="number" id="gameScore" value="0" readonly>
-		Streak Count: <input type="number" id="streakCounter" value="0" readonly>
-	</form>
+	
 
 	<footer></footer>
 

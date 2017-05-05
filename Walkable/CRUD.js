@@ -44,7 +44,6 @@ function createTerm(selectedDeckKey) {
       .then(function(snapShot){
         //console.log(snapShot.val());
         if(snapShot.exists()){
-          console.log("got into if statement");
           let newTermKey = categoryTermsRef.child(selectedDeckKey).push().key;
           console.log("pushing key to categoryTermsRef");
           console.log(newTermKey);
@@ -66,7 +65,6 @@ function createTerm(selectedDeckKey) {
           let update = {};
           update["/category-terms/"+selectedDeckKey+"/"+newTermKey]=newCard;
           rootRef.update(update);
-          //console.log("after update");
           resolve(newTermKey);
         }else{
           alert("unable to make new card");

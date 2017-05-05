@@ -150,6 +150,7 @@ function shuffleCards(array){
 }
 
 function initializeGame(numcards){
+  window.scrollTo(0,document.body.scrollHeight);
   startGameTimer();
   setGameDetails();
   checkCardBackgrounds();
@@ -185,7 +186,7 @@ function initializeGame(numcards){
 		//console.log("Answer:",ans1," Hint:",hint1," TermID:",termID1);
 		selectTog = false;
 		moveCount++;
-		$('#moveCounter').val(moveCount);
+		$('#moveCounter').text("Move Count: "+moveCount);
 		//Checks to make sure that you're not matching two cards with the same ID
 		//It still works after hint swapping for this reason, kind of useful in that sense
 		if(id0!=id1){
@@ -203,12 +204,13 @@ function initializeGame(numcards){
 					if(pairsCleared==(numcards/2)){
 						gameCleared = true;
 						//Stuff when the board is cleared
-						//If the player matched all cards without breaking the streak...
-						if(streakCount==(numcards/2)) {$('#winText').text("PERFECT CLEAR!");}
+						//If the player matched all cards without breaking the streak...(this should be more sophistcated, this check isn't good enough)
+						if(moveCount==(numcards/2)) {$('#winText').text("PERFECT CLEAR!");}
 						else{$('#winText').text("YOU WIN!");
 						}
 						$('#winText').show();
 				}
+					id0 = null; id1 = null;
 				},5*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Add the cleared cards to the cleared card list by their literal ID
@@ -227,8 +229,8 @@ function initializeGame(numcards){
 				//Check if all the pairs have been cleared
 				pairsCleared++;
 				
-				$('#gameScore').val(score);
-				$('#streakCounter').val(streakCount);
+				$('#gameScore').text("Score: "+score);
+				$('#streakCounter').text("Streak: "+streakCount);
 			}else{
 				//INCORRECT MATCH: DO THE FOLLOWING
 				//Play sound for wrong match
@@ -251,13 +253,14 @@ function initializeGame(numcards){
 					handleImageCards();
 					$('#'+id0).attr("chosen","false");
 				        $('#'+id1).attr("chosen","false");
+					id0 = false; id1 = false;
 				},3*cardFlipDelay)
 				//These operations below the timeout are meant to be done instantenously
 				//Decrement the player's score for wrong match (resets streak multiplier)
 				score = score - 50;
 				streakCount = 0;
-				$('#gameScore').val(score);
-				$('#streakCounter').val(streakCount);
+				$('#gameScore').text("Score: "+score);
+				$('#streakCounter').text("Streak: "+streakCount);
 				resetSelections();
 			}
 		}else{
@@ -396,6 +399,7 @@ function hintFunction(){
  var delay1 = 4*cardFlipDelay;
  var delay2 = 8*cardFlipDelay;
  if(clearedCardList.length==num) {console.log("No more hints to clear..."); return;}
+ if(id0!=null){selectiveHintFunction(); return;}
  while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
  isAnimating = true;
  if(i%2==0){
@@ -434,8 +438,44 @@ function hintFunction(){
  }
  score = score - 100;
  streakCount = 0;
- $('#gameScore').val(score);
- $('#streakCounter').val(streakCount);
+ $('#gameScore').text("Score: "+score);
+ $('#streakCounter').text("Streak: "+streakCount);
+}
+
+function selectiveHintFunction(){
+ var x;
+ var tempCardX; 
+ var tempCardDiv;
+ for(x=0; x<cardlist.length; x++){
+ 	tempCardX = cardlist[x];
+	tempCardDiv = tempCardX.div;
+	if($(tempCardDiv).attr("answer")==$('#'+id0).attr("answer")&&$(tempCardDiv).attr("id")!=id0){
+		isAnimating = true;
+		//Found the selectively matched card to match.  Do what you need to in here.
+		setCardToYellow('#'+$(tempCardDiv).attr("id"));
+		turnCardCSS('#'+id0,$('#'+id0).attr("answer"));
+		turnCardCSS('#'+$(tempCardDiv).attr("id"),$(tempCardDiv).attr("answer"));
+		handleFoundSelection('#'+$(tempCardDiv).attr("id"));
+		break;
+	}else{
+		isAnimating = false;
+		hintClear = false;
+	}
+ }
+}
+
+function handleFoundSelection(element){
+	var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+	setTimeout(function(){
+		$(element).replaceWith(blankdiv);
+		$('#'+id0).replaceWith(blankdiv);
+		isAnimating = false;
+		clearedCardList.push(id0.toString());
+		clearedCardList.push($(element).attr("id").toString());
+		hintClear = false;
+		id0 = null;
+		selectTog = false;
+	},4*cardFlipDelay);
 }
 
 //Automatically solve the entire board
@@ -458,15 +498,17 @@ function solveFunction(){
  alert("Auto-solving the board...");
  score = -9999;
  streakCount = -100;
- $('#gameScore').val(score);
- $('#streakCounter').val(streakCount);
+ $('#gameScore').text("Score: "+score);
+
+ $('#streakCounter').text("Streak: "+streakCount);
  //console.log(clearedCardList.toString());
 }
 
 //Controls the timer for the game
+var timeInterval;
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
-        setInterval(function () {
+        timeInterval = setInterval(function () {
 	        minutes = parseInt(timer / 60, 10);
 		seconds = parseInt(timer % 60, 10);
 		minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -480,8 +522,9 @@ function startTimer(duration, display) {
 //This code is started in each card's onMouseOver event and will check every second 
 //if the card says " IMAGE CARD ".  When it encounters this situation, it will force that 
 //card to set itself to an image
+var imageInterval;
 function startImageChecker(element){
-	setInterval(function (){
+	imageInterval = setInterval(function (){
 		if(!isAnimating){
 			if($(element).text()==imageCardIdentifierString||$(element).text()==" "){setImageCardDetails(element);}
 			if($(element).attr("chosen")=="false"&&$(element).text()!=imageCardIdentifierString&&$(element).text()!=" "){$(element).css("background-image","none"); setCardBackground($(element).attr("id"));}
@@ -506,7 +549,10 @@ function checkCardBackgrounds(){
   if(this.selected) {
   	$('.card').css("background-image","url(./resources/ep_naturalblack.png)");
 	$('.card').css("color","white");
-  	$('.card').css("text-shadow","2px 0 black, 0 2px black, 2px 0 black, 0 -2px black");
+  	$('.card').css("text-shadow","2px 0 black, 0 2px black, 0px 0px black, 0px 0px yellow");
+	//$('.card').css("color","black");
+  	//$('.card').css("text-shadow","2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow");
+
 	handleImageCards();
   }
  });
@@ -561,6 +607,29 @@ function disableBoxes(){
 	$('#categories').attr("disabled","disabled");
 }
 
+function resetBoard(){
+	$('#deck').empty();
+	$('#time').empty();
+	terms = [];
+	cardlist = [];
+	addedCardList = [];
+	clearedCardList = [];
+	score = 0;
+	moveCount=0;
+	streakCount = 0;
+	selectTog=false;
+	initialized = false;
+	isAnimating = false;					//keeps track of ongoing animations going on
+	var gameCleared = false;
+	resetSelections();
+	$('#gameScore').text("Score: "+score);
+	$('#streakCounter').text("Streak: "+streakCount);
+	$('#moveCounter').text("Move Count: "+moveCount);
+	clearInterval(timeInterval);
+	clearInterval(imageInterval);
+	id0 = null; id1 = null;
+}
+
 $(document).ready(function() {
   $('#winText').hide();			//hide the winText on start
   appendCategories()
@@ -589,13 +658,29 @@ $(document).ready(function() {
   });
 
 
-  $('#hint').click(function() {
+  $('#solve').click(function() {
     if (initialized) {
       hintFunction();
     }
   });
 
-  $('#solve').click(function() {
+ //Self-explanatory: reset the board w/ the current chosen options
+ $('#reset').click(function (){
+    resetBoard();
+    setTimeout(function(){
+    	terms = [];
+    	topic = category.value;
+    	getCategoryTerms(topic, terms)
+      		.then(function() {
+        	checkBoardConfig();
+      	})
+      	.catch(function(error) {
+        	console.log(error.message);
+      	});
+    },500);
+  });
+
+  $('#clear').click(function() {
     if (initialized) {
       solveFunction();
     }
