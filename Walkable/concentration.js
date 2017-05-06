@@ -18,6 +18,8 @@
  ];*/
 
 var terms = [];
+var audio ={};
+var image={};
 var topic;
 var cardlist = [];
 var addedCardList = [];
@@ -49,13 +51,13 @@ class Card{
 
 function playMusic(element){
  //Horribly lazy but functional way to ensure that image cards get set to images properly
- startImageChecker(element);		
+ startImageChecker(element);
  //Exit method if animation is in progress
  if(isAnimating) return;
  //Check for music card identifying hint to determine if music should play
  if($(element).attr('hint')==musicCardIdentifierString){
  	//If the player has already started playing a song, pause it then release it (i.e. set to null)
-	if(cardSoundPlayer!=null) cardSoundPlayer.pause(); cardSoundPlayer = null;	
+	if(cardSoundPlayer!=null) cardSoundPlayer.pause(); cardSoundPlayer = null;
 	//Determine which song to play based off of the element's parameters
 	cardSoundPlayer = new Audio("./resources/ffxiv_sunleth_sunscape.mp3");
 	//cardSoundPlayer = new Audio("http://66.90.93.122/ost/fire-emblem-6-sword-of-seals-gamerip-/xzrqmlzryi/10-beyond-the-sky.mp3"); //this version works with a url!
@@ -228,7 +230,7 @@ function initializeGame(numcards){
 				snd.play();
 				//Check if all the pairs have been cleared
 				pairsCleared++;
-				
+
 				$('#gameScore').text("Score: "+score);
 				$('#streakCounter').text("Streak: "+streakCount);
 			}else{
@@ -444,7 +446,7 @@ function hintFunction(){
 
 function selectiveHintFunction(){
  var x;
- var tempCardX; 
+ var tempCardX;
  var tempCardDiv;
  for(x=0; x<cardlist.length; x++){
  	tempCardX = cardlist[x];
@@ -519,8 +521,8 @@ function startTimer(duration, display) {
 }
 
 //A lazy but functional way to ensure that image cards get their images set properly.
-//This code is started in each card's onMouseOver event and will check every second 
-//if the card says " IMAGE CARD ".  When it encounters this situation, it will force that 
+//This code is started in each card's onMouseOver event and will check every second
+//if the card says " IMAGE CARD ".  When it encounters this situation, it will force that
 //card to set itself to an image
 var imageInterval;
 function startImageChecker(element){
@@ -642,10 +644,23 @@ $(document).ready(function() {
 
   $('#play').click(function() {
     terms = [];
+    images={};
+    audio={};
     topic = category.value;
-    getCategoryTerms(topic, terms)
+    getCategoryTerms(topic, terms,images,audio)
       .then(function() {
         checkBoardConfig();
+        console.log("this is the term array");
+        console.log(terms);
+        console.log("this is the images array");
+        console.log(images);
+        console.log("this is the audio array");
+        console.log(audio);
+        console.log("This is a test");
+        console.log("print a url to an mp3 file");
+        console.log(audio["TEST8"]);
+        console.log("print a url to an image");
+        console.log(images["TEST8"]);
       })
       .catch(function(error) {
         console.log(error.message);
@@ -667,17 +682,17 @@ $(document).ready(function() {
  //Self-explanatory: reset the board w/ the current chosen options
  $('#reset').click(function (){
     resetBoard();
-    setTimeout(function(){
-    	terms = [];
-    	topic = category.value;
-    	getCategoryTerms(topic, terms)
-      		.then(function() {
-        	checkBoardConfig();
-      	})
-      	.catch(function(error) {
-        	console.log(error.message);
-      	});
-    },500);
+    terms = [];
+    images={};
+    audio={};
+    topic = category.value;
+    getCategoryTerms(topic, terms,images,audio)
+      .then(function() {
+        checkBoardConfig();
+      })
+      .catch(function(error) {
+        console.log(error.message);
+      });
   });
 
   $('#clear').click(function() {
