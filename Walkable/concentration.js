@@ -538,6 +538,16 @@ function startImageChecker(element){
 			}else{
 				$(element).css("border","3px solid black");
 			}
+		}else{
+			/*			
+			if($(element).attr("chosen")=="false"){
+				$(element).css("background-image","none");
+				$(element).css("background-color","yellow");
+			}*/
+			$('#'+id0).css("background-image","none");
+			$('#'+id0).css("background-color","yellow");
+			$('#'+id1).css("background-image","none");
+			$('#'+id1).css("background-color","yellow");
 		}
 			},100);
 }
