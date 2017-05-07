@@ -62,7 +62,6 @@ function playMusic(element){
 	//Determine which song to play based off of the element's parameters
 	cardSoundPlayer = new Audio(audio[$(element).attr("answer")]);
 	//cardSoundPlayer = new Audio("./resources/ffxiv_sunleth_sunscape.mp3");
-	//cardSoundPlayer = new Audio("http://66.90.93.122/ost/fire-emblem-6-sword-of-seals-gamerip-/xzrqmlzryi/10-beyond-the-sky.mp3"); //this version works with a url!
 	cardSoundPlayer.volume = 0.25;
 	cardSoundPlayer.play();
  }else{
@@ -312,7 +311,6 @@ function setImageCardDetails(element){
  if($(element).attr('hint')==imageCardIdentifierString||$(element).text()==imageCardIdentifierString){
  	$(element).css("background-color","none");
 	$(element).css("border","3px solid black");
-	//$(element).css('background-image','url(./resources/cowboy_bebop.jpeg)');
 	var url = "url("+images[$(element).attr("answer")]+")";
 	$(element).css('background-image',url);
 	$(element).text(" ");
@@ -533,7 +531,13 @@ function startImageChecker(element){
 		if(!isAnimating){
 			if($(element).text()==imageCardIdentifierString||$(element).text()==" "){setImageCardDetails(element);}
 			if($(element).attr("chosen")=="false"&&$(element).text()!=imageCardIdentifierString&&$(element).text()!=" "){$(element).css("background-image","none"); setCardBackground($(element).attr("id"));}
-			if($(element).attr("chosen")=="true"&&($(element).text()==" "||$(element).text()==imageCardIdentifierString)){$(element).css("border","3px solid yellow");}else{$(element).css("border","3px solid black");}
+			if($(element).attr("chosen")=="true"&&($(element).text()==" "||$(element).text()==imageCardIdentifierString)){
+				//$(element).css("border","3px solid yellow");
+				$(element).css("background-image","none");
+				$(element).css("background-color","yellow");
+			}else{
+				$(element).css("border","3px solid black");
+			}
 		}
 			},100);
 }
@@ -555,9 +559,6 @@ function checkCardBackgrounds(){
   	$('.card').css("background-image","url(./resources/ep_naturalblack.png)");
 	$('.card').css("color","white");
   	$('.card').css("text-shadow","2px 0 black, 0 2px black, 0px 0px black, 0px 0px yellow");
-	//$('.card').css("color","black");
-  	//$('.card').css("text-shadow","2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow");
-
 	handleImageCards();
   }
  });
