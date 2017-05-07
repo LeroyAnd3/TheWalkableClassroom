@@ -19,7 +19,7 @@
 
 var terms = [];
 var audio ={};
-var image={};
+var images ={};
 var topic;
 var cardlist = [];
 var addedCardList = [];
@@ -54,12 +54,14 @@ function playMusic(element){
  startImageChecker(element);
  //Exit method if animation is in progress
  if(isAnimating) return;
+ console.log($(element).text());
  //Check for music card identifying hint to determine if music should play
  if($(element).attr('hint')==musicCardIdentifierString){
  	//If the player has already started playing a song, pause it then release it (i.e. set to null)
 	if(cardSoundPlayer!=null) cardSoundPlayer.pause(); cardSoundPlayer = null;
 	//Determine which song to play based off of the element's parameters
-	cardSoundPlayer = new Audio("./resources/ffxiv_sunleth_sunscape.mp3");
+	cardSoundPlayer = new Audio(audio[$(element).attr("answer")]);
+	//cardSoundPlayer = new Audio("./resources/ffxiv_sunleth_sunscape.mp3");
 	//cardSoundPlayer = new Audio("http://66.90.93.122/ost/fire-emblem-6-sword-of-seals-gamerip-/xzrqmlzryi/10-beyond-the-sky.mp3"); //this version works with a url!
 	cardSoundPlayer.volume = 0.25;
 	cardSoundPlayer.play();
@@ -310,8 +312,9 @@ function setImageCardDetails(element){
  if($(element).attr('hint')==imageCardIdentifierString||$(element).text()==imageCardIdentifierString){
  	$(element).css("background-color","none");
 	$(element).css("border","3px solid black");
-	$(element).css('background-image','url(./resources/cowboy_bebop.jpeg)');
-	//$(element).css('background-image','url(https://s-media-cache-ak0.pinimg.com/736x/eb/79/d3/eb79d39b2d87943eb3b640b550af0ab2.jpg)'); //this version works with url
+	//$(element).css('background-image','url(./resources/cowboy_bebop.jpeg)');
+	var url = "url("+images[$(element).attr("answer")]+")";
+	$(element).css('background-image',url);
 	$(element).text(" ");
   }else{
 	setCardBackground($(element).attr('id'));

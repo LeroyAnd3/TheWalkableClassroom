@@ -305,12 +305,12 @@ function makeCard(card, cardCollection,imageCollection,audioCollection, id, hint
     hintCount++;
   }
   if (getHint7(hint)) {
-    card.push("AUDIO CARD");
+    card.push(" AUDIO CARD ");
     audioCollection[term]=getHint7(hint);
     hintCount++;
   }
   if (getHint8(hint)) {
-    card.push("IMAGE CARD");
+    card.push(" IMAGE CARD ");
     imageCollection[term]=getHint8(hint);
     hintCount++;
   }
