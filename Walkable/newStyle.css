@@ -382,7 +382,7 @@ button:not(#pause, #restart, #quit, #play, #hint, #solve) {
   border-radius: 10px;
   border: 1px solid #000;
   width: 75%;
-  height: 75%;
+  height: 80%;
   margin-top: 30px;
   margin-bottom: 30px;
   margin-left: auto;
