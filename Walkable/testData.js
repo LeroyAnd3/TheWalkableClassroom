@@ -1,16 +1,6 @@
 class ViewManager {
   constructor() {
     this.view = 1;
-    // this.updateView = function(e) {
-    //   let id = Number(e.target.value);
-    //   if($(`#view-${id}`).hasClass('hidden'))
-    //     for(var i = 1; i <= 8; i++)
-    //       if (i === id)
-    //         $(`#view-${id}`).toggleClass('hidden')
-    //       else
-    //         $(`#view-${i}`).addClass('hidden');
-    //
-    // }
 
     this.changeView = function(id){
       if($(`#view-${id}`).hasClass('hidden'))
@@ -85,37 +75,10 @@ class ViewManager {
     this.how.addEventListener('mousedown', this.updateView);
     this.play.addEventListener('mousedown', this.updateView);
 
-    // this.button1 = document.getElementById('button-1');
-    // this.button2 = document.getElementById('button-2');
-    // this.button3 = document.getElementById('button-3');
-    // this.button4 = document.getElementById('button-4');
-    // this.button5 = document.getElementById('button-5');
-    // this.button6 = document.getElementById('button-6');
-    // this.button7 = document.getElementById('button-7');
-    // this.button8 = document.getElementById('button-8');
-    //
-    // this.button1.addEventListener('mousedown', this.updateView);
-    // this.button2.addEventListener('mousedown', this.updateView);
-    // this.button3.addEventListener('mousedown', this.updateView);
-    // this.button4.addEventListener('mousedown', this.updateView);
-    // this.button5.addEventListener('mousedown', this.updateView);
-    // this.button6.addEventListener('mousedown', this.updateView);
-    // this.button7.addEventListener('mousedown', this.updateView);
-    // this.button8.addEventListener('mousedown', this.updateView);
-
     $(`#view-${this.view}`).removeClass('hidden');
   }
 };
 let viewmanager = new ViewManager();
-
-// function Card(id, term, hints=[], key_term, category_key){
-//   var self = this;
-//   this.id = id;
-//   this.term = term;
-//   this.hints = hints;
-//   this.key_term = key_term;
-//   this.category_key = category_key;
-// }
 
 function Deck(id, subject, cards, category_key) {
   self = this;
@@ -624,6 +587,10 @@ function DeckCollection(decks=[]) {
         '</div>'+
       '</div>'
     );
+    // console.log($('#view-5:last-child').get(0));
+
+    // $('#view-5:last-child').css('background-color', 'red');
+
     self.decks.push(newDeck);
 
     var domDeck = document.getElementById(`deck-${newDeck.id}`);
