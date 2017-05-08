@@ -105,3 +105,30 @@
 [info] Public Directory: Walkable
 [info] 
 [info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\ejchen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] CLI Version:  3.6.1
+[debug] Platform:     win32
+[debug] Node Version: v6.10.2
+[debug] Time:         Mon May 08 2017 11:11:35 GMT-0400 (Eastern Daylight Time)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/thewalkableclassroom  
+ Mon May 08 2017 11:11:35 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/thewalkableclassroom/tokens  
+ Mon May 08 2017 11:11:35 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: C:\Users\ejchen\TheWAlkableClassroom
+[debug] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/thewalkableclassroom  
+ Mon May 08 2017 11:11:36 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/880340132017/clients/_:getWebAppConfig  
+ Mon May 08 2017 11:11:36 GMT-0400 (Eastern Daylight Time)
+[debug] <<< HTTP RESPONSE 200
+[info] Public Directory: Walkable
+[info] 
+[info] Server listening at: http://localhost:5000
