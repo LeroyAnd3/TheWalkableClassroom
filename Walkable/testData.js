@@ -15,28 +15,47 @@ class ViewManager {
     this.changeView = function(id){
       if($(`#view-${id}`).hasClass('hidden'))
         for(var i = 1; i <= 8; i++)
-          if (i === id)
-            $(`#view-${id}`).toggleClass('hidden')
-          else
+          if (i === id) {
+            $(`#view-${id}`).toggleClass('hidden');
+          }
+          else {
             $(`#view-${i}`).addClass('hidden');
-
+          }
     };
 
     this.updateView = function(e) {
       var id = String(e.target.id);
 
+      $(`#home`).removeClass('selectedNav');
+      $(`#create`).removeClass('selectedNav');
+      $(`#how`).removeClass('selectedNav');
+      $(`#playnav`).removeClass('selectedNav');
+
+      $(`#home`).addClass('navigation');
+      $(`#create`).addClass('navigation');
+      $(`#how`).addClass('navigation');
+      $(`#playnav`).addClass('navigation');
+
       switch (id) {
         case 'home':
           this.changeView(1);
+          $(`#home`).removeClass('navigation');
+          $(`#home`).addClass('selectedNav');
           break;
         case 'create':
           this.changeView(5);
+          $(`#create`).removeClass('navigation');
+          $(`#create`).addClass('selectedNav');
           break;
         case 'how':
           this.changeView(2);
+          $(`#how`).removeClass('navigation');
+          $(`#how`).addClass('selectedNav');
           break;
         case 'playnav':
           this.changeView(3);
+          $(`#playnav`).removeClass('navigation');
+          $(`#playnav`).addClass('selectedNav');
           break;
         default:
       }
