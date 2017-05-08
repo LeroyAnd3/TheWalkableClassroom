@@ -231,7 +231,6 @@ function initializeGame(numcards){
 				snd.play();
 				//Check if all the pairs have been cleared
 				pairsCleared++;
-
 				$('#gameScore').text("Score: "+score);
 				$('#streakCounter').text("Streak: "+streakCount);
 			}else{
@@ -626,7 +625,6 @@ function disableBoxes(){
 function resetBoard(){
 	$('#deck').empty();
 	$('#time').empty();
-	terms = [];
 	cardlist = [];
 	addedCardList = [];
 	clearedCardList = [];
@@ -636,7 +634,7 @@ function resetBoard(){
 	selectTog=false;
 	initialized = false;
 	isAnimating = false;					//keeps track of ongoing animations going on
-	var gameCleared = false;
+	gameCleared = false;
 	resetSelections();
 	$('#gameScore').text("Score: "+score);
 	$('#streakCounter').text("Streak: "+streakCount);
@@ -695,12 +693,14 @@ $(document).ready(function() {
 
  //Self-explanatory: reset the board w/ the current chosen options
  $('#reset').click(function (){
+    $('#winText').text("");
+    $('#winText').hide();
     resetBoard();
     terms = [];
     images={};
     audio={};
     topic = category.value;
-    getCategoryTerms(topic, terms,images,audio)
+    getCategoryTerms(topic,terms,images,audio)
       .then(function() {
         checkBoardConfig();
       })
