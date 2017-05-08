@@ -3,19 +3,23 @@ class ViewManager {
     this.view = 1;
     this.updateView = function(e) {
       let id = Number(e.target.value);
-      for(var i = 1; i <= 8; i++)
-        if (i === id)
-          $(`#view-${id}`).toggleClass('hidden')
-        else
-          $(`#view-${i}`).addClass('hidden');
+      if($(`#view-${id}`).hasClass('hidden'))
+        for(var i = 1; i <= 8; i++)
+          if (i === id)
+            $(`#view-${id}`).toggleClass('hidden')
+          else
+            $(`#view-${i}`).addClass('hidden');
+
     }
 
     this.changeView = function(id){
-      for(var i = 1; i <= 8; i++)
-        if (i === id)
-          $(`#view-${id}`).toggleClass('hidden')
-        else
-          $(`#view-${i}`).addClass('hidden');
+      if($(`#view-${id}`).hasClass('hidden'))
+        for(var i = 1; i <= 8; i++)
+          if (i === id)
+            $(`#view-${id}`).toggleClass('hidden')
+          else
+            $(`#view-${i}`).addClass('hidden');
+
     };
 
     this.newUpdateView = function(e) {
@@ -76,7 +80,7 @@ class ViewManager {
     // this.button6.addEventListener('mousedown', this.updateView);
     // this.button7.addEventListener('mousedown', this.updateView);
     // this.button8.addEventListener('mousedown', this.updateView);
-    
+
     $(`#view-${this.view}`).removeClass('hidden');
   }
 };
@@ -269,9 +273,7 @@ function Deck(id, subject, cards, category_key) {
     $('#hint-7').val(card.hints[6]);
     $('#hint-8').val(card.hints[7]);
 
-    viewmanager.updateView({
-      target: {value:7}
-    });
+    viewmanager.changeView(7);
   }.bind(this);
 
   self.emptyView = function() {
@@ -294,9 +296,7 @@ function Deck(id, subject, cards, category_key) {
 
     updateHints(card.category_key,card.key_term,card.hints)
     .then(function(){
-      viewmanager.updateView({
-        target: {value:6}
-      });
+      viewmanager.changeView(6);
     })
     .catch(function(error){
       alert("Unable to update hints");
@@ -307,9 +307,7 @@ function Deck(id, subject, cards, category_key) {
   }.bind(this)
 
   self.cancelUpdateHints = function() {
-    viewmanager.updateView({
-      target: {value:6}
-    });
+    viewmanager.changeView(6);
   }.bind(this);
 
   self.doesntExist = function(newCard, cards) {
@@ -564,9 +562,7 @@ function DeckCollection(decks=[]) {
     self.cancelUpdateHintsButton = document.getElementById('cancelUpdateHintsButton');
     self.cancelUpdateHintsButton.addEventListener('click', self.cancelUpdateHints)
 
-    viewmanager.updateView({
-      target: {value:6}
-    });
+    viewmanager.changeView(6);
   };
 
   self.addCard = function(e) {
