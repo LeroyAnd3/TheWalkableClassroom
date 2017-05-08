@@ -388,3 +388,8 @@ button:not(#pause, #restart, #quit, #play, #hint, #solve) {
   margin-left: auto;
   margin-right: auto;
 }
+
+.invisibleText {
+  color:#ffffff;
+  display:inline;
+}
