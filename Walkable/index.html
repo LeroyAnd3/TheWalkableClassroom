@@ -45,28 +45,44 @@
       <div class="hidden" id="view-4">4</div>
 
       <div class="hidden" id="view-5">
-        <div class="deckStack">
-          <div class="card1" style="background: #F5F5F5;">
-            <div class="card2" style="background: #F5F5F5;">
-              <div class="card3" style="background: #F5F5F5;">
-                <br>Want to create<br> a new deck?<br>
-                <button id="addDeckButton">Click to Create</button>
+
+        <div class="container"> <!-- this needs to go outside of all added decks-->
+          <!-- add additional decks in here -->
+          <!-- and each additional deck needs to have class="item" added to it -->
+
+          <div class="item" class="deckStack">
+            <div class="card1" style="background: #F5F5F5;">
+              <div class="card2" style="background: #F5F5F5;">
+                <div class="card3" style="background: #F5F5F5;">
+                  <br>Want to create<br> a new deck?<br>
+                  <button id="addDeckButton">Click to Create</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+          <!-- or add add additional decks in here -->
+
+        </div> <!-- this needs to go outside of all added decks-->
       </div>
 
       <div class="hidden" id="view-6">
-        <div class="card">
-          <br><span>data 1</span><br>
-          <span>data 2</span><br>
-          <button class="editButton">Edit</button>
-        </div>
-        <div class="card" style="background: #F5F5F5;">
-          <br>Want to create<br>a new card?<br>
-          <button id="addCardButton" class="addCardButton">Click to Create</button>
-        </div>
+        <div class="container"> <!-- this needs to go outside of all added decks-->
+          <!-- add additional decks in here -->
+          <!-- and each additional card needs to have class="item" added to it -->
+
+          <div class="item" class="card">
+            <br><span>data 1</span><br>
+            <span>data 2</span><br>
+            <button class="editButton">Edit</button>
+          </div>
+
+          <div item="class" class="card" style="background: #F5F5F5;">
+            <br>Want to create<br>a new card?<br>
+            <button id="addCardButton" class="addCardButton">Click to Create</button>
+          </div>
+          <!-- or add add additional cards in here -->
+
+        </div> <!-- this needs to go outside of all added decks-->
       </div>
 
       <div class="hidden" id="view-7">

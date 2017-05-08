@@ -418,3 +418,18 @@ a.navigation {
   margin-left: auto;
   margin-right: auto;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.item {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
