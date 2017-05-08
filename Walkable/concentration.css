@@ -1,5 +1,5 @@
 body {
-    background: #DCDCDC ;
+    background: #DCDCDC;
     font-size: 12pt;
     font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
     overflow: scroll;
@@ -52,6 +52,10 @@ form {
 
 #home {
   color: #000000;
+  text-align: center;
+  border: 2px solid #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #home:hover{
@@ -64,6 +68,10 @@ form {
 
 #create {
   color: #000000;
+  text-align: center;
+  border: 2px solid #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #create:hover {
@@ -76,6 +84,10 @@ form {
 
 #how {
   color: #000000;
+  text-align: center;
+  border: 2px solid #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #how:hover {
@@ -90,33 +102,13 @@ form {
 #playnav {
   color: #000000;
   text-align: center;
-  border: 2px solid #000000;
+  border: 2px solid #DCDCDC;
   border-radius: 10px;
   padding: 5px;
 }
 
 #login {
   color: #000000;
-}
-
-#login:hover {
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#logout {
-  color: #000000;
-}
-
-#logout:hover {
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
 }
 
 a {
