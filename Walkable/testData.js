@@ -35,7 +35,7 @@ class ViewManager {
         case 'how':
           this.changeView(2);
           break;
-        case 'play':
+        case 'playnav':
           this.changeView(3);
           break;
         default:
@@ -56,7 +56,7 @@ class ViewManager {
     this.home = document.getElementById('home');
     this.create = document.getElementById('create');
     this.how = document.getElementById('how');
-    this.play = document.getElementById('play');
+    this.play = document.getElementById('playnav');
 
     this.home.addEventListener('mousedown', this.updateView);
     this.create.addEventListener('mousedown', this.updateView);
@@ -86,14 +86,14 @@ class ViewManager {
 };
 let viewmanager = new ViewManager();
 
-function Card(id, term, hints=[], key_term, category_key){
-  var self = this;
-  this.id = id;
-  this.term = term;
-  this.hints = hints;
-  this.key_term = key_term;
-  this.category_key = category_key;
-}
+// function Card(id, term, hints=[], key_term, category_key){
+//   var self = this;
+//   this.id = id;
+//   this.term = term;
+//   this.hints = hints;
+//   this.key_term = key_term;
+//   this.category_key = category_key;
+// }
 
 function Deck(id, subject, cards, category_key) {
   self = this;

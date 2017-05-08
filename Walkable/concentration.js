@@ -1,5 +1,5 @@
 //Game logic for the concentration game.
-//Author(s): Abby, Chris
+//Author(s): Abby, Chris, Leroy
 
 //Index 0 is the termid, index 1 is the answer, indices > 1 are the hints
 //Sample data
@@ -45,7 +45,7 @@ class Card{
         this.answer = answer;
         this.hint = hint;
 	this.itemid = itemid;
-        this.div='<div onmouseover="playMusic(this)" chosen="false" class ="card" termID ='+itemid+' hint="'+hint+'"  answer="'+answer+'" literalID = '+id+' id="card' +id +'">'+hint+'</div>';
+        this.div='<div onmouseover="playMusic(this)" chosen="false" class ="cardConcentration" termID ='+itemid+' hint="'+hint+'"  answer="'+answer+'" literalID = '+id+' id="card' +id +'">'+hint+'</div>';
  }
 }
 
@@ -160,9 +160,9 @@ function initializeGame(numcards){
   handleMusicCards();
   initialized = true;
   disableBoxes();
-  var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+  var blankdiv = '<div class ="cardConcentration" id="blank" style ="visibility:hidden" >'+" "+'</div>';
   var pairsCleared = 0;
-  $('.card').on('click',function(){
+  $('.cardConcentration').on('click',function(){
   	//Only allow player to click on cards when an animation is not active
 	if(!isAnimating){
 		var newUl = document.createElement("ul");
@@ -320,9 +320,9 @@ function setImageCardDetails(element){
 
 function setGameDetails(){
   $('#gametitle').html("Concentration Game: "+topic);
-  $('.card').css("color","black");
-  $('.card').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
-  $('.card').css("font-family","sans-serif");
+  $('.cardConcentration').css("color","black");
+  $('.cardConcentration').css("text-shadow","2px 0 white, 0 2px white, 2px 0 white, 0 -2px white");
+  $('.cardConcentration').css("font-family","sans-serif");
   $("#cardbackground").attr("disabled","disabled");
   $("#play").attr("disabled", "disabled");
 }
@@ -396,7 +396,7 @@ function hintFunction(){
  //Don't allow hint functionality if an animation is already in progress
  if(isAnimating) {console.log("Animation in progress, try hint functionality later"); return;}
  hintClear = true;
- var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+ var blankdiv = '<div class ="cardConcentration" id="blank" style ="visibility:hidden" >'+" "+'</div>';
  var i = getRandomIntInclusive(0,num-1);
  var delay1 = 4*cardFlipDelay;
  var delay2 = 8*cardFlipDelay;
@@ -467,7 +467,7 @@ function selectiveHintFunction(){
 }
 
 function handleFoundSelection(element){
-	var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+	var blankdiv = '<div class ="cardConcentration" id="blank" style ="visibility:hidden" >'+" "+'</div>';
 	setTimeout(function(){
 		$(element).replaceWith(blankdiv);
 		$('#'+id0).replaceWith(blankdiv);
@@ -483,7 +483,7 @@ function handleFoundSelection(element){
 //Automatically solve the entire board
 //Should allow the player to view the cleared cards somewhere (?)
 function solveFunction(){
- var blankdiv = '<div class ="card" id="blank" style ="visibility:hidden" >'+" "+'</div>';
+ var blankdiv = '<div class ="cardConcentration" id="blank" style ="visibility:hidden" >'+" "+'</div>';
  while(clearedCardList.length!=num){
  	var i = getRandomIntInclusive(0,num-1);
 	while(clearedCardList.includes(i.toString())) {i=getRandomIntInclusive(0,num-1);}
@@ -538,7 +538,7 @@ function startImageChecker(element){
 				$(element).css("border","3px solid black");
 			}
 		}else{
-			/*			
+			/*
 			if($(element).attr("chosen")=="false"){
 				$(element).css("background-image","none");
 				$(element).css("background-color","yellow");
@@ -558,33 +558,33 @@ function failedToStart(){
 //Checks and sets card backgrounds based on the user's choice
 function checkCardBackgrounds(){
  $('#defaultback').each(function() {
-  if(this.selected) {$('.card').css("background-color","white"); handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-color","white"); handleImageCards();}
  });
  $('#naturalwhite').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/ep_naturalwhite.png)"); handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/ep_naturalwhite.png)"); handleImageCards();}
  });
  $('#naturalblack').each(function(){
   if(this.selected) {
-  	$('.card').css("background-image","url(./resources/ep_naturalblack.png)");
-	$('.card').css("color","white");
-  	$('.card').css("text-shadow","2px 0 black, 0 2px black, 0px 0px black, 0px 0px yellow");
+  	$('.cardConcentration').css("background-image","url(./resources/ep_naturalblack.png)");
+	$('.cardConcentration').css("color","white");
+  	$('.cardConcentration').css("text-shadow","2px 0 black, 0 2px black, 0px 0px black, 0px 0px yellow");
 	handleImageCards();
   }
  });
  $('#sayagata').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/sayagata-400px.png)");handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/sayagata-400px.png)");handleImageCards();}
  });
  $('#retinawood').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/retina_wood.png");handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/retina_wood.png");handleImageCards();}
  });
  $('#circlesround').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/circles-and-roundabouts.png)");handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/circles-and-roundabouts.png)");handleImageCards();}
  });
  $('#oldmap').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/old_map.png)");handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/old_map.png)");handleImageCards();}
  });
  $('#skulls').each(function(){
-  if(this.selected) {$('.card').css("background-image","url(./resources/skulls.png)");handleImageCards();}
+  if(this.selected) {$('.cardConcentration').css("background-image","url(./resources/skulls.png)");handleImageCards();}
  });
 }
 
