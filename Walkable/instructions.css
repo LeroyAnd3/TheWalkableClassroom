@@ -53,10 +53,11 @@ body {
   font-size: 16pt;
 }
 
-img {
+img.img {
   display: block;
   margin: auto;
-  width: 80%;
+  height: auto;
+  width: 85%;
 }
 
 #nav {
