@@ -156,7 +156,8 @@ function getCategoryTerms(category, cardColllection, imageCollection,audioCollec
 //append current categories to the concentration game to select from
 function appendCategories() {
   return new Promise(function(resolve, reject) {
-    categoryRef.once('value', snap => {
+    categoryRef.on('value', snap => {
+      clearMenu();
       snap.forEach(subject => {
         let option = document.createElement("option");
         let node = document.createTextNode(subject.val().subject);
@@ -378,4 +379,14 @@ function getHint7(hintObject) {
 
 function getHint8(hintObject) {
   return hintObject.hint8;
+}
+
+function clearMenu(){
+    let element = document.getElementById("categories");
+    let i;
+    for(i = element.options.length - 1 ; i >= 0 ; i--)
+    {
+        element.remove(i);
+    }
+
 }
