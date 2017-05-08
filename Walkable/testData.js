@@ -1,16 +1,16 @@
 class ViewManager {
   constructor() {
     this.view = 1;
-    this.updateView = function(e) {
-      let id = Number(e.target.value);
-      if($(`#view-${id}`).hasClass('hidden'))
-        for(var i = 1; i <= 8; i++)
-          if (i === id)
-            $(`#view-${id}`).toggleClass('hidden')
-          else
-            $(`#view-${i}`).addClass('hidden');
-
-    }
+    // this.updateView = function(e) {
+    //   let id = Number(e.target.value);
+    //   if($(`#view-${id}`).hasClass('hidden'))
+    //     for(var i = 1; i <= 8; i++)
+    //       if (i === id)
+    //         $(`#view-${id}`).toggleClass('hidden')
+    //       else
+    //         $(`#view-${i}`).addClass('hidden');
+    //
+    // }
 
     this.changeView = function(id){
       if($(`#view-${id}`).hasClass('hidden'))
@@ -22,7 +22,7 @@ class ViewManager {
 
     };
 
-    this.newUpdateView = function(e) {
+    this.updateView = function(e) {
       var id = String(e.target.id);
 
       switch (id) {
@@ -58,10 +58,10 @@ class ViewManager {
     this.how = document.getElementById('how');
     this.play = document.getElementById('play');
 
-    this.home.addEventListener('mousedown', this.newUpdateView);
-    this.create.addEventListener('mousedown', this.newUpdateView);
-    this.how.addEventListener('mousedown', this.newUpdateView);
-    this.play.addEventListener('mousedown', this.newUpdateView);
+    this.home.addEventListener('mousedown', this.updateView);
+    this.create.addEventListener('mousedown', this.updateView);
+    this.how.addEventListener('mousedown', this.updateView);
+    this.play.addEventListener('mousedown', this.updateView);
 
     // this.button1 = document.getElementById('button-1');
     // this.button2 = document.getElementById('button-2');
