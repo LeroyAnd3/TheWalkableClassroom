@@ -1,202 +1,3 @@
-/*body {
-    background: #DCDCDC ;
-    font-size: 12pt;
-    font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-.deckStack{
-  display: inline-block;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-
-.card1 {
-  text-align: center;
-  height: 200px;
-  width: 150px;
-  border: 2px solid #000;
-  border-radius: 15px;
-  transform: translate(0px, 0px);
-  background: #ADD8E6;
-  margin-top: 25px;
-  box-shadow: 5px 5px 20px grey;
-}
-
-.card2 {
-  text-align: center;
-  height: 200px;
-  width: 150px;
-  border: 2px solid #000;
-  border-radius: 15px;
-  transform: translate(5px, 5px);
-  background: #ADD8E6;
-  box-shadow: 5px 5px 20px grey;
-}
-
-.card3 {
-  text-align: center;
-  height: 200px;
-  width: 150px;
-  border: 2px double #000;
-  border-radius: 15px;
-  transform: translate(5px, 5px);
-  background: #ADD8E6;
-  margin-bottom: 25px;
-  box-shadow: 5px 5px 20px grey;
-}
-
-button{
-  margin-top: 50px;
-  left: 50%;
-}
-
-.card {
-  text-align: center;
-  height: 150px;
-  width: 130px;
-  border: 2px solid #000;
-  border-radius: 15px;
-  transform: translate(0px, 0px);
-  background: #ADD8E6;
-  margin-top: 25px;
-  box-shadow: 5px 5px 20px grey;
-  display: inline-block;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-
-
-#space1 {
-  padding: 20px;
-}
-#space2 {
-  padding: 35px;
-}
-#space3 {
-  padding: 50px;
-}
-
-#logo {
-  font-size: 35pt;
-  text-align: left;
-  width: 100%;
-  border-top: 5px double #000;
-  border-bottom: 5px double #000;
-  height: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-  background: url('./resources/map_cropped.jpeg') no-repeat;
-  background-size: 100%;
-}
-
-#nav {
-  color: #ffffff;
-  font-size: 10pt;
-  text-align: center;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  width: 100%;
-  margin-top: 5px;
-}
-
-#home {
-  color: #000000;
-  text-align: center;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #DCDCDC;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#home:hover{
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#create {
-  color: #000000;
-  text-align: center;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #DCDCDC;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#create:hover{
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#how {
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-  text-decoration: none;
-}
-
-#play {
-  color: #000000;
-  text-align: center;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #DCDCDC;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#play:hover {
-  color: #000000;
-  text-align: center;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-a {
-  text-decoration: none;
-}
-
-a.navigation {
-  margin-right: 12px;
-  margin-left: 12px;
-}
-
-.hidden{
-    visibility: hidden;
-    display: none;
-}
-
-.selected {
-  background-color: yellow;
-}
-
-.deckDeleteButton{
-  float: right;
-  display: inline-block;
-  height: 30px;
-  width: 30px;
-  background-color: red;
-  margin-top: 4px;
-  margin-right: 4px;
-}*/
-
 body {
     background: #DCDCDC ;
     font-size: 12pt;
@@ -216,7 +17,7 @@ body {
   text-align: center;
   height: 200px;
   width: 150px;
-  border: 2px solid #000;
+  border: 0.25px solid #000;
   border-radius: 15px;
   transform: translate(0px, 0px);
   background: #ADD8E6;
@@ -228,7 +29,7 @@ body {
   text-align: center;
   height: 200px;
   width: 150px;
-  border: 2px solid #000;
+  border: 0.25px solid #000;
   border-radius: 15px;
   transform: translate(5px, 5px);
   background: #ADD8E6;
@@ -239,7 +40,7 @@ body {
   text-align: center;
   height: 200px;
   width: 150px;
-  border: 2px double #000;
+  border: 0.25px double #000;
   border-radius: 15px;
   transform: translate(5px, 5px);
   background: #ADD8E6;
@@ -256,7 +57,7 @@ button{
   text-align: center;
   height: 175px;
   width: 150px;
-  border: 2px solid #000;
+  border: 0.25px solid #000;
   border-radius: 15px;
   transform: translate(0px, 0px);
   background: #ADD8E6;
@@ -304,7 +105,7 @@ button{
   width: 100%;
   margin-top: 5px;
 }
-#home {
+/*#home {
   color: #000000;
   text-align: center;
   border-style: solid;
@@ -313,7 +114,6 @@ button{
   border-radius: 10px;
   padding: 5px;
 }
-
 
 #create {
   color: #000000;
@@ -350,7 +150,7 @@ button{
   padding: 5px;
 }
 
-#play {
+#playnav {
   color: #000000;
   text-align: center;
   border-style: solid;
@@ -360,13 +160,13 @@ button{
   padding: 5px;
 }
 
-#play:hover {
+#playnav:hover {
   color: #000000;
   text-align: center;
   border: 2px solid #000000;
   border-radius: 10px;
   padding: 5px;
-}
+}*/
 
 a {
   text-decoration: none;
@@ -375,6 +175,33 @@ a {
 a.navigation {
   margin-right: 12px;
   margin-left: 12px;
+}
+
+a.navigation {
+  color: #000000;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
+}
+a.navigation:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.selectedNav {
+  color: #000000;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000000;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 .hidden{
@@ -411,8 +238,156 @@ a.navigation {
   clear: center;
   text-align: center;
   border-radius: 10px;
+  border: 1px solid #000;
+  width: 80%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.item {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.instrBox {
+  padding-top: 10px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: white;
+  clear: center;
+  text-align: center;
+  border-radius: 10px;
   border: 3px solid #000;
   width: 80%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+/*concentration stuff*/
+#gametitle {
+  text-align: center;
+  font-size: 16pt;
+  margin: 0px;
+}
+
+#time {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+
+#winText {
+  display: table;
+  text-align: center;
+  font-size: 200%;
+  width: 100%;
+}
+
+form {
+  text-align: center;
+  padding: 10px;
+}
+p {
+  font-size: 11pt;
+}
+#row {
+  display: flex;
+}
+
+#deck {
+  text-align: center;
+  float: center;
+  border-collapse: collapse;
+  margin: 0 auto;
+  display: table;
+}
+
+button:not(#pause, #restart, #quit, #play, #hint, #solve) {
+  height: 25px;
+  width: 25px;
+  font-weight: 700;
+  color: black;
+  font-size: 12pt;
+}
+
+#tableHeader {
+  text-align: center;
+  float: center;
+  width: auto;
+}
+
+#textBox {
+  border-style: solid;
+  border-width: medium;
+  width: 30px;
+}
+
+.mine {
+  text-align: center;
+}
+
+.flipping {
+    transform: translate(0, 0px) rotateY(90deg);
+    -webkit-transform: translate(0, 0px) rotateY(90deg);
+}
+
+.cardConcentration {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 10px;
+  color: black;
+  background-color: white;
+  clear: center;
+  text-align: center;
+  float: center;
+  border-radius: 15px;
+  border: 3px solid black;
+  width: 155px;
+  height: 100px;
+  -webkit-transition:-webkit-transform 0.5s;
+  transition:transform 0.5s;
+  background:#FF0;
+}
+.img {
+  display: block;
+  margin: auto;
+  width: 80%;
+  max-height: 500px;
+}
+
+.splashPage{
+  padding-top: 10px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: black;
+  background-color: white;
+  clear: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #000;
+  width: 75%;
+  height: 75%;
   margin-top: 30px;
   margin-bottom: 30px;
   margin-left: auto;

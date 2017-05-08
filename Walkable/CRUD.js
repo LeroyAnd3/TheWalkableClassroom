@@ -166,9 +166,6 @@ function appendCategories() {
         element.appendChild(option);
       });
       resolve();
-    })
-    .catch(function(error) {
-      reject(new Error("Failed to append categories: " + error.message));
     });
   })
 }

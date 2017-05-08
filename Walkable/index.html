@@ -30,18 +30,165 @@
       </div>
 
       <div id="nav">
-        <a class="navigation" href="index.html" id="home">Home</a>
-        <a class="navigation" href="deckCollection.html" id="create">Create Content</a>
-        <a class="navigation" href="instructions.html" id="how">How to Play</a>
-        <a class="navigation" href="concentration.html" id="play">Play Game</a>
+        <a class="selectedNav" href="#" id="home">Home</a>
+        <a class="navigation" href="#" id="create">Create Content</a>
+        <a class="navigation" href="#" id="how">How to Play</a>
+        <a class="navigation" href="#" id="playnav">Play Game</a>
+      </div>
+    </div>
+
+    <div class="hidden" id="view-1">
+      <div class="splashPage">
+        Welcome to The Flippable Classroom, a tool designed to be used in partnership with The Walkable Classroom!<br>We've designed an educational game and tool that we hope you will enjoy using.<br>Here's a silly video explaining its concept:
+        <br>
+        <br>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/uXgBfIixxJs" frameborder="0" allowfullscreen></iframe>
+        <br>
+      </div>
+    </div>
+
+    <div class="hidden" id="view-2">
+      <div class="instrBox">
+        <p>1. Select the desired board configuration from the drop down menu.</p>
+        <img class="img" src="./resources/boardconfig.png"></img>
+        <br>
       </div>
 
-      <div class="hidden" id="view-1">1</div>
-      <div class="hidden" id="view-2">2</div>
-      <div class="hidden" id="view-3">3</div>
-      <div class="hidden" id="view-4">4</div>
-      <div class="hidden" id="view-5">
-        <div class="deckStack">
+      <div class="instrBox">
+        <p>2. Select the desired card background from the drop down menu.</p>
+        <img class="img" src="./resources/background.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>3. Select a category for your game from the drop down menu.</p>
+        <img class="img" src="./resources/category.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>4. Press Play to begin game play!</p>
+        <img class="img" src="./resources/play.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>5. This is an example game board. Scroll down in your screen to make sure you can see your gameboard fully.</p>
+        <img class="img" src="./resources/gameBoard.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>6. Once you have your board setup however you like, click on a card. It will become highlighted yellow when you select it (as show by the blue circled card). Note the orange circled card for future instructions.</p>
+        <img class="img" src="./resources/cardSelect.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>7. When you select two cards, they both highlight yellow, and then rotate to show you the hints on the back. As you can see, these two cards no longer have the hints on the cards as the previous image. That is because they have rotated to show the terms on the backside of the card. This is to help you learn what the hints on the front actually represent. (aka the answers that match to the hints)</p>
+        <img class="img" src="./resources/flippedCard.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>8. Notice that the hints are now different. The cards are still here because the two cards that were selected were an incorrect match. If you select an incorrect pair of cards, then new hints will appear, if you make multiple hints for a term, and the hints will be randomly shuffled through.</p>
+        <img class="img" src="./resources/newHints.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>9. If you select two cards that are a correct match, the cards will disappear as shown here.</p>
+        <img class="img" src="./resources/correct.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>Note: The goal is to clear the board by matching all the pairs of cards correctly. If you clear the board, you "win" and this is what is seen.</p>
+        <img class="img" src="./resources/win.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>Note: Pressing the HINT button will clear one pair of cards from the deck.</p>
+        <img class="img" src="./resources/hint.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>Note: Pressing the SOLVE button will clear all of the cards from the deck.</p>
+        <img class="img" src="./resources/solve.png"></img>
+        <br>
+      </div>
+
+      <div class="instrBox">
+        <p>Note: Pressing the QUIT button will refresh the page and allow you to reselect board configurations.</p>
+        <img class="img" src="./resources/quit.png"></img>
+        <br>
+      </div>
+    </div>
+
+    <div class="hidden" id="view-3">
+      <!-- <div class="container"> -->
+      <div>
+
+        <h1 id="gametitle">Concentration Game</h1>
+
+        <form class="userInputs" style="margin:auto;">
+          <select id="boardconfig">
+            <option id="default" value="default">Select a board configuration</option>
+            <option id="rectangle2x4" value="rectangle2x4">Rectangle Small (2x4)</option>
+          <option id="rectangle3x4" value="rectangle3x4">Rectangle Medium (3x4)</option>
+          <option id="rectangle3x6" value="rectangle3x6">Rectangle Large (3x6)</option>
+            <option id="square" value="square">Square</option>
+          </select>
+
+          <select id="cardbackground">
+            <option id="defaultback" value="defaultback">Select card background</option>
+            <option id="naturalwhite" value="naturalwhite">White Floor Tile</option>
+            <option id="naturalblack" value="naturalblack">Starry Galaxy</option>
+            <option id="sayagata" value="sayagata">Sayagata Gray & White</option>
+            <option id="retinawood" value="retinawood">Retina Wood</option>
+            <option id="circlesround" value="circlesround">Abstract Gray</option>
+            <option id="oldmap" value="oldmap">Tan Specks</option>
+            <option id="skulls" value="skulls">Beige Peter Max</option>
+          </select>
+
+          <select id="categories">
+            <option value='Select a category'>Select a category</option>
+          </select>
+
+          <button type="button" id="play" style="margin-top:auto;"> Play! </button>
+          <button type="button" id="solve" style="margin-top:auto;"> Solve </button>
+          <button type="button" id="clear" style="margin-top:auto;"> Clear </button>
+          <button type="button" id="reset" style="margin-top:auto;"> Reset </button>
+          <button type="button" id="quit" style="margin-top:auto;"> Quit </button>
+        </form>
+      <div>
+
+        <form id="scoreBoard" style="margin:auto;">
+        <p style="display:inline">Time: </p>
+        <p style="display:inline" id="time">00:00</p>
+        <p style="display:inline" id="moveCounter">Move Count: 0</p>
+        <p style="display:inline" id="streakCounter">Streak: 0</p>
+        <p style="display:inline" id="gameScore">Score: 0</p>
+      </form>
+      </div>
+      </div>
+
+
+      <p id="winText"> </p>
+
+     <div id="deck"></div>
+
+
+      <footer></footer>
+    </div>
+
+    <div class="hidden" id="view-4">4</div>
+
+    <div class="hidden container" id="view-5">
+        <div></div>
+        <div class="item" class="deckStack">
           <div class="card1" style="background: #F5F5F5;">
             <div class="card2" style="background: #F5F5F5;">
               <div class="card3" style="background: #F5F5F5;">
@@ -51,56 +198,47 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="hidden" id="view-6">
-        <div class="card">
+
+    </div>
+
+    <div class="hidden container" id="view-6">
+
+        <div class="item" class="card">
           <br><span>data 1</span><br>
           <span>data 2</span><br>
           <button class="editButton">Edit</button>
         </div>
 
-
-        <div class="card" style="background: #F5F5F5;">
+        <div item="class" class="card" style="background: #F5F5F5;">
           <br>Want to create<br>a new card?<br>
           <button id="addCardButton" class="addCardButton">Click to Create</button>
         </div>
+        
+    </div>
 
-      </div>
-      <div class="hidden" id="view-7">
-        <div style="text-align: center;">
-          <div class="hintMaker">
-            <div class="title" style="margin: 5px;">
-              <span>{Subject}</span>
-              <span>{Terms}</span>
-              <span>HINT LIST</span>
-            </div>
-            <div> Hint 1: <textarea id="hint-1" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 2: <textarea id="hint-2" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 3: <textarea id="hint-3" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 4: <textarea id="hint-4" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 5: <textarea id="hint-5" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 6: <textarea id="hint-6" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 7: <textarea id="hint-7" rows="1" style="width:75%"></textarea> </div>
-            <div> Hint 8: <textarea id="hint-8" rows="1" style="width:75%"></textarea> </div>
-            <button id="updateHintsButton" style="margin-top:15px; margin-bottom:10px;">Save Changes</button>
-            <button id="cancelUpdateHintsButton" style="margin-top:15px;margin-bottom:10px;">Delete Changes</button>
+    <div class="hidden" id="view-7">
+      <div style="text-align: center;">
+        <div class="hintMaker">
+          <div class="title" style="margin: 5px;">
+            <span>HINT LIST</span>
           </div>
+          <div> Hint 1: <textarea id="hint-1" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 2: <textarea id="hint-2" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 3: <textarea id="hint-3" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 4: <textarea id="hint-4" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 5: <textarea id="hint-5" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 6: <textarea id="hint-6" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 7: <textarea id="hint-7" rows="1" style="width:75%"></textarea> </div>
+          <div> Hint 8: <textarea id="hint-8" rows="1" style="width:75%"></textarea> </div>
+          <button id="updateHintsButton" style="margin-top:15px; margin-bottom:10px;">Save Changes</button>
+          <button id="cancelUpdateHintsButton" style="margin-top:15px;margin-bottom:10px;">Delete Changes</button>
         </div>
       </div>
-      <div class="hidden" id="view-8">8</div>
+    </div>
 
-      <div style="text-align:center;">
-        <button style="inline" id="button-1" value="1">button1</button>
-        <button style="inline" id="button-2" value="2">button2</button>
-        <button style="inline" id="button-3" value="3">button3</button>
-        <button style="inline" id="button-4" value="4">button4</button>
-        <button style="inline" id="button-5" value="5">button5</button>
-        <button style="inline" id="button-6" value="6">button6</button>
-        <button style="inline" id="button-7" value="7">button7</button>
-        <button style="inline" id="button-8" value="8">button8</button>
-      </div>
-
+    <div class="hidden" id="view-8">8</div>
   </body>
 
   <script src="testData.js" type="text/javascript"></script>
+  <script src="concentration.js" type="text/javascript"></script>
 </html>
