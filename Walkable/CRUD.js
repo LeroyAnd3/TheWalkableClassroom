@@ -376,3 +376,14 @@ function getHint7(hintObject) {
 function getHint8(hintObject) {
   return hintObject.hint8;
 }
+
+function clearMenu(){
+    let element = document.getElementById("categories");
+    let i;
+    for(i = element.options.length - 1 ; i > 0 ; i--)
+    {
+        element.remove(i);
+    }
+
+
+}
