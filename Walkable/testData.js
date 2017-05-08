@@ -16,10 +16,13 @@ class ViewManager {
       if($(`#view-${id}`).hasClass('hidden'))
         for(var i = 1; i <= 8; i++)
           if (i === id) {
-            $(`#view-${id}`).toggleClass('hidden');
+            $(`#view-${id}`).removeClass('hidden');
+            if(id === 5 || id === 6)
+              $(`#view-${id}`).addClass('container');
           }
           else {
             $(`#view-${i}`).addClass('hidden');
+            $( `#view-${i}`).removeClass('container');
           }
     };
 
