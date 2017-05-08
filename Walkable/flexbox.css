@@ -1,3 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+
+.item {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.card1 {
+  text-align: center;
+  height: 150px;
+  width: 130px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  transform: translate(0px, 0px);
+  background: #ADD8E6;
+  margin-top: 25px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.card2 {
+  text-align: center;
+  height: 150px;
+  width: 130px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  transform: translate(5px, 5px);
+  background: #ADD8E6;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.card3 {
+  text-align: center;
+  height: 150px;
+  width: 130px;
+  border: 2px double #000;
+  border-radius: 15px;
+  transform: translate(5px, 5px);
+  background: #ADD8E6;
+  margin-bottom: 25px;
+  box-shadow: 5px 5px 20px grey;
+}
+
 body {
     background: #DCDCDC ;
     font-size: 12pt;
@@ -30,36 +80,6 @@ body {
   background-size: 100%;
 }
 
-.instrBox {
-  padding-top: 10px;
-  padding-bottom: 8px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color: black;
-  background-color: white;
-  clear: center;
-  text-align: center;
-  border-radius: 10px;
-  border: 3px solid #000;
-  width: 80%;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.title {
-  text-align: center;
-  font-size: 16pt;
-}
-
-img.img {
-  display: block;
-  margin: auto;
-  height: auto;
-  width: 85%;
-}
-
 #nav {
   color: #ffffff;
   font-size: 10pt;
@@ -67,7 +87,7 @@ img.img {
   padding-right: 10px;
   padding-left: 10px;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   width: 100%;
   margin-top: 5px;
 }
@@ -90,17 +110,7 @@ img.img {
   padding: 5px;
 }
 
-#create {
-  color: #000000;
-  text-align: center;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #DCDCDC;
-  border-radius: 10px;
-  padding: 5px;
-}
-
-#create:hover{
+#create{
   color: #000000;
   text-align: center;
   border: 2px solid #000000;
@@ -111,10 +121,18 @@ img.img {
 #how {
   color: #000000;
   text-align: center;
-  border: 2px solid #000000;
+  border: 2px solid #DCDCDC;
   border-radius: 10px;
   padding: 5px;
   text-decoration: none;
+}
+
+#how:hover {
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #play {

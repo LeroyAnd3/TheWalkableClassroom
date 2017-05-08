@@ -1,14 +1,60 @@
 class ViewManager {
   constructor() {
-    this.view = 5;
+    this.view = 1;
+
+    this.changeView = function(id){
+      if($(`#view-${id}`).hasClass('hidden'))
+        for(var i = 1; i <= 8; i++)
+          if (i === id) {
+            $(`#view-${id}`).removeClass('hidden');
+            if(id === 5 || id === 6)
+              $(`#view-${id}`).addClass('container');
+          }
+          else {
+            $(`#view-${i}`).addClass('hidden');
+            $( `#view-${i}`).removeClass('container');
+          }
+    };
+
     this.updateView = function(e) {
-      let id = Number(e.target.value);
-      for(var i = 1; i <= 8; i++)
-        if (i === id)
-          $(`#view-${id}`).toggleClass('hidden')
-        else
-          $(`#view-${i}`).addClass('hidden');
-    }
+      var id = String(e.target.id);
+
+      $(`#home`).removeClass('selectedNav');
+      $(`#create`).removeClass('selectedNav');
+      $(`#how`).removeClass('selectedNav');
+      $(`#playnav`).removeClass('selectedNav');
+
+      $(`#home`).addClass('navigation');
+      $(`#create`).addClass('navigation');
+      $(`#how`).addClass('navigation');
+      $(`#playnav`).addClass('navigation');
+
+      switch (id) {
+        case 'home':
+          this.changeView(1);
+          $(`#home`).removeClass('navigation');
+          $(`#home`).addClass('selectedNav');
+          break;
+        case 'create':
+          this.changeView(5);
+          $(`#create`).removeClass('navigation');
+          $(`#create`).addClass('selectedNav');
+          break;
+        case 'how':
+          this.changeView(2);
+          $(`#how`).removeClass('navigation');
+          $(`#how`).addClass('selectedNav');
+          break;
+        case 'playnav':
+          this.changeView(3);
+          $(`#playnav`).removeClass('navigation');
+          $(`#playnav`).addClass('selectedNav');
+          break;
+        default:
+      }
+
+    }.bind(this);
+
     this.$view1 = $('#view-1');
     this.$view2 = $('#view-2');
     this.$view3 = $('#view-3');
@@ -18,36 +64,21 @@ class ViewManager {
     this.$view7 = $('#view-7');
     this.$view8 = $('#view-8');
 
-    this.button1 = document.getElementById('button-1');
-    this.button2 = document.getElementById('button-2');
-    this.button3 = document.getElementById('button-3');
-    this.button4 = document.getElementById('button-4');
-    this.button5 = document.getElementById('button-5');
-    this.button6 = document.getElementById('button-6');
-    this.button7 = document.getElementById('button-7');
-    this.button8 = document.getElementById('button-8');
+    //caching the navigation tabs
+    this.home = document.getElementById('home');
+    this.create = document.getElementById('create');
+    this.how = document.getElementById('how');
+    this.play = document.getElementById('playnav');
 
-    this.button1.addEventListener('mousedown', this.updateView);
-    this.button2.addEventListener('mousedown', this.updateView);
-    this.button3.addEventListener('mousedown', this.updateView);
-    this.button4.addEventListener('mousedown', this.updateView);
-    this.button5.addEventListener('mousedown', this.updateView);
-    this.button6.addEventListener('mousedown', this.updateView);
-    this.button7.addEventListener('mousedown', this.updateView);
-    this.button8.addEventListener('mousedown', this.updateView);
+    this.home.addEventListener('mousedown', this.updateView);
+    this.create.addEventListener('mousedown', this.updateView);
+    this.how.addEventListener('mousedown', this.updateView);
+    this.play.addEventListener('mousedown', this.updateView);
+
     $(`#view-${this.view}`).removeClass('hidden');
   }
 };
 let viewmanager = new ViewManager();
-
-function Card(id, term, hints=[], key_term, category_key){
-  var self = this;
-  this.id = id;
-  this.term = term;
-  this.hints = hints;
-  this.key_term = key_term;
-  this.category_key = category_key;
-}
 
 function Deck(id, subject, cards, category_key) {
   self = this;
@@ -73,9 +104,8 @@ function Deck(id, subject, cards, category_key) {
     this.$view.prepend(
       `<div id=card-${card.id} class="card">` +
         `<button id="deleteCard-${card.id}" class="cardDeleteButton">x</button>`+
-        `<input id=inputCard-${card.id} size=12 class="hidden"></input><br>` +
-        `<span>Card #${card.id}</span><br>` +
-        `<span id=term-${card.id} >${card.term || "Add Term"}</span><br>` +
+        `<input id=inputCard-${card.id} size=12 class="hidden"></input><br><br>` +
+        `<span style="text-align:center" id=term-${card.id} >${card.term || "Add Term"}</span><br>` +
         `<button id=editCardTerm-${card.id}>Term</button>` +
         `<button id=editCardHints-${card.id}>Hints</button>` +
         `<button id=updateCardTerm-${card.id} class="hidden">Update</button>` +
@@ -227,9 +257,7 @@ function Deck(id, subject, cards, category_key) {
     $('#hint-7').val(card.hints[6]);
     $('#hint-8').val(card.hints[7]);
 
-    viewmanager.updateView({
-      target: {value:7}
-    });
+    viewmanager.changeView(7);
   }.bind(this);
 
   self.emptyView = function() {
@@ -252,9 +280,7 @@ function Deck(id, subject, cards, category_key) {
 
     updateHints(card.category_key,card.key_term,card.hints)
     .then(function(){
-      viewmanager.updateView({
-        target: {value:6}
-      });
+      viewmanager.changeView(6);
     })
     .catch(function(error){
       alert("Unable to update hints");
@@ -265,9 +291,7 @@ function Deck(id, subject, cards, category_key) {
   }.bind(this)
 
   self.cancelUpdateHints = function() {
-    viewmanager.updateView({
-      target: {value:6}
-    });
+    viewmanager.changeView(6);
   }.bind(this);
 
   self.doesntExist = function(newCard, cards) {
@@ -290,7 +314,7 @@ function Deck(id, subject, cards, category_key) {
 
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
-      console.log(newCard);
+      // console.log(newCard);
       // theCurrentDeck.cards.push(newCard);
       // theCurrentDeck.cardCount = theCurrentDeck.cardCount + 1;
       //
@@ -522,9 +546,7 @@ function DeckCollection(decks=[]) {
     self.cancelUpdateHintsButton = document.getElementById('cancelUpdateHintsButton');
     self.cancelUpdateHintsButton.addEventListener('click', self.cancelUpdateHints)
 
-    viewmanager.updateView({
-      target: {value:6}
-    });
+    viewmanager.changeView(6);
   };
 
   self.addCard = function(e) {
@@ -546,7 +568,30 @@ function DeckCollection(decks=[]) {
     }
     self.deckCount = self.deckCount + 1;
 
-    self.$view.prepend(
+    // self.$view.prepend(
+    //   `<div class="deckStack">` +
+    //     '<div class="card1">' +
+    //       '<div class="card2">' +
+    //         `<div id=deck-${newDeck.id} class="card3">` +
+    //           `<div id=deleteDeck-${newDeck.id} class="deckDeleteButton">x</div><br>` +
+    //           '<br>' +
+    //           `<span id=subject-${newDeck.id} >${newDeck.subject || "Add Subject"}</span><br>` +
+    //           `<input id=input-${newDeck.id} size=12 class="hidden"></input><br>` +
+    //           `<button id=edit-${newDeck.id} class="editButton">Edit</button>` +
+    //           `<button id=addCards-${newDeck.id} value=6 class="addCardsButton">Add Cards</button>` +
+    //           `<button id=submit-${newDeck.id} class="submitButton hidden">Submit</button>` +
+    //           `<button id=cancel-${newDeck.id} class="cancelButton hidden">Cancel</button>` +
+    //       '  </div>' +
+    //       '</div>' +
+    //     '</div>'+
+    //   '</div>'
+    // );
+    var count = self.$view.children().length;
+    var additionDiv = self.$view.children(0)[count-2];
+    // console.log(self.$view.children().length);
+    // console.log(newDeck.subject, count, self.$view.children(0).get(count-1));
+    // $(additionDiv).css('background-color', 'red');
+    $(additionDiv).append(
       `<div class="deckStack">` +
         '<div class="card1">' +
           '<div class="card2">' +
@@ -564,6 +609,7 @@ function DeckCollection(decks=[]) {
         '</div>'+
       '</div>'
     );
+
     self.decks.push(newDeck);
 
     var domDeck = document.getElementById(`deck-${newDeck.id}`);
