@@ -104,9 +104,8 @@ function Deck(id, subject, cards, category_key) {
     this.$view.prepend(
       `<div id=card-${card.id} class="card">` +
         `<button id="deleteCard-${card.id}" class="cardDeleteButton">x</button>`+
-        `<input id=inputCard-${card.id} size=12 class="hidden"></input><br>` +
-        `<span>Card #${card.id}</span><br>` +
-        `<span id=term-${card.id} >${card.term || "Add Term"}</span><br>` +
+        `<input id=inputCard-${card.id} size=12 class="hidden"></input><br><br>` +
+        `<span style="text-align:center" id=term-${card.id} >${card.term || "Add Term"}</span><br>` +
         `<button id=editCardTerm-${card.id}>Term</button>` +
         `<button id=editCardHints-${card.id}>Hints</button>` +
         `<button id=updateCardTerm-${card.id} class="hidden">Update</button>` +
