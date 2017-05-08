@@ -450,3 +450,73 @@ a.navigation {
   margin-left: auto;
   margin-right: auto;
 }
+
+
+
+/*concentration stuff*/
+#gametitle {
+  text-align: center;
+  font-size: 16pt;
+  margin: 0px;
+}
+
+#time {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+
+#winText {
+  display: table;
+  text-align: center;
+  font-size: 200%;
+  width: 100%;
+}
+
+form {
+  text-align: center;
+  padding: 10px;
+}
+p {
+  font-size: 11pt;
+}
+#row {
+  display: flex;
+}
+
+#deck {
+  text-align: center;
+  float: center;
+  border-collapse: collapse;
+  margin: 0 auto;
+  display: table;
+}
+
+button:not(#pause, #restart, #quit, #play, #hint, #solve) {
+  height: 25px;
+  width: 25px;
+  font-weight: 700;
+  color: black;
+  font-size: 12pt;
+}
+
+#tableHeader {
+  text-align: center;
+  float: center;
+  width: auto;
+}
+
+#textBox {
+  border-style: solid;
+  border-width: medium;
+  width: 30px;
+}
+
+.mine {
+  text-align: center;
+}
+
+.flipping {
+    transform: translate(0, 0px) rotateY(90deg);
+    -webkit-transform: translate(0, 0px) rotateY(90deg);
+}
