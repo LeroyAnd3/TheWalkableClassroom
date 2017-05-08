@@ -1,6 +1,6 @@
 class ViewManager {
   constructor() {
-    this.view = 5;
+    this.view = 1;
     this.updateView = function(e) {
       let id = Number(e.target.value);
       for(var i = 1; i <= 8; i++)
@@ -9,6 +9,36 @@ class ViewManager {
         else
           $(`#view-${i}`).addClass('hidden');
     }
+
+    this.changeView = function(id){
+      for(var i = 1; i <= 8; i++)
+        if (i === id)
+          $(`#view-${id}`).toggleClass('hidden')
+        else
+          $(`#view-${i}`).addClass('hidden');
+    };
+
+    this.newUpdateView = function(e) {
+      var id = String(e.target.id);
+
+      switch (id) {
+        case 'home':
+          this.changeView(1);
+          break;
+        case 'create':
+          this.changeView(5);
+          break;
+        case 'how':
+          this.changeView(2);
+          break;
+        case 'play':
+          this.changeView(3);
+          break;
+        default:
+      }
+
+    }.bind(this);
+
     this.$view1 = $('#view-1');
     this.$view2 = $('#view-2');
     this.$view3 = $('#view-3');
@@ -18,23 +48,35 @@ class ViewManager {
     this.$view7 = $('#view-7');
     this.$view8 = $('#view-8');
 
-    this.button1 = document.getElementById('button-1');
-    this.button2 = document.getElementById('button-2');
-    this.button3 = document.getElementById('button-3');
-    this.button4 = document.getElementById('button-4');
-    this.button5 = document.getElementById('button-5');
-    this.button6 = document.getElementById('button-6');
-    this.button7 = document.getElementById('button-7');
-    this.button8 = document.getElementById('button-8');
+    //caching the navigation tabs
+    this.home = document.getElementById('home');
+    this.create = document.getElementById('create');
+    this.how = document.getElementById('how');
+    this.play = document.getElementById('play');
 
-    this.button1.addEventListener('mousedown', this.updateView);
-    this.button2.addEventListener('mousedown', this.updateView);
-    this.button3.addEventListener('mousedown', this.updateView);
-    this.button4.addEventListener('mousedown', this.updateView);
-    this.button5.addEventListener('mousedown', this.updateView);
-    this.button6.addEventListener('mousedown', this.updateView);
-    this.button7.addEventListener('mousedown', this.updateView);
-    this.button8.addEventListener('mousedown', this.updateView);
+    this.home.addEventListener('mousedown', this.newUpdateView);
+    this.create.addEventListener('mousedown', this.newUpdateView);
+    this.how.addEventListener('mousedown', this.newUpdateView);
+    this.play.addEventListener('mousedown', this.newUpdateView);
+
+    // this.button1 = document.getElementById('button-1');
+    // this.button2 = document.getElementById('button-2');
+    // this.button3 = document.getElementById('button-3');
+    // this.button4 = document.getElementById('button-4');
+    // this.button5 = document.getElementById('button-5');
+    // this.button6 = document.getElementById('button-6');
+    // this.button7 = document.getElementById('button-7');
+    // this.button8 = document.getElementById('button-8');
+    //
+    // this.button1.addEventListener('mousedown', this.updateView);
+    // this.button2.addEventListener('mousedown', this.updateView);
+    // this.button3.addEventListener('mousedown', this.updateView);
+    // this.button4.addEventListener('mousedown', this.updateView);
+    // this.button5.addEventListener('mousedown', this.updateView);
+    // this.button6.addEventListener('mousedown', this.updateView);
+    // this.button7.addEventListener('mousedown', this.updateView);
+    // this.button8.addEventListener('mousedown', this.updateView);
+    
     $(`#view-${this.view}`).removeClass('hidden');
   }
 };
@@ -290,7 +332,7 @@ function Deck(id, subject, cards, category_key) {
 
     if(typeof potentialCard === 'object' && typeof potentialCard.id === 'number'){
       newCard = potentialCard;
-      console.log(newCard);
+      // console.log(newCard);
       // theCurrentDeck.cards.push(newCard);
       // theCurrentDeck.cardCount = theCurrentDeck.cardCount + 1;
       //
