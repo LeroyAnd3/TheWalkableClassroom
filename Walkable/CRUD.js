@@ -156,7 +156,8 @@ function getCategoryTerms(category, cardColllection, imageCollection,audioCollec
 //append current categories to the concentration game to select from
 function appendCategories() {
   return new Promise(function(resolve, reject) {
-    categoryRef.once('value', snap => {
+    categoryRef.on('value', snap => {
+      clearMenu();
       snap.forEach(subject => {
         let option = document.createElement("option");
         let node = document.createTextNode(subject.val().subject);
