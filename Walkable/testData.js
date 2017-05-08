@@ -569,7 +569,30 @@ function DeckCollection(decks=[]) {
     }
     self.deckCount = self.deckCount + 1;
 
-    self.$view.prepend(
+    // self.$view.prepend(
+    //   `<div class="deckStack">` +
+    //     '<div class="card1">' +
+    //       '<div class="card2">' +
+    //         `<div id=deck-${newDeck.id} class="card3">` +
+    //           `<div id=deleteDeck-${newDeck.id} class="deckDeleteButton">x</div><br>` +
+    //           '<br>' +
+    //           `<span id=subject-${newDeck.id} >${newDeck.subject || "Add Subject"}</span><br>` +
+    //           `<input id=input-${newDeck.id} size=12 class="hidden"></input><br>` +
+    //           `<button id=edit-${newDeck.id} class="editButton">Edit</button>` +
+    //           `<button id=addCards-${newDeck.id} value=6 class="addCardsButton">Add Cards</button>` +
+    //           `<button id=submit-${newDeck.id} class="submitButton hidden">Submit</button>` +
+    //           `<button id=cancel-${newDeck.id} class="cancelButton hidden">Cancel</button>` +
+    //       '  </div>' +
+    //       '</div>' +
+    //     '</div>'+
+    //   '</div>'
+    // );
+    var count = self.$view.children().length;
+    var additionDiv = self.$view.children(0)[count-2];
+    // console.log(self.$view.children().length);
+    // console.log(newDeck.subject, count, self.$view.children(0).get(count-1));
+    // $(additionDiv).css('background-color', 'red');
+    $(additionDiv).append(
       `<div class="deckStack">` +
         '<div class="card1">' +
           '<div class="card2">' +
@@ -587,9 +610,6 @@ function DeckCollection(decks=[]) {
         '</div>'+
       '</div>'
     );
-    // console.log($('#view-5:last-child').get(0));
-
-    // $('#view-5:last-child').css('background-color', 'red');
 
     self.decks.push(newDeck);
 
