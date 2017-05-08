@@ -73,9 +73,33 @@ img {
 
 #home {
   color: #000000;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #home:hover{
+  color: #000000;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#create {
+  color: #000000;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#create:hover{
   color: #000000;
   text-align: center;
   border: 2px solid #000000;
@@ -94,6 +118,12 @@ img {
 
 #play {
   color: #000000;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #DCDCDC;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 #play:hover {
